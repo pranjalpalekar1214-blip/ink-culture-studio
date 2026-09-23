@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://streetculture.tattoo/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://streetculture.tattoo/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://streetculture.tattoo/artists</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://streetculture.tattoo/artists/karan</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://streetculture.tattoo/artists/lucky</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://streetculture.tattoo/gallery</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://streetculture.tattoo/book</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://streetculture.tattoo/academy</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://streetculture.tattoo/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://streetculture.tattoo/blog/how-to-choose-your-first-tattoo</loc><priority>0.7</priority></url>
+  <url><loc>https://streetculture.tattoo/blog/how-much-does-a-tattoo-cost-in-mumbai</loc><priority>0.7</priority></url>
+  <url><loc>https://streetculture.tattoo/blog/how-to-prepare-for-your-tattoo-appointment</loc><priority>0.7</priority></url>
+  <url><loc>https://streetculture.tattoo/blog/black-and-grey-vs-colour-tattoos</loc><priority>0.7</priority></url>
+  <url><loc>https://streetculture.tattoo/blog/how-tattoo-aftercare-actually-works</loc><priority>0.7</priority></url>
+  <url><loc>https://streetculture.tattoo/blog/best-tattoo-placements-for-your-first-tattoo</loc><priority>0.7</priority></url>
+  <url><loc>https://streetculture.tattoo/blog/things-you-should-never-do-before-a-tattoo</loc><priority>0.7</priority></url>
+  <url><loc>https://streetculture.tattoo/blog/cover-up-tattoos-what-you-need-to-know</loc><priority>0.7</priority></url>
+  <url><loc>https://streetculture.tattoo/blog/why-we-built-the-street-culture-academy</loc><priority>0.7</priority></url>
+  <url><loc>https://streetculture.tattoo/careers</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://streetculture.tattoo/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+</urlset>

@@ -1,0 +1,161 @@
+/* DO NOT CHANGE */
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+/* DO NOT CHANGE */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Street Culture brand tokens (generate text-/bg-/border-* utilities) */
+  --color-bone: var(--bone);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-blood: var(--blood);
+  --color-acid: var(--acid);
+  --color-ember: var(--ember);
+  --color-charcoal: var(--charcoal);
+  /* Brand typography stacks (Google Fonts loaded in index.html) */
+  --font-display: var(--sc-font-display);
+  --font-body: var(--sc-font-body);
+  --font-marker: var(--sc-font-marker);
+  --font-mono: var(--sc-font-mono);
+}
+
+/* THEME — Street Culture: dark editorial, near-black + off-white + electric red */
+:root {
+  --radius: 0rem;
+
+  /* brand palette */
+  --bone: oklch(0.94 0.012 90);        /* off-white text */
+  --cream: oklch(0.93 0.045 95);       /* dirty cream */
+  --ink: oklch(0.155 0.008 260);       /* near-black charcoal */
+  --charcoal: oklch(0.22 0.01 260);
+  --blood: oklch(0.62 0.24 27);        /* electric red */
+  --acid: oklch(0.83 0.2 128);         /* acid green */
+  --ember: oklch(0.71 0.16 55);        /* muted orange */
+
+  /* shadcn tokens mapped onto the brand */
+  --background: var(--ink);
+  --foreground: var(--bone);
+  --card: oklch(0.19 0.01 260);
+  --card-foreground: var(--bone);
+  --popover: oklch(0.19 0.01 260);
+  --popover-foreground: var(--bone);
+  --primary: var(--bone);
+  --primary-foreground: var(--ink);
+  --secondary: var(--charcoal);
+  --secondary-foreground: var(--bone);
+  --muted: var(--charcoal);
+  --muted-foreground: oklch(0.68 0.01 90);
+  --accent: var(--charcoal);
+  --accent-foreground: var(--bone);
+  --destructive: var(--blood);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: var(--blood);
+  --chart-1: var(--blood);
+  --chart-2: var(--acid);
+  --chart-3: var(--ember);
+  --chart-4: var(--cream);
+  --chart-5: oklch(0.5 0.05 260);
+  --sidebar: var(--charcoal);
+  --sidebar-foreground: var(--bone);
+  --sidebar-primary: var(--blood);
+  --sidebar-primary-foreground: var(--ink);
+  --sidebar-accent: var(--charcoal);
+  --sidebar-accent-foreground: var(--bone);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: var(--blood);
+
+  /* brand typography stacks */
+  --sc-font-display: "Archivo Black", "Arial Narrow", Impact, sans-serif;
+  --sc-font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --sc-font-marker: "Caveat", "Segoe Script", cursive;
+  --sc-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+.dark {
+  --background: var(--ink);
+  --foreground: var(--bone);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--sc-font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  button:not([disabled]),
+  [role="button"]:not([disabled]) {
+    cursor: pointer;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--sc-font-display);
+    font-weight: 400;
+  }
+  ::selection {
+    background: var(--blood);
+    color: var(--ink);
+  }
+
+  /* film grain overlay utility */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
+  /* thin editorial scrollbars */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--ink); }
+  ::-webkit-scrollbar-thumb { background: var(--charcoal); border: 2px solid var(--ink); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--blood); }
+}
+
+/* Respect reduced motion globally */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
