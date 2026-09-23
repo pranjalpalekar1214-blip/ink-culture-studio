@@ -86,15 +86,19 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
               <StarMotif className={cn("h-7 w-7 shrink-0", accentText[artist.accent])} />
             </div>
 
-            {/* portrait plate */}
-            <div className="relative mt-5 overflow-hidden border border-bone/10 bg-ink">
+            {/* portrait plate — tap to open portfolio */}
+            <Link
+              to={`/artists/${artist.id}`}
+              aria-label={`Open ${artist.name}'s portfolio`}
+              className="relative mt-5 block overflow-hidden border border-bone/10 bg-ink transition-transform duration-300 hover:-rotate-1"
+            >
               <div className="pointer-events-none absolute inset-0 grain opacity-40" aria-hidden />
               <ArtistPortrait who={artist.portrait} className="mx-auto h-64 w-auto text-bone/85 sm:h-72" />
               <div className="absolute inset-x-0 bottom-0 flex justify-between border-t border-bone/10 bg-ink/80 px-3 py-2 text-[9px] uppercase tracking-[0.25em] text-bone/50 backdrop-blur-sm">
                 <span>{artist.style}</span>
-                <span>SC·{artist.number}</span>
+                <span className="text-blood">tap for portfolio →</span>
               </div>
-            </div>
+            </Link>
 
             {/* specialties chips */}
             <div className="mt-4 flex flex-wrap gap-1.5">

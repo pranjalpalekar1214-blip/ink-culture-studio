@@ -49,6 +49,7 @@
   --color-acid: var(--acid);
   --color-ember: var(--ember);
   --color-charcoal: var(--charcoal);
+  --color-volt: var(--volt);
   /* Brand typography stacks (Google Fonts loaded in index.html) */
   --font-display: var(--sc-font-display);
   --font-body: var(--sc-font-body);
@@ -65,7 +66,8 @@
   --cream: oklch(0.93 0.045 95);       /* dirty cream */
   --ink: oklch(0.155 0.008 260);       /* near-black charcoal */
   --charcoal: oklch(0.22 0.01 260);
-  --blood: oklch(0.62 0.24 27);        /* electric red */
+  --blood: oklch(0.8 0.14 85);         /* ⚡ brand yellow (kept old token name for compatibility) */
+  --volt: oklch(0.8 0.14 85);          /* new token name — same yellow */
   --acid: oklch(0.83 0.2 128);         /* acid green */
   --ember: oklch(0.71 0.16 55);        /* muted orange */
 
@@ -103,7 +105,7 @@
   --sidebar-ring: var(--blood);
 
   /* brand typography stacks */
-  --sc-font-display: "Archivo Black", "Arial Narrow", Impact, sans-serif;
+  --sc-font-display: "Anton", "Arial Narrow", Impact, sans-serif;
   --sc-font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --sc-font-marker: "Caveat", "Segoe Script", cursive;
   --sc-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;

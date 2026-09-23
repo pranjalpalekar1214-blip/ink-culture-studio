@@ -11,6 +11,7 @@ const links = [
   { to: "/about", label: "About" },
   { to: "/artists", label: "Artists" },
   { to: "/gallery", label: "Gallery" },
+  { to: "/concept", label: "Ink Lab" },
   { to: "/academy", label: "Academy" },
   { to: "/blog", label: "Blog" },
   { to: "/careers", label: "Careers" },

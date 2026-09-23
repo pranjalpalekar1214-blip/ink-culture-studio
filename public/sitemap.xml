@@ -20,4 +20,5 @@
   <url><loc>https://streetculture.tattoo/blog/why-we-built-the-street-culture-academy</loc><priority>0.7</priority></url>
   <url><loc>https://streetculture.tattoo/careers</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://streetculture.tattoo/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://streetculture.tattoo/concept</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

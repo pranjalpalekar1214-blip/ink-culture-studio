@@ -1,5 +1,8 @@
 import { contact, siteUrl } from "./contact";
 
+/** Brand accent (yellow). Single source of truth for schema colors. */
+export const BRAND_COLOR = "#F5C518";
+
 export const siteName = "Street Culture Tattoo Studio & Academy";
 
 /** Shared OG image path — replace public/og-image.png with a real 1200×630 image. */
@@ -124,6 +127,12 @@ export const pageMeta = {
       "Find Street Culture Tattoo Studio in Kandivali West, Mumbai. Address, WhatsApp number, opening hours, directions and how to reach us by train.",
     path: "/contact",
   }),
+  concept: buildPageMeta({
+    title: `AI Tattoo Concept Lab | ${siteName}`,
+    description:
+      "Upload a reference image, describe your tattoo idea and get a personalized AI-drafted concept brief from Street Culture — style notes, placement guidance and the right artist for the job.",
+    path: "/concept",
+  }),
 };
 
 /* ------------------------------------------------------------------ */
@@ -156,6 +165,8 @@ export function localBusinessSchema() {
     telephone: `+${contact.whatsappNumber}`,
     email: contact.email,
     priceRange: "₹₹",
+    /** Brand accent (yellow) surfaced for rich results. */
+    color: BRAND_COLOR,
     address: {
       "@type": "PostalAddress",
       streetAddress: a.street,

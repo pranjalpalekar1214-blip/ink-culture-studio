@@ -3,7 +3,7 @@ import { ArrowDown, ChevronDown } from "lucide-react";
 import { useRef } from "react";
 import { Link } from "react-router";
 import { ArtistCard } from "@/components/ArtistCard";
-import { ArtistPortrait, EyeMotif, FloatingMotifs, HandMotif, InkStroke, LocalTrainMotif, SnakeMotif, StarMotif } from "@/components/art";
+import { ArtistPortrait, EyeMotif, FloatingMotifs, HandMotif, InkStroke, LocalTrainMotif, SnakeMotif, StarMotif, TickerStrip } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
 import { GalleryGridMini } from "@/components/GalleryGridMini";
 import { InkButton, MaskReveal, Reveal, SectionHeading } from "@/components/ui-kit";
@@ -20,9 +20,19 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <TickerStrip
+        items={[
+          "INK IS CULTURE",
+          "CUSTOM ONLY — NO REPEATS",
+          "PIERCINGS · TATTOOS · TRAINING",
+          "KANDIVALI WEST, MUMBAI",
+          "WALK IN LOUD, WALK OUT ICONIC",
+        ]}
+      />
       <Philosophy />
       <ArtistsSection />
       <GalleryStrip />
+      <InkLabTeaser />
       <AcademyTeaser />
       <Testimonials />
       <ProcessTeaser />
@@ -226,6 +236,61 @@ function GalleryStrip() {
         </div>
         <div className="mt-12">
           <GalleryGridMini />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------------------- INK LAB TEASER ------------------------- */
+
+function InkLabTeaser() {
+  return (
+    <section className="relative overflow-hidden border-t-2 border-bone/10 py-20 md:py-28" aria-labelledby="inklab-heading">
+      <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
+        <div className="relative border-2 border-bone/15 bg-gradient-to-br from-[#1a160a] to-[#0d0d0d] p-8 shadow-[10px_10px_0_0_rgba(245,197,24,0.15)] md:p-12">
+          <div className="pointer-events-none absolute inset-0 grain opacity-40" aria-hidden />
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            <div>
+              <Reveal>
+                <p className="flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.3em] text-blood">
+                  <span className="font-mono">NEW</span>
+                  <span aria-hidden className="h-px w-8 bg-blood/60" /> AI Concept Lab
+                </p>
+              </Reveal>
+              <Reveal delay={0.08}>
+                <h2 id="inklab-heading" className="mt-6 font-display text-4xl uppercase leading-[0.95] tracking-tight text-bone sm:text-5xl">
+                  Can't explain it?<br />
+                  <span className="text-blood">Let the machine try.</span>
+                </h2>
+              </Reveal>
+              <Reveal delay={0.16}>
+                <p className="mt-5 max-w-md font-body text-base leading-relaxed text-bone/70">
+                  Drop a reference image, mumble your idea, and get a full concept brief back — concept name,
+                  style notes, placement, and which artist should hold the machine.
+                </p>
+              </Reveal>
+              <Reveal delay={0.24}>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <InkButton href="/concept" variant="sticker">Try the Ink Lab — Free</InkButton>
+                  <InkButton href="/book" variant="ghost">or just book a chair →</InkButton>
+                </div>
+              </Reveal>
+            </div>
+            <div className="relative hidden lg:block">
+              <Reveal delay={0.2}>
+                <div className="rotate-2 border-2 border-ink bg-[#151310] p-6 shadow-[8px_8px_0_0_var(--blood)]">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-blood">Concept Brief · Draft 01</p>
+                  <p className="mt-3 font-display text-2xl uppercase text-bone">“Monsoon Moth”</p>
+                  <div className="mt-4 space-y-2 font-body text-sm text-bone/70">
+                    <p><span className="text-blood">THE IDEA —</span> A black & grey moth cradling a tiny umbrella, riding a downpour of fine-line rain…</p>
+                    <p><span className="text-blood">PLACEMENT —</span> Wraps the forearm; wings open with the muscle.</p>
+                    <p><span className="text-blood">ARTIST MATCH —</span> Karan. Whip-shaded gradients, single-needle rain.</p>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </div>
         </div>
       </div>
     </section>

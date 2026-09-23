@@ -1,5 +1,5 @@
 /**
- * Gallery data — categories and items.
+ * Gallery data — categories, items, ink colors.
  * Categories are deliberately configurable: the studio's specialties may
  * change, and the gallery UI adapts automatically.
  *
@@ -23,6 +23,9 @@ export type GalleryCategory =
   | "Small Tattoos"
   | "Large Tattoos";
 
+/** Ink palette used for the "colour" filter dimension. */
+export type InkColor = "Black" | "Black & Grey" | "Colour" | "Fine B&W";
+
 export const galleryCategories: ("All" | GalleryCategory)[] = [
   "All",
   "Black & Grey",
@@ -37,10 +40,21 @@ export const galleryCategories: ("All" | GalleryCategory)[] = [
   "Large Tattoos",
 ];
 
+/** Derived from items — but ordered explicitly for the UI. */
+export const inkColorFilters: ("All" | InkColor)[] = [
+  "All",
+  "Black",
+  "Black & Grey",
+  "Colour",
+  "Fine B&W",
+];
+
 export type GalleryItem = {
   id: string;
   title: string;
   category: GalleryCategory;
+  /** Ink palette dimension for filtering */
+  inkColor: InkColor;
   artistId: string;
   artistName: string;
   /** WebP/AVIF-ready: set srcSet when real photos are added */
@@ -54,19 +68,19 @@ export type GalleryItem = {
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 /** Placeholder pool — duplicated across categories to fill the grid until real work is added. */
-const styles: { style: string; artist: 0 | 1; cat: GalleryCategory }[] = [
-  { style: "Black & Grey", artist: 0, cat: "Black & Grey" },
-  { style: "Realism", artist: 0, cat: "Realism" },
-  { style: "Geometric", artist: 0, cat: "Black & Grey" },
-  { style: "Fine Line", artist: 1, cat: "Fine Line" },
-  { style: "Lettering", artist: 1, cat: "Lettering" },
-  { style: "Neo Trad", artist: 1, cat: "Neo Traditional" },
-  { style: "Traditional", artist: 1, cat: "Traditional" },
-  { style: "Custom", artist: 0, cat: "Custom" },
-  { style: "Cover Up", artist: 0, cat: "Cover Ups" },
-  { style: "Small", artist: 1, cat: "Small Tattoos" },
-  { style: "Large", artist: 0, cat: "Large Tattoos" },
-  { style: "Portrait", artist: 0, cat: "Realism" },
+const styles: { style: string; artist: 0 | 1; cat: GalleryCategory; ink: InkColor }[] = [
+  { style: "Black & Grey", artist: 0, cat: "Black & Grey", ink: "Black & Grey" },
+  { style: "Realism", artist: 0, cat: "Realism", ink: "Black & Grey" },
+  { style: "Geometric", artist: 0, cat: "Black & Grey", ink: "Black" },
+  { style: "Fine Line", artist: 1, cat: "Fine Line", ink: "Fine B&W" },
+  { style: "Lettering", artist: 1, cat: "Lettering", ink: "Black" },
+  { style: "Neo Trad", artist: 1, cat: "Neo Traditional", ink: "Colour" },
+  { style: "Traditional", artist: 1, cat: "Traditional", ink: "Colour" },
+  { style: "Custom", artist: 0, cat: "Custom", ink: "Black & Grey" },
+  { style: "Cover Up", artist: 0, cat: "Cover Ups", ink: "Black" },
+  { style: "Small", artist: 1, cat: "Small Tattoos", ink: "Fine B&W" },
+  { style: "Large", artist: 0, cat: "Large Tattoos", ink: "Black & Grey" },
+  { style: "Portrait", artist: 0, cat: "Realism", ink: "Black & Grey" },
 ];
 
 const titles = [
@@ -97,6 +111,7 @@ function build(): GalleryItem[] {
         id: `g-${idx + 1}`,
         title: titles[idx % titles.length] + (pass === 1 ? " II" : ""),
         category: s.cat,
+        inkColor: s.ink,
         artistId: artist.id,
         artistName: artist.name,
         src: `/images/placeholder/${slug(s.style)}.svg`,

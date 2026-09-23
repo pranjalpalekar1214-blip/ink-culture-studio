@@ -93,6 +93,102 @@ export function StarMotif({ className }: ArtProps) {
   );
 }
 
+export function SparkMotif({ className }: ArtProps) {
+  return (
+    <svg viewBox="0 0 40 40" fill="none" aria-hidden className={className}>
+      <path d="M20 2 V 38 M 2 20 H 38 M 8 8 L 32 32 M 32 8 L 8 32" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function BombMotif({ className }: ArtProps) {
+  const reduce = useReducedMotion();
+  return (
+    <svg viewBox="0 0 90 100" fill="none" aria-hidden className={className}>
+      <motion.g stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" {...draw(reduce, 0, 1.2)}>
+        <circle cx="42" cy="60" r="26" />
+        <path d="M58 40 L 68 28 M 68 28 C 72 22, 80 24, 78 30" />
+        <path d="M76 20 L 82 26 M 82 18 L 78 28" />
+        <path d="M30 54 C 30 48, 36 44, 42 46" />
+      </motion.g>
+      <motion.path d="M84 12 L 88 4 M 74 8 L 78 0" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" {...draw(reduce, 0.8, 0.5)} />
+    </svg>
+  );
+}
+
+export function PizzaMotif({ className }: ArtProps) {
+  const reduce = useReducedMotion();
+  return (
+    <svg viewBox="0 0 100 100" fill="none" aria-hidden className={className}>
+      <motion.g stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" {...draw(reduce, 0, 1.2)}>
+        <path d="M50 92 L 14 26 C 36 12, 64 12, 86 26 Z" />
+        <path d="M50 92 L 30 40 M 50 92 L 70 40" />
+        <circle cx="44" cy="38" r="4" />
+        <circle cx="58" cy="50" r="4" />
+        <circle cx="40" cy="62" r="4" />
+      </motion.g>
+    </svg>
+  );
+}
+
+export function CatMotif({ className }: ArtProps) {
+  const reduce = useReducedMotion();
+  return (
+    <svg viewBox="0 0 100 100" fill="none" aria-hidden className={className}>
+      <motion.g stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" {...draw(reduce, 0, 1.2)}>
+        <path d="M28 44 L 24 20 L 40 32" />
+        <path d="M72 44 L 76 20 L 60 32" />
+        <path d="M28 44 C 28 28, 72 28, 72 44 C 72 64, 60 74, 50 74 C 40 74, 28 64, 28 44 Z" />
+        <path d="M40 50 C 42 52, 46 52, 48 50" />
+        <path d="M56 50 C 58 52, 62 52, 64 50" />
+        <path d="M46 60 C 48 63, 54 63, 56 60" />
+        <path d="M16 48 L 28 50 M 16 58 L 28 56 M 84 48 L 72 50 M 84 58 L 72 56" />
+      </motion.g>
+    </svg>
+  );
+}
+
+export function WinkMotif({ className }: ArtProps) {
+  return (
+    <svg viewBox="0 0 60 40" fill="none" aria-hidden className={className}>
+      <path d="M10 18 C 16 8, 44 8, 50 18" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+      <path d="M16 24 H 24" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+      <circle cx="40" cy="24" r="2.6" fill="currentColor" />
+      <path d="M22 32 C 26 36, 36 36, 40 32" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function BoltDoodleMotif({ className }: ArtProps) {
+  return (
+    <svg viewBox="0 0 60 90" fill="none" aria-hidden className={className}>
+      <path d="M34 4 L 10 48 L 28 48 L 20 86 L 52 36 L 32 36 L 44 4 Z" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** Infinite horizontal marquee strip — fun studio slogans. */
+export function TickerStrip({ items, className }: { items: string[]; className?: string }) {
+  const reduce = useReducedMotion();
+  const doubled = [...items, ...items];
+  return (
+    <div className={cn("relative overflow-hidden border-y-2 border-ink bg-blood py-3", className)} aria-hidden>
+      <motion.div
+        className="flex w-max items-center gap-8 pr-8"
+        animate={reduce ? {} : { x: ["0%", "-50%"] }}
+        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+      >
+        {doubled.map((t, i) => (
+          <span key={i} className="flex items-center gap-8 whitespace-nowrap font-display text-lg uppercase tracking-[0.08em] text-ink">
+            {t}
+            <StarMotif className="h-4 w-4" />
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
 export function ArrowMotif({ className }: ArtProps) {
   return (
     <svg viewBox="0 0 120 40" fill="none" aria-hidden className={className}>
@@ -268,17 +364,26 @@ export function FloatingMotifs({ className }: ArtProps) {
   const anim2 = reduce ? {} : { animate: { y: [0, 10, 0], rotate: [0, -6, 0] }, transition: { duration: 9, repeat: Infinity, ease: "easeInOut" as const } };
   return (
     <div aria-hidden className={cn("pointer-events-none", className)}>
-      <motion.div {...anim} className="absolute left-[6%] top-[16%] text-blood/50">
+      <motion.div {...anim} className="absolute left-[6%] top-[16%] text-blood/60">
         <StarMotif className="h-8 w-8" />
       </motion.div>
-      <motion.div {...anim2} className="absolute right-[8%] top-[24%] text-acid/40">
+      <motion.div {...anim2} className="absolute right-[8%] top-[22%] text-acid/40">
         <RoseMotif className="h-24 w-24" />
       </motion.div>
-      <motion.div {...anim} className="absolute bottom-[18%] left-[12%] text-cream/30">
-        <SnakeMotif className="h-28 w-28" />
+      <motion.div {...anim} className="absolute bottom-[30%] left-[4%] text-cream/30">
+        <SnakeMotif className="h-24 w-24" />
       </motion.div>
-      <motion.div {...anim2} className="absolute bottom-[24%] right-[14%] text-ember/50">
-        <BoltMotif className="h-10 w-10" />
+      <motion.div {...anim2} className="absolute bottom-[24%] right-[13%] text-ember/60">
+        <BombMotif className="h-14 w-14" />
+      </motion.div>
+      <motion.div {...anim} className="absolute right-[26%] top-[10%] text-blood/50">
+        <CatMotif className="h-16 w-16" />
+      </motion.div>
+      <motion.div {...anim2} className="absolute bottom-[10%] left-[24%] text-blood/40">
+        <PizzaMotif className="h-14 w-14" />
+      </motion.div>
+      <motion.div {...anim} className="absolute left-[42%] top-[8%] text-ember/40">
+        <WinkMotif className="h-8 w-12" />
       </motion.div>
     </div>
   );

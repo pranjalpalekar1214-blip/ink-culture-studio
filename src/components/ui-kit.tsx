@@ -48,12 +48,13 @@ export function Magnetic({
 /* ------------------------------------------------------------------ */
 
 import { Link } from "react-router";
+import { StarMotif } from "./art";
 
 type InkButtonProps = {
   children: ReactNode;
   href?: string;
   onClick?: () => void;
-  variant?: "primary" | "outline" | "ghost";
+  variant?: "primary" | "outline" | "ghost" | "sticker";
   size?: "sm" | "md" | "lg";
   className?: string;
   type?: "button" | "submit";
@@ -75,7 +76,7 @@ export function InkButton({
   ariaLabel,
 }: InkButtonProps) {
   const base =
-    "group/btn relative inline-flex items-center justify-center gap-2 overflow-hidden font-display font-semibold uppercase tracking-[0.14em] transition-colors duration-300 disabled:opacity-40 disabled:pointer-events-none select-none";
+    "group/btn relative inline-flex items-center justify-center gap-2 overflow-visible font-display font-semibold uppercase tracking-[0.1em] transition-transform duration-200 disabled:opacity-40 disabled:pointer-events-none select-none";
   const sizes = {
     sm: "px-4 py-2 text-[11px]",
     md: "px-6 py-3 text-xs",
@@ -83,24 +84,23 @@ export function InkButton({
   } as const;
   const variants = {
     primary:
-      "bg-cream text-ink hover:text-cream border border-cream",
+      "bg-blood text-ink border-2 border-ink shadow-[4px_4px_0_0_#e8e2d5] hover:shadow-[2px_2px_0_0_#e8e2d5] hover:translate-x-[2px] hover:translate-y-[2px] hover:-rotate-1",
     outline:
-      "bg-transparent text-bone border border-bone/40 hover:text-ink",
-    ghost: "bg-transparent text-bone/80 hover:text-bone border border-transparent",
+      "bg-transparent text-bone border-2 border-dashed border-bone/50 hover:border-blood hover:text-blood hover:rotate-1",
+    ghost: "bg-transparent text-bone/80 border-2 border-transparent hover:text-blood",
+    sticker:
+      "bg-cream text-ink border-2 border-ink shadow-[5px_5px_0_0_var(--blood)] hover:shadow-[2px_2px_0_0_var(--blood)] hover:translate-x-[3px] hover:translate-y-[3px] hover:-rotate-2",
   } as const;
 
   const inner = (
     <>
-      {/* ink spread fill */}
+      {/* wink: a tiny star pops on hover */}
       <span
         aria-hidden
-        className={cn(
-          "absolute inset-0 origin-bottom scale-y-0 transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/btn:scale-y-100",
-          variant === "primary" && "bg-ink",
-          variant === "outline" && "bg-cream",
-          variant === "ghost" && "bg-bone/10",
-        )}
-      />
+        className="absolute -right-1.5 -top-2 text-blood opacity-0 transition-all duration-200 group-hover/btn:opacity-100 group-hover/btn:rotate-45"
+      >
+        <StarMotif className="size-4" />
+      </span>
       <span className="relative z-10 flex items-center gap-2">{children}</span>
     </>
   );

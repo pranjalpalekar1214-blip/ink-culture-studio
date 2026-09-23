@@ -28,6 +28,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
 const Book = lazy(() => import("./pages/Book.tsx"));
 const Careers = lazy(() => import("./pages/Careers.tsx"));
 const ContactPage = lazy(() => import("./pages/Contact.tsx"));
+const ConceptLab = lazy(() => import("./pages/ConceptLab.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 // Simple loading fallback for route transitions
@@ -143,6 +144,7 @@ function SiteLayout() {
             <Route path="/book" element={<Book />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/concept" element={<ConceptLab />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

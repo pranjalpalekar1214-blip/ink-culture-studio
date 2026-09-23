@@ -42,12 +42,12 @@ export function generalEnquiryMessage(): string {
   return `Hey ${contact.studioName}! I want to enquire about a tattoo.`;
 }
 
-/** Builds the full booking enquiry message from form state. */
+/** Builds the full booking enquiry message from form state (tattoo / piercing / academy). */
 export function bookingMessage(b: BookingEnquiry): string {
   const line = (label: string, value?: string) => `${label}: ${value?.trim() || "—"}\n`;
   return (
     `Hey ${contact.studioName}!\n\n` +
-    `I want to enquire about a tattoo.\n\n` +
+    `I'd like to request a session.\n\n` +
     line("Name", b.name) +
     line("Looking for", b.service) +
     line("Artist", b.artist) +
