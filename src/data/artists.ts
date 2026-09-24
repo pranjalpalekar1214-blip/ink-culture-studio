@@ -23,6 +23,8 @@ export type Artist = {
   bio: string;
   artisticStyle: string;
   philosophy: string;
+  /** Pokémon-card-style flavor line printed at the bottom of the collectible card */
+  cardFlavor: string;
   stats: ArtistStats;
   /** Accent tint used across card + profile page */
   accent: "red" | "green" | "orange" | "cream";
@@ -59,6 +61,8 @@ export const artists: Artist[] = [
       "Delicate fine line compositions paired with confident script. Clean heals, readable at any size, with neo-traditional flourishes when the story calls for it.",
     philosophy:
       "Your skin is a diary, not a billboard. I want the tattoo to feel inevitable — like it was always meant to be exactly there.",
+    cardFlavor:
+      "Will talk about your ex for three hours before drawing a single line. Weakness: spelling requests at 2 AM.",
     stats: { linework: 94, shading: 86, detail: 92, creativity: 95, customDesign: 97 },
     accent: "green",
     image: "/images/artists/lucky.svg",
@@ -81,6 +85,8 @@ export const artists: Artist[] = [
       "High-contrast black & grey with cinematic depth. Fine single-needle detail over soft whip-shaded gradients, with negative space doing half the work.",
     philosophy:
       "A tattoo should look like it grew there. I design around the body — its lines, its movement, its story — so the piece belongs to you, not to a trend.",
+    cardFlavor:
+      "Says only 14 words per session — all of them are about your linework. Weakness: being told his shading is \"nice\".",
     stats: { linework: 96, shading: 90, detail: 94, creativity: 88, customDesign: 92 },
     accent: "red",
     image: "/images/artists/karan.svg",

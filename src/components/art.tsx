@@ -291,6 +291,72 @@ export function SkylineMotif({ className }: ArtProps) {
   );
 }
 
+/* ---------------- Stick-figure placeholder portraits (collectible card) ---------------- */
+
+/** Placeholder stick-figure doodle for the collectible card — one pose per artist. */
+export function StickArtistFigure({ who, className }: { who: "karan" | "lucky"; className?: string }) {
+  const reduce = useReducedMotion();
+  const common = { stroke: "currentColor", strokeWidth: 3, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  const detail = { stroke: "currentColor", strokeWidth: 2.2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+
+  return (
+    <svg viewBox="0 0 200 240" fill="none" aria-hidden className={className} role="img">
+      {who === "lucky" ? (
+        <>
+          {/* Lucky — curly scribble hair, story book, machine raised mid-yarn */}
+          <motion.g {...common} {...draw(reduce, 0, 1.6)}>
+            <path d="M100 34 C 116 34 126 46 126 60 C 126 76 114 86 100 86 C 86 86 74 76 74 60 C 74 46 84 34 100 34 Z" />
+            <path d="M76 46 C 72 30 86 20 100 22 C 116 18 130 30 126 44" />
+            <path d="M84 30 C 86 24 94 22 98 26 M 104 24 C 112 22 120 26 122 34" />
+            <path d="M100 86 L 100 150" />
+            <path d="M100 100 C 86 106 74 110 64 116" />
+            <path d="M100 100 C 118 94 130 84 138 70" />
+            <path d="M100 150 C 96 170 94 190 90 210" />
+            <path d="M100 150 C 106 170 108 190 112 210" />
+            <path d="M90 210 L 78 214 M 112 210 L 124 214" />
+          </motion.g>
+          <motion.g {...detail} {...draw(reduce, 0.8, 1)}>
+            <circle cx="90" cy="58" r="2.6" fill="currentColor" stroke="none" />
+            <circle cx="110" cy="58" r="2.6" fill="currentColor" stroke="none" />
+            <path d="M88 70 C 94 78 106 78 112 70" />
+            <path d="M100 112 L 103 120 L 111 120 L 105 125 L 107 133 L 100 128 L 93 133 L 95 125 L 89 120 L 97 120 Z" />
+            <path d="M56 116 L 72 112 L 72 132 L 56 136 Z" />
+            <path d="M64 114 L 64 134" />
+            <path d="M134 54 L 150 68 L 144 76 L 128 62 Z" />
+            <path d="M150 68 L 158 80" />
+            <path d="M150 44 L 154 36 M 158 52 L 166 48" />
+          </motion.g>
+        </>
+      ) : (
+        <>
+          {/* Karan — cap down low, both hands on the machine, surgical focus */}
+          <motion.g {...common} {...draw(reduce, 0, 1.6)}>
+            <path d="M100 34 C 118 34 128 46 128 62 C 128 78 116 88 100 88 C 84 88 72 78 72 62 C 72 46 82 34 100 34 Z" />
+            <path d="M76 50 C 80 34 120 34 124 50" />
+            <path d="M70 50 L 132 50" />
+            <path d="M100 88 L 100 152" />
+            <path d="M100 102 C 88 110 80 116 74 122" />
+            <path d="M100 102 C 112 110 120 116 126 122" />
+            <path d="M100 152 L 96 210" />
+            <path d="M100 152 L 106 210" />
+            <path d="M96 210 L 84 214 M 106 210 L 118 214" />
+          </motion.g>
+          <motion.g {...detail} {...draw(reduce, 0.8, 1)}>
+            <path d="M88 60 L 96 62 M 112 60 L 104 62" />
+            <circle cx="92" cy="66" r="2.4" fill="currentColor" stroke="none" />
+            <circle cx="108" cy="66" r="2.4" fill="currentColor" stroke="none" />
+            <path d="M92 78 C 96 81 104 81 108 78" />
+            <path d="M84 132 L 114 116 L 118 124 L 88 140 Z" />
+            <path d="M118 124 L 130 116" />
+            <path d="M134 110 L 140 104 M 138 120 L 146 116" />
+            <path d="M90 112 C 94 108 100 112 106 108" />
+          </motion.g>
+        </>
+      )}
+    </svg>
+  );
+}
+
 /* ---------------- Artist portraits (original caricature line art) ---------------- */
 
 export function ArtistPortrait({
