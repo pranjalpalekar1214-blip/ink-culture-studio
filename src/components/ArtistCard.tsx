@@ -88,7 +88,7 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
 
             {/* portrait plate — tap to open portfolio */}
             <Link
-              to={`/artists/${artist.id}`}
+              to={`/artists/${artist.id}/portfolio`}
               aria-label={`Open ${artist.name}'s portfolio`}
               className="relative mt-5 block overflow-hidden border border-bone/10 bg-ink transition-transform duration-300 hover:-rotate-1"
             >
@@ -124,10 +124,10 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
 
             <div className="mt-6 flex items-center gap-3">
               <Link
-                to={`/artists/${artist.id}`}
+                to={`/artists/${artist.id}/portfolio`}
                 className="group/v flex flex-1 items-center justify-center gap-2 border border-bone/25 bg-bone/5 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone hover:text-ink"
               >
-                View Artist
+                View Portfolio
                 <ArrowUpRight className="size-4 transition-transform group-hover/v:translate-x-0.5 group-hover/v:-translate-y-0.5" />
               </Link>
               <button

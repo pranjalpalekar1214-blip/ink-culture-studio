@@ -74,7 +74,7 @@ function Tile({ item, onOpen, index }: { item: GalleryItem; onOpen: () => void; 
         </button>
         {/* artist credit chip → portfolio */}
         <Link
-          to={`/artists/${item.artistId}`}
+          to={`/artists/${item.artistId}/portfolio`}
           className="absolute left-2 top-2 z-10 border-2 border-ink bg-ink/85 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.16em] text-bone/85 backdrop-blur-sm transition-colors hover:border-blood hover:text-blood"
           aria-label={`See all work by ${item.artistName}`}
         >
@@ -142,7 +142,7 @@ export function GalleryGrid() {
             ))}
             {artist !== "All" && (
               <Link
-                to={`/artists/${artist.toLowerCase()}`}
+                to={`/artists/${artist.toLowerCase()}/portfolio`}
                 className="ml-1 border-2 border-bone/25 px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.16em] text-bone/70 transition-colors hover:border-blood hover:text-blood"
               >
                 open portfolio →
@@ -293,7 +293,7 @@ function Lightbox({
               </p>
             </div>
             <Link
-              to={`/artists/${item.artistId}`}
+              to={`/artists/${item.artistId}/portfolio`}
               className="border-2 border-blood bg-blood px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-ink transition-transform hover:-translate-y-0.5"
             >
               {item.artistName}'s Portfolio

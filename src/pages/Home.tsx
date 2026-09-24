@@ -1,7 +1,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ChevronDown } from "lucide-react";
 import { useRef } from "react";
-import { Link } from "react-router";
 import { ArtistCard } from "@/components/ArtistCard";
 import { ArtistPortrait, EyeMotif, FloatingMotifs, HandMotif, InkStroke, LocalTrainMotif, SnakeMotif, StarMotif, TickerStrip } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
@@ -98,9 +97,8 @@ function Hero() {
           className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
           <p className="max-w-xl font-body text-base leading-relaxed text-bone/70 md:text-lg">
-            Street Culture Tattoo Studio & Academy. Custom tattoos drawn for your body, your story, your streets — by{" "}
-            <Link to="/artists/karan" className="text-bone underline decoration-blood/60 underline-offset-4 transition-colors hover:text-blood">Karan</Link> and{" "}
-            <Link to="/artists/lucky" className="text-bone underline decoration-blood/60 underline-offset-4 transition-colors hover:text-blood">Lucky</Link>.
+            Street Culture Tattoo Studio &amp; Academy. Custom tattoos drawn for your body, your story, your
+            streets — in Kandivali West, Mumbai.
           </p>
           <div className="flex flex-wrap gap-3">
             <InkButton href="/book" size="lg">Book Your Tattoo</InkButton>

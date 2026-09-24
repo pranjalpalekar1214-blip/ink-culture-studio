@@ -325,7 +325,7 @@ export default function Book() {
                             <Choice label={a} active={form.artist === a} onClick={() => set("artist", a)} tall />
                             {isArtist && (
                               <Link
-                                to={`/artists/${slug}`}
+                                to={`/artists/${slug}/portfolio`}
                                 className="absolute -top-2 right-2 border border-bone/30 bg-ink px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.15em] text-bone/70 transition-colors hover:border-blood hover:text-blood"
                               >
                                 portfolio

@@ -10,7 +10,7 @@
 
 export const contact = {
   /** Studio display name */
-  studioName: "Street Culture Tattoo Studio & Academy",
+  studioName: "Street Culture Tattoo Studio and Academy",
   shortName: "Street Culture",
   tagline: "INK IS CULTURE.",
 

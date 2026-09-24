@@ -12,7 +12,7 @@ export type Artist = {
   number: string;
   name: string;
   role: string;
-  /** Short personality line, e.g. "The Linework Surgeon" */
+  /** Short personality line, e.g. "The Story Keeper" */
   epithet: string;
   specialties: string[];
   style: string;
@@ -38,33 +38,13 @@ export type Artist = {
  * ⚠️ PLACEHOLDER CONTENT — every bio, stat and "experience" value below is
  * illustrative. Replace with real artist information before launch.
  * Do not invent certifications or claims; keep facts editable here only.
+ *
+ * Card order: Card 01 = Lucky, Card 02 = Karan.
  */
 export const artists: Artist[] = [
   {
-    id: "karan",
-    number: "01",
-    name: "Karan",
-    role: "Tattoo Artist",
-    epithet: "The Linework Surgeon",
-    specialties: ["Black & Grey", "Realism", "Geometric"],
-    style: "Black & Grey Realism",
-    experience: "[X]+ years",
-    signatureTechniques: ["Whip-shading", "Single-needle detail", "Negative space"],
-    personality: "Quiet focus, loud tattoos. Karan believes every line should earn its place.",
-    bio: "Karan is a resident artist at Street Culture, Kandivali West. He works primarily in black & grey, building portraits and geometric compositions with patient, deliberate linework. Every piece starts with a consultation and a custom drawing — never a repeat of someone else's flash.",
-    artisticStyle:
-      "High-contrast black & grey with cinematic depth. Fine single-needle detail over soft whip-shaded gradients, with negative space doing half the work.",
-    philosophy:
-      "A tattoo should look like it grew there. I design around the body — its lines, its movement, its story — so the piece belongs to you, not to a trend.",
-    stats: { linework: 96, shading: 90, detail: 94, creativity: 88, customDesign: 92 },
-    accent: "red",
-    image: "/images/artists/karan.svg",
-    portrait: "karan",
-    instagram: "",
-  },
-  {
     id: "lucky",
-    number: "02",
+    number: "01",
     name: "Lucky",
     role: "Tattoo Artist",
     epithet: "The Story Keeper",
@@ -83,6 +63,28 @@ export const artists: Artist[] = [
     accent: "green",
     image: "/images/artists/lucky.svg",
     portrait: "lucky",
+    instagram: "",
+  },
+  {
+    id: "karan",
+    number: "02",
+    name: "Karan",
+    role: "Tattoo Artist",
+    epithet: "The Linework Surgeon",
+    specialties: ["Black & Grey", "Realism", "Geometric"],
+    style: "Black & Grey Realism",
+    experience: "[X]+ years",
+    signatureTechniques: ["Whip-shading", "Single-needle detail", "Negative space"],
+    personality: "Quiet focus, loud tattoos. Karan believes every line should earn its place.",
+    bio: "Karan is a resident artist at Street Culture, Kandivali West. He works primarily in black & grey, building portraits and geometric compositions with patient, deliberate linework. Every piece starts with a consultation and a custom drawing — never a repeat of someone else's flash.",
+    artisticStyle:
+      "High-contrast black & grey with cinematic depth. Fine single-needle detail over soft whip-shaded gradients, with negative space doing half the work.",
+    philosophy:
+      "A tattoo should look like it grew there. I design around the body — its lines, its movement, its story — so the piece belongs to you, not to a trend.",
+    stats: { linework: 96, shading: 90, detail: 94, creativity: 88, customDesign: 92 },
+    accent: "red",
+    image: "/images/artists/karan.svg",
+    portrait: "karan",
     instagram: "",
   },
 ];

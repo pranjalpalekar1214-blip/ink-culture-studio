@@ -69,8 +69,8 @@ export default function ArtistDetail() {
         lead={artist.epithet + " — " + artist.style + ", Street Culture, Kandivali West."}
       >
         <div className="mt-8 flex flex-wrap gap-3">
+          <InkButton href={`/artists/${artist.id}/portfolio`} size="lg">View Portfolio</InkButton>
           <InkButton href="/book" size="lg">Book with {artist.name}</InkButton>
-          <InkButton href="/artists" variant="outline" size="lg">All Artists</InkButton>
         </div>
       </PageHero>
 
@@ -200,7 +200,7 @@ export default function ArtistDetail() {
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {work.map((g) => (
               <CursorLabel key={g.id} label="VIEW">
-                <Link to="/gallery" className="group block border border-bone/10">
+                <Link to={`/artists/${artist.id}/portfolio`} className="group block border border-bone/10">
                   <div className="aspect-[3/4] overflow-hidden">
                     <PlaceholderImage seed={g.id} label={g.category} sub={g.title} className="transition-transform duration-700 group-hover:scale-105" />
                   </div>
@@ -209,7 +209,7 @@ export default function ArtistDetail() {
             ))}
           </div>
           <Reveal className="mt-8">
-            <InkButton href="/gallery" variant="outline">See the Full Gallery</InkButton>
+            <InkButton href={`/artists/${artist.id}/portfolio`} variant="outline">See the Full Portfolio</InkButton>
           </Reveal>
         </div>
       </section>

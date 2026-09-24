@@ -3,7 +3,7 @@ import { contact, siteUrl } from "./contact";
 /** Brand accent (yellow). Single source of truth for schema colors. */
 export const BRAND_COLOR = "#F5C518";
 
-export const siteName = "Street Culture Tattoo Studio & Academy";
+export const siteName = "Street Culture Tattoo Studio and Academy";
 
 /** Shared OG image path — replace public/og-image.png with a real 1200×630 image. */
 export const ogImage = "/og-image.png";
