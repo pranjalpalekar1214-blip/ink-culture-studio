@@ -1,11 +1,10 @@
-import { motion, useReducedMotion } from "framer-motion";
-import { RefreshCw } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
-import { ArrowUpRight } from "lucide-react";
 import { statLabels, type Artist } from "@/data/artists";
 import { cn } from "@/lib/utils";
-import { ArtistPortrait, StarMotif } from "./art";
+import { ArtistPortrait, BoltMotif, SparkMotif, StarMotif } from "./art";
 import { CursorLabel } from "./CursorLabel";
 
 const accentText: Record<Artist["accent"], string> = {
@@ -20,6 +19,14 @@ const accentBg: Record<Artist["accent"], string> = {
   green: "bg-acid",
   orange: "bg-ember",
   cream: "bg-cream",
+};
+
+/** CSS variable that holds the raw accent color — used for glows/shadows. */
+const accentVar: Record<Artist["accent"], string> = {
+  red: "--blood",
+  green: "--acid",
+  orange: "--ember",
+  cream: "--cream",
 };
 
 function StatBar({ label, value, delay, accent }: { label: string; value: number; delay: number; accent: string }) {
@@ -43,6 +50,125 @@ function StatBar({ label, value, delay, accent }: { label: string; value: number
   );
 }
 
+/* ==================== POWER AURA (visible once flipped) ==================== */
+
+const SPARKS = [
+  { x: 8, rise: 240, dur: 2.6, delay: 0, size: 12, drift: 14 },
+  { x: 21, rise: 300, dur: 3.4, delay: 0.6, size: 8, drift: -12 },
+  { x: 37, rise: 210, dur: 2.9, delay: 1.2, size: 14, drift: 10 },
+  { x: 54, rise: 330, dur: 3.8, delay: 0.3, size: 9, drift: -10 },
+  { x: 67, rise: 230, dur: 2.4, delay: 0.9, size: 12, drift: 16 },
+  { x: 79, rise: 290, dur: 3.2, delay: 1.6, size: 8, drift: -14 },
+  { x: 91, rise: 250, dur: 3.6, delay: 0.4, size: 11, drift: 12 },
+  { x: 46, rise: 350, dur: 4.1, delay: 2, size: 7, drift: -18 },
+] as const;
+
+const FLOATING = [
+  { Icon: SparkMotif, pos: "left-[-7%] top-[6%]", size: "h-8 w-8", dur: 5, drift: -14, rot: 20 },
+  { Icon: StarMotif, pos: "right-[-8%] top-[16%]", size: "h-10 w-10", dur: 6.5, drift: 12, rot: -24 },
+  { Icon: BoltMotif, pos: "left-[-9%] bottom-[12%]", size: "h-12 w-12", dur: 7.5, drift: 10, rot: -12 },
+  { Icon: StarMotif, pos: "right-[-5%] bottom-[6%]", size: "h-7 w-7", dur: 5.5, drift: -10, rot: 18 },
+] as const;
+
+/** Electric backdrop that charges up behind the card when it flips. */
+function PowerAura({ accent, active }: { accent: Artist["accent"]; active: boolean }) {
+  const reduce = useReducedMotion();
+  const color = `var(${accentVar[accent]})`;
+
+  return (
+    <AnimatePresence>
+      {active && (
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -inset-8 z-0 sm:-inset-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+        >
+          {/* core energy glow */}
+          <motion.div
+            className="absolute inset-0 rounded-[48px] blur-3xl"
+            style={{ background: `radial-gradient(closest-side, ${color}, transparent 72%)` }}
+            animate={reduce ? { opacity: 0.28 } : { opacity: [0.22, 0.5, 0.22], scale: [0.94, 1.04, 0.94] }}
+            transition={reduce ? { duration: 0.4 } : { duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          />
+          {/* tighter hot core */}
+          <motion.div
+            className="absolute inset-6 rounded-[40px] blur-2xl"
+            style={{ background: `radial-gradient(closest-side, ${color}, transparent 65%)` }}
+            animate={reduce ? { opacity: 0.2 } : { opacity: [0.14, 0.34, 0.14], scale: [1, 1.06, 1] }}
+            transition={reduce ? { duration: 0.4 } : { duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+          />
+
+          {/* rotating summoning rings */}
+          <motion.div
+            className="absolute -inset-3 rounded-[40px] border-2 border-dashed"
+            style={{ borderColor: color, opacity: 0.35 }}
+            animate={reduce ? undefined : { rotate: 360 }}
+            transition={reduce ? undefined : { duration: 28, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.div
+            className="absolute -inset-1 rounded-[36px] border border-dotted"
+            style={{ borderColor: color, opacity: 0.25 }}
+            animate={reduce ? undefined : { rotate: -360 }}
+            transition={reduce ? undefined : { duration: 20, repeat: Infinity, ease: "linear" }}
+          />
+
+          {/* floating motifs */}
+          {FLOATING.map(({ Icon, pos, size, dur, drift, rot }, i) => (
+            <motion.div
+              key={i}
+              className={cn("absolute", pos, size)}
+              style={{ color }}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.4, rotate: rot * 2 }}
+              animate={
+                reduce
+                  ? { opacity: 0.7 }
+                  : { opacity: 1, scale: 1, rotate: [rot, rot * -1, rot], y: [0, drift, 0] }
+              }
+              transition={
+                reduce
+                  ? { duration: 0.4 }
+                  : {
+                      opacity: { duration: 0.35, delay: 0.1 + i * 0.08 },
+                      scale: { duration: 0.5, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] },
+                      rotate: { duration: dur, repeat: Infinity, ease: "easeInOut" },
+                      y: { duration: dur, repeat: Infinity, ease: "easeInOut" },
+                    }
+              }
+            >
+              <Icon className="h-full w-full" />
+            </motion.div>
+          ))}
+
+          {/* rising sparks */}
+          {SPARKS.map((s, i) => (
+            <motion.span
+              key={`spark-${i}`}
+              className="absolute bottom-[4%]"
+              style={{ left: `${s.x}%`, color }}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 0 }}
+              animate={reduce ? { opacity: 0.5 } : { opacity: [0, 1, 1, 0], y: [0, -s.rise], rotate: [0, s.drift] }}
+              transition={
+                reduce
+                  ? { duration: 0.4 }
+                  : { duration: s.dur, repeat: Infinity, delay: s.delay, ease: "easeOut" }
+              }
+            >
+              <svg viewBox="0 0 12 12" fill="none" style={{ width: s.size, height: s.size }}>
+                <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </motion.span>
+          ))}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ==================== CARD ==================== */
+
 /** Large collectible artist card with flip-to-details interaction. */
 export function ArtistCard({ artist, index }: { artist: Artist; index: number }) {
   const [flipped, setFlipped] = useState(false);
@@ -57,15 +183,25 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
         transition={{ duration: 0.8, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
         className="group relative"
         style={{ perspective: 1600 }}
+        onKeyDown={(e) => {
+          if (e.key === "Escape" && flipped) setFlipped(false);
+        }}
       >
+        {/* powers backdrop — charges up once flipped */}
+        <PowerAura accent={artist.accent} active={flipped} />
+
         <div
-          className="relative transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-          style={{ transformStyle: "preserve-3d", transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
+          className="relative z-10 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          style={{
+            transformStyle: "preserve-3d",
+            willChange: "transform",
+            transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          }}
         >
           {/* ============ FRONT ============ */}
           <div
             className="relative flex flex-col border border-bone/15 bg-gradient-to-b from-[#1a1a1a] to-[#101010] p-5 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.9)] sm:p-7"
-            style={{ backfaceVisibility: "hidden" }}
+            style={{ backfaceVisibility: "hidden", pointerEvents: flipped ? "none" : undefined }}
           >
             {/* corner ticks */}
             <span aria-hidden className="absolute left-0 top-0 h-5 w-5 border-l-2 border-t-2 border-blood" />
@@ -89,6 +225,7 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
             {/* portrait plate — tap to open portfolio */}
             <Link
               to={`/artists/${artist.id}/portfolio`}
+              tabIndex={flipped ? -1 : undefined}
               aria-label={`Open ${artist.name}'s portfolio`}
               className="relative mt-5 block overflow-hidden border border-bone/10 bg-ink transition-transform duration-300 hover:-rotate-1"
             >
@@ -125,6 +262,7 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
             <div className="mt-6 flex items-center gap-3">
               <Link
                 to={`/artists/${artist.id}/portfolio`}
+                tabIndex={flipped ? -1 : undefined}
                 className="group/v flex flex-1 items-center justify-center gap-2 border border-bone/25 bg-bone/5 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone hover:text-ink"
               >
                 View Portfolio
@@ -143,7 +281,7 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
           {/* ============ BACK ============ */}
           <div
             className="absolute inset-0 flex flex-col border border-bone/15 bg-gradient-to-b from-[#161616] to-[#0d0d0d] p-5 sm:p-7"
-            style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+            style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", pointerEvents: flipped ? undefined : "none" }}
           >
             <span aria-hidden className="absolute left-0 top-0 h-5 w-5 border-l-2 border-t-2 border-blood" />
             <span aria-hidden className="absolute right-0 top-0 h-5 w-5 border-r-2 border-t-2 border-blood" />
@@ -154,7 +292,7 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
               Dossier · {artist.name}
             </p>
 
-            <div className="mt-4 space-y-4 overflow-y-auto pr-1 text-sm leading-relaxed text-bone/75">
+            <div className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto pr-1 text-sm leading-relaxed text-bone/75">
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-bone/40">Signature Techniques</p>
                 <ul className="mt-1.5 space-y-1">
@@ -182,7 +320,8 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
 
             <button
               onClick={() => setFlipped(false)}
-              className="mt-auto flex items-center justify-center gap-2 border border-bone/25 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone hover:text-ink"
+              tabIndex={flipped ? 0 : -1}
+              className="mt-4 flex items-center justify-center gap-2 border border-bone/25 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone hover:text-ink"
             >
               <RefreshCw className="size-4" /> Flip Back
             </button>
