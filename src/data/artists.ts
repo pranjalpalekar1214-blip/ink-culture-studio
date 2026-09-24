@@ -62,7 +62,7 @@ export const artists: Artist[] = [
     philosophy:
       "Your skin is a diary, not a billboard. I want the tattoo to feel inevitable — like it was always meant to be exactly there.",
     cardFlavor:
-      "Will talk about your ex for three hours before drawing a single line. Weakness: spelling requests at 2 AM.",
+      "Face like a thundercloud, punchlines like a comedian. Temper sparks the second you touch his stencil. Weakness: his own jokes — he always laughs first.",
     stats: { linework: 94, shading: 86, detail: 92, creativity: 95, customDesign: 97 },
     accent: "green",
     image: "/images/artists/lucky.svg",
