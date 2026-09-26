@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import "./index.css";
 
 // Site chrome
+import { BlockHitLayer } from "@/components/BlockHitLayer";
 import { CursorProvider } from "@/components/Cursor";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -130,6 +131,7 @@ function SiteLayout() {
     <CursorProvider>
       <ScrollToTop />
       <Intro />
+      <BlockHitLayer />
       <Navbar />
       <div id="main">
         <Suspense fallback={<RouteLoading />}>
