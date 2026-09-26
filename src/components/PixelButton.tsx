@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useRef, useState } from "react";
 import { Link } from "react-router";
-import { addCoins, checkDiscountUnlock } from "@/lib/arcade";
+import { addCoins, checkDiscountUnlock, COIN_ODDS, gambleCoins } from "@/lib/arcade";
 import { cn } from "@/lib/utils";
 
 /**
@@ -53,13 +53,14 @@ export function PixelButton({
 
   const fire = () => {
     if (disabled) return;
-    if (!reduce) {
+    // Variable-ratio payout — not every press pays (65% for CTAs).
+    if (!reduce && gambleCoins(COIN_ODDS.pixel) > 0) {
       setPop(true);
       window.clearTimeout(timer.current);
       timer.current = window.setTimeout(() => setPop(false), 550);
+      addCoins(1);
+      checkDiscountUnlock();
     }
-    addCoins(1);
-    checkDiscountUnlock();
     onClick?.();
   };
 

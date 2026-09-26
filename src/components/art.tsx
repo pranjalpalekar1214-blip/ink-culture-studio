@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRef, useState } from "react";
-import { addCoins, checkDiscountUnlock } from "@/lib/arcade";
+import { addCoins, checkDiscountUnlock, COIN_ODDS, gambleCoins } from "@/lib/arcade";
 import { cn } from "@/lib/utils";
 
 /**
@@ -374,12 +374,15 @@ export function QuestionBlock({ className }: ArtProps) {
   const hit = () => {
     if (bumping) return;
     setBumping(true);
-    const id = ++coinId.current;
-    setCoins((c) => [...c, id]);
-    window.setTimeout(() => setCoins((c) => c.filter((x) => x !== id)), 800);
     window.setTimeout(() => setBumping(false), 340);
-    addCoins(3);
-    checkDiscountUnlock();
+    // The hero block is the generous one: 75% payout odds, 3 coins on a win.
+    if (gambleCoins(COIN_ODDS.block) > 0) {
+      const id = ++coinId.current;
+      setCoins((c) => [...c, id]);
+      window.setTimeout(() => setCoins((c) => c.filter((x) => x !== id)), 800);
+      addCoins(3);
+      checkDiscountUnlock();
+    }
   };
 
   return (

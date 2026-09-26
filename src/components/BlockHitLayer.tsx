@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { addCoins, checkDiscountUnlock } from "@/lib/arcade";
+import { addCoins, checkDiscountUnlock, COIN_ODDS, gambleCoins } from "@/lib/arcade";
 
 /**
  * Global "hit the block" FX — every interactive control on the site reacts
@@ -14,7 +14,7 @@ import { addCoins, checkDiscountUnlock } from "@/lib/arcade";
 const INTERACTIVE = 'a, button, [role="button"], summary, label';
 const BURST_LIFE = 750;
 
-type Burst = { id: number; x: number; y: number };
+type Burst = { id: number; x: number; y: number; won: boolean };
 
 /** Inject the shared bump keyframes once. */
 function ensureStyles() {
@@ -33,8 +33,8 @@ function ensureStyles() {
   document.head.appendChild(style);
 }
 
-/** Coin + pixel shards popping out of the press point. */
-function PixelBurst({ x, y }: { x: number; y: number }) {
+/** Coin + pixel shards popping out of the press point. `won=false` → shards only. */
+function PixelBurst({ x, y, won }: { x: number; y: number; won: boolean }) {
   const shards = [
     { dx: -24, dy: -32, size: 6, color: "#ffd94a" },
     { dx: 22, dy: -36, size: 5, color: "#c9a227" },
@@ -44,23 +44,27 @@ function PixelBurst({ x, y }: { x: number; y: number }) {
   ];
   return (
     <div className="absolute" style={{ left: x, top: y }}>
-      {/* +1 score popup */}
-      <motion.span
-        className="absolute -translate-x-1/2 font-mono text-[11px] font-bold tracking-widest text-[#ffd94a]"
-        style={{ textShadow: "1px 1px 0 #141414" }}
-        initial={{ x: "-50%", y: -34, opacity: 1 }}
-        animate={{ y: -64, opacity: [1, 1, 0] }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        +1
-      </motion.span>
-      {/* coin */}
-      <motion.span
-        className="absolute h-5 w-4 rounded-[2px] border-2 border-[#141414] bg-[#ffd94a] shadow-[inset_0_-2px_0_#c9a227]"
-        initial={{ x: -8, y: 0, opacity: 1, scaleX: 1 }}
-        animate={{ x: -8, y: [0, -44, -32], opacity: [1, 1, 0], scaleX: [1, 0.35, 1] }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-      />
+      {won && (
+        <>
+          {/* +1 score popup */}
+          <motion.span
+            className="absolute -translate-x-1/2 font-mono text-[11px] font-bold tracking-widest text-[#ffd94a]"
+            style={{ textShadow: "1px 1px 0 #141414" }}
+            initial={{ x: "-50%", y: -34, opacity: 1 }}
+            animate={{ y: -64, opacity: [1, 1, 0] }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            +1
+          </motion.span>
+          {/* coin */}
+          <motion.span
+            className="absolute h-5 w-4 rounded-[2px] border-2 border-[#141414] bg-[#ffd94a] shadow-[inset_0_-2px_0_#c9a227]"
+            initial={{ x: -8, y: 0, opacity: 1, scaleX: 1 }}
+            animate={{ x: -8, y: [0, -44, -32], opacity: [1, 1, 0], scaleX: [1, 0.35, 1] }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          />
+        </>
+      )}
       {/* pixel shards */}
       {shards.map((s, i) => (
         <motion.span
@@ -90,9 +94,9 @@ export function BlockHitLayer() {
 
     const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const spawn = (x: number, y: number) => {
+    const spawn = (x: number, y: number, won: boolean) => {
       const id = ++idRef.current;
-      setBursts((b) => [...b.slice(-7), { id, x, y }]);
+      setBursts((b) => [...b.slice(-7), { id, x, y, won }]);
       window.setTimeout(() => setBursts((b) => b.filter((p) => p.id !== id)), BURST_LIFE);
     };
 
@@ -116,9 +120,10 @@ export function BlockHitLayer() {
       const el = target?.closest?.(INTERACTIVE);
       if (!el) return;
       bump(el);
-      spawn(e.clientX, e.clientY);
+      const won = !target?.closest?.("[data-pixel-btn]") ? gambleCoins(COIN_ODDS.click) > 0 : false;
+      spawn(e.clientX, e.clientY, won);
       // PixelButtons score their own coin — avoid double-counting.
-      if (!target?.closest?.("[data-pixel-btn]")) score(1);
+      if (won) score(1);
     };
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -128,8 +133,9 @@ export function BlockHitLayer() {
       if (!el || !el.matches?.(INTERACTIVE)) return;
       const r = el.getBoundingClientRect();
       bump(el);
-      spawn(r.left + r.width / 2, r.top + r.height / 2);
-      if (!el.closest?.("[data-pixel-btn]")) score(1);
+      const won = !el.closest?.("[data-pixel-btn]") && gambleCoins(COIN_ODDS.click) > 0;
+      spawn(r.left + r.width / 2, r.top + r.height / 2, won);
+      if (won) score(1);
     };
 
     document.addEventListener("pointerdown", onPointerDown, { capture: true });
@@ -144,7 +150,7 @@ export function BlockHitLayer() {
     <div aria-hidden className="pointer-events-none fixed inset-0 z-[70] overflow-hidden">
       <AnimatePresence>
         {bursts.map((b) => (
-          <PixelBurst key={b.id} x={b.x} y={b.y} />
+          <PixelBurst key={b.id} x={b.x} y={b.y} won={b.won} />
         ))}
       </AnimatePresence>
     </div>

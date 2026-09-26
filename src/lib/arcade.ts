@@ -4,6 +4,9 @@ const KEY_DISCOUNTS = "sc-arcade-discounts";
 /** Coins needed for each mystery discount block. */
 export const DISCOUNT_GOAL = 30;
 
+/** Variable-ratio payout odds — not every hit pays (keeps the loop addictive). */
+export const COIN_ODDS = { click: 0.55, pixel: 0.65, block: 0.75 } as const;
+
 export type ArcadeDiscount = {
   id: string;
   percent: number;
@@ -35,6 +38,11 @@ export function addCoins(n = 1): number {
   return total;
 }
 
+/** Variable-ratio coin payout: returns coins won (0 = miss). */
+export function gambleCoins(chance: number, amount = 1): number {
+  return Math.random() < chance ? amount : 0;
+}
+
 /* ----------------------------- discounts ----------------------------- */
 
 function readDiscounts(): ArcadeDiscount[] {
@@ -64,7 +72,12 @@ export function getHeldDiscount(): ArcadeDiscount | null {
   return unused.length ? unused[unused.length - 1] : null;
 }
 
-const rollPercent = () => 5 + Math.floor(Math.random() * 31); // 5–35 inclusive
+const rollPercent = () => {
+  // Jackpot band (>15%) must stay under 1:200 odds — we use 1:220 for margin.
+  if (Math.random() < 1 / 220) return 16 + Math.floor(Math.random() * 20); // 16–35
+  // Normal band 5–15%, square-skewed so 5–8% dominate and 15% is the ceiling.
+  return 5 + Math.floor(Math.random() ** 2 * 11); // 5–15
+};
 const makeCode = (p: number) =>
   `1UP-${String(p).padStart(2, "0")}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
 
