@@ -1,31 +1,13 @@
-import { motion, useReducedMotion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Link } from "react-router";
-import { addCoins, checkDiscountUnlock, COIN_ODDS, gambleCoins } from "@/lib/arcade";
+import { trackPress } from "@/lib/mystery";
 import { cn } from "@/lib/utils";
 
 /**
  * PixelButton — CTA styled as a pixelated Mario block: bevel edges,
- * corner rivets, chunky shadow. Pressing it bumps the block and pops
- * a coin into the on-screen score. Renders as Link / a / button.
+ * corner rivets, chunky shadow, squash-on-press. Renders as Link / a /
+ * button. No visible game mechanics — presses feed the Mystery Box engine.
  */
-
-/** Pixel-art coin that pops out of the button on press. */
-function CoinPop({ show }: { show: boolean }) {
-  if (!show) return null;
-  return (
-    <motion.span
-      aria-hidden
-      className="pointer-events-none absolute left-1/2 -top-1 z-20"
-      initial={{ x: "-50%", y: 0, opacity: 1 }}
-      animate={{ y: -38, opacity: [1, 1, 0], scaleX: [1, 0.35, 1] }}
-      transition={{ duration: 0.55, ease: "easeOut" }}
-    >
-      <span className="block h-5 w-4 rounded-[2px] border-2 border-[#141414] bg-[#ffd94a] shadow-[inset_0_-2px_0_#c9a227]" />
-    </motion.span>
-  );
-}
-
 export function PixelButton({
   children,
   href,
@@ -47,20 +29,13 @@ export function PixelButton({
   disabled?: boolean;
   size?: "sm" | "md" | "lg";
 }) {
-  const reduce = useReducedMotion();
-  const [pop, setPop] = useState(false);
-  const timer = useRef(0);
+  const pressed = useRef(false);
 
   const fire = () => {
-    if (disabled) return;
-    // Variable-ratio payout — not every press pays (65% for CTAs).
-    if (!reduce && gambleCoins(COIN_ODDS.pixel) > 0) {
-      setPop(true);
-      window.clearTimeout(timer.current);
-      timer.current = window.setTimeout(() => setPop(false), 550);
-      addCoins(1);
-      checkDiscountUnlock();
-    }
+    if (disabled || pressed.current) return;
+    pressed.current = true;
+    window.setTimeout(() => (pressed.current = false), 250);
+    trackPress("cta");
     onClick?.();
   };
 
@@ -90,7 +65,6 @@ export function PixelButton({
       <span aria-hidden className="pointer-events-none absolute right-1 top-1 size-[5px] bg-[#141414]/85" />
       <span aria-hidden className="pointer-events-none absolute bottom-1 left-1 size-[5px] bg-[#141414]/85" />
       <span aria-hidden className="pointer-events-none absolute bottom-1 right-1 size-[5px] bg-[#141414]/85" />
-      <CoinPop show={pop} />
       <span className="relative z-10 flex items-center gap-2">{children}</span>
     </>
   );

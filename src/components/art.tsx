@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRef, useState } from "react";
-import { addCoins, checkDiscountUnlock, COIN_ODDS, gambleCoins } from "@/lib/arcade";
+import { trackPress } from "@/lib/mystery";
 import { cn } from "@/lib/utils";
 
 /**
@@ -374,30 +374,27 @@ export function QuestionBlock({ className }: ArtProps) {
   const hit = () => {
     if (bumping) return;
     setBumping(true);
+    const id = ++coinId.current;
+    setCoins((c) => [...c, id]);
+    window.setTimeout(() => setCoins((c) => c.filter((x) => x !== id)), 800);
     window.setTimeout(() => setBumping(false), 340);
-    // The hero block is the generous one: 75% payout odds, 3 coins on a win.
-    if (gambleCoins(COIN_ODDS.block) > 0) {
-      const id = ++coinId.current;
-      setCoins((c) => [...c, id]);
-      window.setTimeout(() => setCoins((c) => c.filter((x) => x !== id)), 800);
-      addCoins(3);
-      checkDiscountUnlock();
-    }
+    // Silent signal — the Mystery Box engine reads block hits as engagement.
+    trackPress("block");
   };
 
   return (
     <div className={cn("relative inline-block", className)}>
-      {/* coin pop */}
+      {/* hit sparks — neutral retro puff, no reward hints */}
       <div className="pointer-events-none absolute inset-x-0 -top-2 flex justify-center" aria-hidden>
         <AnimatePresence>
           {coins.map((id) => (
             <motion.span
               key={id}
-              className="absolute h-5 w-4 rounded-[2px] border-2 border-[#141414] bg-[#ffd94a] shadow-[inset_0_-2px_0_#c9a227]"
-              initial={reduce ? { opacity: 0 } : { opacity: 1, y: 0 }}
-              animate={reduce ? { opacity: [0, 1, 0] } : { y: [-8, -46, -38], opacity: [1, 1, 0] }}
+              className="absolute left-1/2 top-0 size-2 bg-[#f5c518]"
+              initial={reduce ? { opacity: 0 } : { opacity: 1, scale: 1, x: "-50%", y: -4 }}
+              animate={reduce ? { opacity: [0, 1, 0] } : { x: "-50%", y: [-4, -18, -26], scale: [1, 2.2, 0.6], opacity: [1, 1, 0] }}
               exit={{ opacity: 0 }}
-              transition={reduce ? { duration: 0.5 } : { duration: 0.7, ease: "easeOut", times: [0, 0.6, 1] }}
+              transition={reduce ? { duration: 0.5 } : { duration: 0.5, ease: "easeOut" }}
             />
           ))}
         </AnimatePresence>

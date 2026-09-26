@@ -3,7 +3,6 @@ import { ArrowDown, ChevronDown } from "lucide-react";
 import { useRef } from "react";
 import { ArtistCard } from "@/components/ArtistCard";
 import { ArtistPortrait, EyeMotif, FloatingMotifs, HandMotif, InkStroke, LocalTrainMotif, QuestionBlock, SnakeMotif, StarMotif, TickerStrip } from "@/components/art";
-import { PixelCloud } from "@/components/PixelCloud";
 import { CursorLabel } from "@/components/CursorLabel";
 import { GalleryGridMini } from "@/components/GalleryGridMini";
 import { InkButton, MaskReveal, Reveal, SectionHeading } from "@/components/ui-kit";
@@ -125,17 +124,14 @@ function Hero() {
           <StarMotif className="h-7 w-7 text-blood/40" />
         </motion.div>
 
-        {/* hit the block — arcade easter egg with discount cloud */}
+        {/* hit the block — quiet arcade easter egg */}
         <motion.div
           initial={reduce ? false : { opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.3, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="pointer-events-none absolute right-4 top-20 z-10 flex w-[180px] flex-col items-center sm:w-[200px] md:right-8 md:top-24"
+          className="pointer-events-auto absolute right-5 top-40 z-10 md:right-8 md:top-44"
         >
-          <PixelCloud className="w-full" />
-          <div className="pointer-events-auto">
-            <QuestionBlock className="h-11 w-11 md:h-14 md:w-14" />
-          </div>
+          <QuestionBlock className="h-11 w-11 md:h-14 md:w-14" />
         </motion.div>
       </motion.div>
 

@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Calendar, Check, Clock, MessageCircle, Upload } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
@@ -7,24 +7,99 @@ import { InkButton, PageHero, Reveal } from "@/components/ui-kit";
 import { breadcrumbSchema, pageMeta } from "@/config/seo";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { submitBooking } from "@/lib/forms";
-import { getHeldDiscount, markDiscountUsed, type ArcadeDiscount } from "@/lib/arcade";
+import {
+  decideMystery,
+  trackBookingStep,
+  trackBookingSubmit,
+  useMysteryTracker,
+  type MysteryDecision,
+} from "@/lib/mystery";
 import { bookingMessage, openWhatsApp } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
-/** Arcade mystery-discount banner shown above the booking form. */
-function DiscountBanner({ held }: { held: ArcadeDiscount | null }) {
-  if (!held) return null;
+/** Map the booking size option to an approximate cm figure for the Mystery Box engine. */
+const sizeCm = (s: string): number | null => {
+  if (s.startsWith("Small")) return 3;
+  if (s.startsWith("Medium")) return 10;
+  if (s.startsWith("Large")) return 20;
+  if (s.startsWith("XL")) return 35;
+  return null;
+};
+
+/**
+ * MysteryBoxReveal — shown only on the booking-confirmation screen.
+ * A closed pixel box the client taps to open; the discount (decided from
+ * their browsing pattern + tattoo size) is revealed here, and only here.
+ */
+function MysteryBoxReveal({ decision }: { decision: MysteryDecision }) {
+  const reduce = useReducedMotion();
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-2 border-ink bg-[#ffd94a] px-4 py-3 shadow-[4px_4px_0_0_rgba(0,0,0,0.45)]">
-      <div>
-        <p className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-ink/70">Mystery block unlocked</p>
-        <p className="font-display text-xl uppercase leading-tight text-ink">
-          {held.percent}% off your booking — code <span className="font-mono">{held.code}</span>
-        </p>
-      </div>
-      <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-ink/60">
-        Auto-attached · mention it on WhatsApp too
-      </p>
+    <div className="mt-10 flex flex-col items-center">
+      {!open ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label="Open your mystery box"
+          className="group flex cursor-pointer flex-col items-center focus:outline-none"
+        >
+          <motion.svg
+            viewBox="0 0 28 24"
+            shapeRendering="crispEdges"
+            className="h-16 w-auto drop-shadow-[3px_3px_0_rgba(0,0,0,0.45)]"
+            animate={reduce ? {} : { y: [0, -4, 0], rotate: [-1.5, 1.5, -1.5] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            {/* lid */}
+            <rect x="4" y="6" width="20" height="5" fill="#c9a227" stroke="#141414" strokeWidth="1.5" />
+            {/* box body */}
+            <rect x="5" y="11" width="18" height="10" fill="#f5c518" stroke="#141414" strokeWidth="1.5" />
+            <rect x="7" y="13" width="2" height="2" fill="#141414" />
+            <rect x="19" y="13" width="2" height="2" fill="#141414" />
+            <rect x="7" y="18" width="2" height="2" fill="#141414" />
+            <rect x="19" y="18" width="2" height="2" fill="#141414" />
+            {/* ? */}
+            <g fill="#141414">
+              <rect x="12" y="13" width="4" height="1.5" />
+              <rect x="15" y="14.5" width="2" height="2" />
+              <rect x="14" y="16.5" width="2" height="1.5" />
+              <rect x="14" y="19.5" width="2" height="1.5" />
+            </g>
+            {/* ribbon */}
+            <rect x="13" y="1" width="2" height="5" fill="#141414" />
+            <rect x="10" y="0" width="8" height="2" fill="#141414" />
+          </motion.svg>
+          <span className="mt-3 font-display text-xs font-bold uppercase tracking-[0.22em] text-bone transition-colors group-hover:text-[#f5c518]">
+            🎁 Open your Mystery Box
+          </span>
+          <span className="mt-1 text-[9px] uppercase tracking-[0.18em] text-bone/40">
+            Every booking gets one. No exceptions.
+          </span>
+        </button>
+      ) : (
+        <motion.div
+          className="flex flex-col items-center"
+          initial={reduce ? false : { scale: 0.6, opacity: 0, y: 10 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-[#f5c518]">
+            ✦ Mystery Unlocked ✦
+          </p>
+          <p className="mt-2 font-display text-6xl uppercase leading-none text-bone">
+            {decision.percent}
+            <span className="text-3xl text-blood">%</span>
+            <span className="ml-2 align-middle font-body text-sm tracking-[0.2em] text-bone/60">OFF</span>
+          </p>
+          <p className="mt-3 border border-bone/20 bg-ink px-3 py-1.5 font-mono text-xs tracking-[0.2em] text-bone/85">
+            CODE&nbsp; {decision.code}
+          </p>
+          <p className="mt-3 max-w-xs text-center text-[10px] uppercase leading-relaxed tracking-[0.14em] text-bone/45">
+            Mention this code on WhatsApp or show it at the studio — it's yours with this booking.
+          </p>
+        </motion.div>
+      )}
     </div>
   );
 }
@@ -130,15 +205,14 @@ export default function Book() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [formOk, setFormOk] = useState(false);
-  const [held, setHeld] = useState(() => getHeldDiscount());
+  const [mystery, setMystery] = useState<MysteryDecision | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  /* If a mystery block unlocks mid-form, show it immediately. */
+  /* Feed the (invisible) Mystery Box engine with booking depth. */
   useEffect(() => {
-    const onDiscount = () => setHeld(getHeldDiscount());
-    window.addEventListener("sc:discount", onDiscount);
-    return () => window.removeEventListener("sc:discount", onDiscount);
-  }, []);
+    trackBookingStep(step);
+  }, [step]);
+  useMysteryTracker();
 
   const days = useMemo(() => nextDays(14), []);
   const set = (k: keyof FormState, v: string) => setForm((f) => ({ ...f, [k]: v }));
@@ -221,10 +295,9 @@ export default function Book() {
       notes: form.referenceName,
     });
     setSubmitting(false);
-    if (result.ok && held) {
-      markDiscountUsed(held.id);
-      setHeld(null);
-    }
+    // The box opens now: decide the discount from behavior pattern + tattoo size.
+    trackBookingSubmit();
+    if (result.ok) setMystery(decideMystery(sizeCm(form.size)));
     setFormOk(result.ok);
     setDone(true);
   };
@@ -252,6 +325,7 @@ export default function Book() {
               </InkButton>
               <InkButton href="/" variant="outline">Back Home</InkButton>
             </div>
+            {mystery && <MysteryBoxReveal decision={mystery} />}
           </div>
         </Reveal>
       </main>
@@ -270,8 +344,6 @@ export default function Book() {
 
       <section className="py-14 md:py-20">
         <div className="mx-auto w-full max-w-3xl px-5 md:px-8">
-          <DiscountBanner held={held} />
-
           {/* stepper */}
           <ol className="mb-10 flex items-center justify-between" aria-label="Booking progress">
             {steps.map((s, i) => (
@@ -536,7 +608,6 @@ export default function Book() {
                         ["Contact via", form.contactPreference],
                         ["Reference", form.referenceName || "—"],
                         ["Idea", form.idea],
-                        ...(held ? [["Discount", `${held.percent}% — ${held.code}`]] : []),
                       ].map(([k, v]) => (
                         <div key={k} className="flex justify-between gap-4 border-b border-bone/10 pb-2">
                           <dt className="text-[10px] uppercase tracking-[0.2em] text-bone/45">{k}</dt>

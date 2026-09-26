@@ -10,8 +10,9 @@ import "./index.css";
 
 // Site chrome
 import { BlockHitLayer } from "@/components/BlockHitLayer";
-import { CoinHud } from "@/components/CoinHud";
+import { PixelCloud } from "@/components/PixelCloud";
 import { CursorProvider } from "@/components/Cursor";
+import { useMysteryTracker } from "@/lib/mystery";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { StickyBookBar } from "@/components/StickyBookBar";
@@ -104,6 +105,7 @@ class RootErrorBoundary extends React.Component<
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
 
 function RouteSyncer() {
+  useMysteryTracker();
   const location = useLocation();
   useEffect(() => {
     window.parent.postMessage(
@@ -133,7 +135,7 @@ function SiteLayout() {
       <ScrollToTop />
       <Intro />
       <BlockHitLayer />
-      <CoinHud />
+      <PixelCloud />
       <Navbar />
       <div id="main">
         <Suspense fallback={<RouteLoading />}>
