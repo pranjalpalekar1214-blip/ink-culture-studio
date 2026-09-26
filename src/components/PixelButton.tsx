@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useRef, useState } from "react";
 import { Link } from "react-router";
-import { addCoins } from "@/lib/arcade";
+import { addCoins, checkDiscountUnlock } from "@/lib/arcade";
 import { cn } from "@/lib/utils";
 
 /**
@@ -59,6 +59,7 @@ export function PixelButton({
       timer.current = window.setTimeout(() => setPop(false), 550);
     }
     addCoins(1);
+    checkDiscountUnlock();
     onClick?.();
   };
 

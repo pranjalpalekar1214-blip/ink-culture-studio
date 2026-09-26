@@ -1,14 +1,34 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Calendar, Check, Clock, MessageCircle, Upload } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
 import { SparkMotif } from "@/components/art";
 import { InkButton, PageHero, Reveal } from "@/components/ui-kit";
 import { breadcrumbSchema, pageMeta } from "@/config/seo";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { submitBooking } from "@/lib/forms";
+import { getHeldDiscount, markDiscountUsed, type ArcadeDiscount } from "@/lib/arcade";
 import { bookingMessage, openWhatsApp } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
+
+/** Arcade mystery-discount banner shown above the booking form. */
+function DiscountBanner({ held }: { held: ArcadeDiscount | null }) {
+  if (!held) return null;
+  return (
+    <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-2 border-ink bg-[#ffd94a] px-4 py-3 shadow-[4px_4px_0_0_rgba(0,0,0,0.45)]">
+      <div>
+        <p className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-ink/70">Mystery block unlocked</p>
+        <p className="font-display text-xl uppercase leading-tight text-ink">
+          {held.percent}% off your booking — code <span className="font-mono">{held.code}</span>
+        </p>
+      </div>
+      <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-ink/60">
+        Auto-attached · mention it on WhatsApp too
+      </p>
+    </div>
+  );
+}
+
 
 const steps = ["Service", "Artist", "Date & Time", "Details", "Confirm"] as const;
 
@@ -110,7 +130,15 @@ export default function Book() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [formOk, setFormOk] = useState(false);
+  const [held, setHeld] = useState(() => getHeldDiscount());
   const fileRef = useRef<HTMLInputElement>(null);
+
+  /* If a mystery block unlocks mid-form, show it immediately. */
+  useEffect(() => {
+    const onDiscount = () => setHeld(getHeldDiscount());
+    window.addEventListener("sc:discount", onDiscount);
+    return () => window.removeEventListener("sc:discount", onDiscount);
+  }, []);
 
   const days = useMemo(() => nextDays(14), []);
   const set = (k: keyof FormState, v: string) => setForm((f) => ({ ...f, [k]: v }));
@@ -193,6 +221,10 @@ export default function Book() {
       notes: form.referenceName,
     });
     setSubmitting(false);
+    if (result.ok && held) {
+      markDiscountUsed(held.id);
+      setHeld(null);
+    }
     setFormOk(result.ok);
     setDone(true);
   };
@@ -238,6 +270,8 @@ export default function Book() {
 
       <section className="py-14 md:py-20">
         <div className="mx-auto w-full max-w-3xl px-5 md:px-8">
+          <DiscountBanner held={held} />
+
           {/* stepper */}
           <ol className="mb-10 flex items-center justify-between" aria-label="Booking progress">
             {steps.map((s, i) => (
@@ -502,6 +536,7 @@ export default function Book() {
                         ["Contact via", form.contactPreference],
                         ["Reference", form.referenceName || "—"],
                         ["Idea", form.idea],
+                        ...(held ? [["Discount", `${held.percent}% — ${held.code}`]] : []),
                       ].map(([k, v]) => (
                         <div key={k} className="flex justify-between gap-4 border-b border-bone/10 pb-2">
                           <dt className="text-[10px] uppercase tracking-[0.2em] text-bone/45">{k}</dt>

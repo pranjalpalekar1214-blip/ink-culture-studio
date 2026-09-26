@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRef, useState } from "react";
-import { addCoins } from "@/lib/arcade";
+import { addCoins, checkDiscountUnlock } from "@/lib/arcade";
 import { cn } from "@/lib/utils";
 
 /**
@@ -379,6 +379,7 @@ export function QuestionBlock({ className }: ArtProps) {
     window.setTimeout(() => setCoins((c) => c.filter((x) => x !== id)), 800);
     window.setTimeout(() => setBumping(false), 340);
     addCoins(3);
+    checkDiscountUnlock();
   };
 
   return (

@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { addCoins } from "@/lib/arcade";
+import { addCoins, checkDiscountUnlock } from "@/lib/arcade";
 
 /**
  * Global "hit the block" FX — every interactive control on the site reacts
@@ -96,6 +96,12 @@ export function BlockHitLayer() {
       window.setTimeout(() => setBursts((b) => b.filter((p) => p.id !== id)), BURST_LIFE);
     };
 
+    /** Score a coin, then check whether it unlocked a mystery discount. */
+    const score = (n = 1) => {
+      addCoins(n);
+      checkDiscountUnlock();
+    };
+
     const bump = (el: Element) => {
       if (el.classList.contains("sc-block-hit")) return;
       el.classList.add("sc-block-hit");
@@ -112,7 +118,7 @@ export function BlockHitLayer() {
       bump(el);
       spawn(e.clientX, e.clientY);
       // PixelButtons score their own coin — avoid double-counting.
-      if (!target?.closest?.("[data-pixel-btn]")) addCoins(1);
+      if (!target?.closest?.("[data-pixel-btn]")) score(1);
     };
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -123,7 +129,7 @@ export function BlockHitLayer() {
       const r = el.getBoundingClientRect();
       bump(el);
       spawn(r.left + r.width / 2, r.top + r.height / 2);
-      if (!el.closest?.("[data-pixel-btn]")) addCoins(1);
+      if (!el.closest?.("[data-pixel-btn]")) score(1);
     };
 
     document.addEventListener("pointerdown", onPointerDown, { capture: true });
