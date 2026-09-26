@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -354,6 +355,87 @@ export function StickArtistFigure({ who, className }: { who: "karan" | "lucky"; 
         </>
       )}
     </svg>
+  );
+}
+
+/* ---------------- Interactive pixel question block (arcade easter egg) ---------------- */
+
+/**
+ * Mario-style "?" block: idles with a gentle bob, and when hit from below
+ * it bumps up and pops a spinning coin — exactly like the classic block.
+ */
+export function QuestionBlock({ className }: ArtProps) {
+  const reduce = useReducedMotion();
+  const [bumping, setBumping] = useState(false);
+  const [coins, setCoins] = useState<number[]>([]);
+  const coinId = useRef(0);
+
+  const hit = () => {
+    if (bumping) return;
+    setBumping(true);
+    const id = ++coinId.current;
+    setCoins((c) => [...c, id]);
+    window.setTimeout(() => setCoins((c) => c.filter((x) => x !== id)), 800);
+    window.setTimeout(() => setBumping(false), 340);
+  };
+
+  return (
+    <div className={cn("relative inline-block", className)}>
+      {/* coin pop */}
+      <div className="pointer-events-none absolute inset-x-0 -top-2 flex justify-center" aria-hidden>
+        <AnimatePresence>
+          {coins.map((id) => (
+            <motion.span
+              key={id}
+              className="absolute h-5 w-4 rounded-[2px] border-2 border-[#141414] bg-[#ffd94a] shadow-[inset_0_-2px_0_#c9a227]"
+              initial={reduce ? { opacity: 0 } : { opacity: 1, y: 0 }}
+              animate={reduce ? { opacity: [0, 1, 0] } : { y: [-8, -46, -38], opacity: [1, 1, 0] }}
+              exit={{ opacity: 0 }}
+              transition={reduce ? { duration: 0.5 } : { duration: 0.7, ease: "easeOut", times: [0, 0.6, 1] }}
+            />
+          ))}
+        </AnimatePresence>
+      </div>
+
+      <motion.button
+        type="button"
+        aria-label="Hit the question block"
+        onClick={hit}
+        className="block h-full w-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blood"
+        animate={reduce ? { y: 0 } : bumping ? { y: [0, -14, 0] } : { y: [0, -4, 0] }}
+        transition={bumping ? { duration: 0.3, ease: "easeOut" } : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <svg
+          viewBox="0 0 16 16"
+          shapeRendering="crispEdges"
+          className="h-full w-full drop-shadow-[0_6px_0_rgba(0,0,0,0.45)]"
+          aria-hidden
+        >
+          {/* block body */}
+          <rect width="16" height="16" fill="#141414" />
+          <rect x="1" y="1" width="14" height="14" fill="var(--blood)" />
+          {/* bevel highlight */}
+          <rect x="1" y="1" width="14" height="2" fill="#ffdf6b" />
+          <rect x="1" y="1" width="2" height="14" fill="#ffdf6b" />
+          {/* bevel shade */}
+          <rect x="1" y="13" width="14" height="2" fill="#c9a227" />
+          <rect x="13" y="1" width="2" height="14" fill="#c9a227" />
+          {/* corner rivets */}
+          <rect x="3" y="3" width="1" height="1" fill="#141414" />
+          <rect x="12" y="3" width="1" height="1" fill="#141414" />
+          <rect x="3" y="12" width="1" height="1" fill="#141414" />
+          <rect x="12" y="12" width="1" height="1" fill="#141414" />
+          {/* pixel "?" */}
+          <g fill="#141414">
+            <rect x="5" y="3" width="6" height="2" />
+            <rect x="9" y="5" width="2" height="2" />
+            <rect x="8" y="7" width="2" height="1" />
+            <rect x="7" y="8" width="2" height="3" />
+            <rect x="7" y="12" width="2" height="2" />
+          </g>
+        </svg>
+      </motion.button>
+    </div>
   );
 }
 

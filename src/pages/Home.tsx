@@ -2,7 +2,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { ArrowDown, ChevronDown } from "lucide-react";
 import { useRef } from "react";
 import { ArtistCard } from "@/components/ArtistCard";
-import { ArtistPortrait, EyeMotif, FloatingMotifs, HandMotif, InkStroke, LocalTrainMotif, SnakeMotif, StarMotif, TickerStrip } from "@/components/art";
+import { ArtistPortrait, EyeMotif, FloatingMotifs, HandMotif, InkStroke, LocalTrainMotif, QuestionBlock, SnakeMotif, StarMotif, TickerStrip } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
 import { GalleryGridMini } from "@/components/GalleryGridMini";
 import { InkButton, MaskReveal, Reveal, SectionHeading } from "@/components/ui-kit";
@@ -85,7 +85,7 @@ function Hero() {
           Tattoo Studio & Academy — Kandivali West, Mumbai
         </motion.p>
 
-        <h1 className="mt-6 font-display text-[15vw] font-black uppercase leading-[0.85] tracking-[-0.02em] text-bone sm:text-[12vw] lg:text-[9rem]">
+        <h1 className="mt-6 font-display text-[11vw] font-black uppercase leading-[0.85] tracking-[-0.02em] text-bone sm:text-[9vw] lg:text-[6.5rem]">
           <span className="block">{word("Ink", 0)}&nbsp;{word("Is", 1)}</span>
           <span className="block text-blood">{word("Culture.", 2)}</span>
         </h1>
@@ -97,8 +97,12 @@ function Hero() {
           className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
           <p className="max-w-xl font-body text-base leading-relaxed text-bone/70 md:text-lg">
-            Street Culture Tattoo Studio &amp; Academy. Custom tattoos drawn for your body, your story, your
-            streets — in Kandivali West, Mumbai.
+            <span className="font-display text-2xl uppercase tracking-tight text-blood md:text-3xl">
+              Street Culture Tattoo Studio &amp; Academy
+            </span>
+            <span className="mt-1.5 block">
+              Custom tattoos drawn for your body, your story, your streets — in Kandivali West, Mumbai.
+            </span>
           </p>
           <div className="flex flex-wrap gap-3">
             <InkButton href="/book" size="lg">Book Your Tattoo</InkButton>
@@ -111,14 +115,23 @@ function Hero() {
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.1, duration: 0.8 }}
-          className="pointer-events-none mt-10 flex items-end justify-between gap-6 text-bone/25 md:mt-14"
-          aria-hidden
+          className="mt-10 flex items-end justify-between gap-6 text-bone/25 md:mt-14"
         >
           <SnakeMotif className="h-16 w-16 md:h-24 md:w-24" />
           <LocalTrainMotif className="hidden h-16 w-24 text-bone/20 sm:block" />
           <HandMotif className="h-20 w-16 md:h-28 md:w-24" />
           <InkStroke className="hidden w-40 md:block" />
           <StarMotif className="h-7 w-7 text-blood/40" />
+        </motion.div>
+
+        {/* hit the block — arcade easter egg */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.3, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="pointer-events-auto absolute right-5 top-40 z-10 md:right-8 md:top-44"
+        >
+          <QuestionBlock className="h-11 w-11 md:h-14 md:w-14" />
         </motion.div>
       </motion.div>
 
