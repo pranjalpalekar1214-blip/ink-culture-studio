@@ -10,6 +10,7 @@ import "./index.css";
 
 // Site chrome
 import { BlockHitLayer } from "@/components/BlockHitLayer";
+import { CoinHud } from "@/components/CoinHud";
 import { CursorProvider } from "@/components/Cursor";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -132,6 +133,7 @@ function SiteLayout() {
       <ScrollToTop />
       <Intro />
       <BlockHitLayer />
+      <CoinHud />
       <Navbar />
       <div id="main">
         <Suspense fallback={<RouteLoading />}>

@@ -3,6 +3,7 @@ import { Instagram, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
 import { contact } from "@/config/contact";
+import { PixelButton } from "@/components/PixelButton";
 import { cn } from "@/lib/utils";
 import { InkButton, useLockBody } from "./ui-kit";
 
@@ -104,9 +105,9 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
-            <InkButton href="/book" size="sm" className="hidden sm:inline-flex">
+            <PixelButton href="/book" size="sm" className="hidden sm:inline-flex">
               Book Now
-            </InkButton>
+            </PixelButton>
             <button
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}

@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRef, useState } from "react";
+import { addCoins } from "@/lib/arcade";
 import { cn } from "@/lib/utils";
 
 /**
@@ -377,6 +378,7 @@ export function QuestionBlock({ className }: ArtProps) {
     setCoins((c) => [...c, id]);
     window.setTimeout(() => setCoins((c) => c.filter((x) => x !== id)), 800);
     window.setTimeout(() => setBumping(false), 340);
+    addCoins(3);
   };
 
   return (
@@ -401,6 +403,7 @@ export function QuestionBlock({ className }: ArtProps) {
         type="button"
         aria-label="Hit the question block"
         onClick={hit}
+        data-block-native
         className="block h-full w-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blood"
         animate={reduce ? { y: 0 } : bumping ? { y: [0, -14, 0] } : { y: [0, -4, 0] }}
         transition={bumping ? { duration: 0.3, ease: "easeOut" } : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}

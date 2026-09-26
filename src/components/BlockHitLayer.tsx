@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { addCoins } from "@/lib/arcade";
 
 /**
  * Global "hit the block" FX — every interactive control on the site reacts
@@ -43,6 +44,16 @@ function PixelBurst({ x, y }: { x: number; y: number }) {
   ];
   return (
     <div className="absolute" style={{ left: x, top: y }}>
+      {/* +1 score popup */}
+      <motion.span
+        className="absolute -translate-x-1/2 font-mono text-[11px] font-bold tracking-widest text-[#ffd94a]"
+        style={{ textShadow: "1px 1px 0 #141414" }}
+        initial={{ x: "-50%", y: -34, opacity: 1 }}
+        animate={{ y: -64, opacity: [1, 1, 0] }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        +1
+      </motion.span>
       {/* coin */}
       <motion.span
         className="absolute h-5 w-4 rounded-[2px] border-2 border-[#141414] bg-[#ffd94a] shadow-[inset_0_-2px_0_#c9a227]"
@@ -93,10 +104,15 @@ export function BlockHitLayer() {
 
     const onPointerDown = (e: PointerEvent) => {
       if (reduced()) return;
-      const el = (e.target as HTMLElement | null)?.closest?.(INTERACTIVE);
+      const target = e.target as HTMLElement | null;
+      // Elements with their own richer block FX (e.g. hero "?" block) handle everything themselves.
+      if (target?.closest?.("[data-block-native]")) return;
+      const el = target?.closest?.(INTERACTIVE);
       if (!el) return;
       bump(el);
       spawn(e.clientX, e.clientY);
+      // PixelButtons score their own coin — avoid double-counting.
+      if (!target?.closest?.("[data-pixel-btn]")) addCoins(1);
     };
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -107,6 +123,7 @@ export function BlockHitLayer() {
       const r = el.getBoundingClientRect();
       bump(el);
       spawn(r.left + r.width / 2, r.top + r.height / 2);
+      if (!el.closest?.("[data-pixel-btn]")) addCoins(1);
     };
 
     document.addEventListener("pointerdown", onPointerDown, { capture: true });
