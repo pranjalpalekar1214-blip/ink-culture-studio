@@ -1,7 +1,9 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useMutation } from "convex/react";
 import { ArrowLeft, ArrowRight, Calendar, Check, Clock, MessageCircle, Upload } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
+import { api } from "@/convex/_generated/api";
 import { SparkMotif } from "@/components/art";
 import { InkButton, PageHero, Reveal } from "@/components/ui-kit";
 import { breadcrumbSchema, pageMeta } from "@/config/seo";
@@ -9,6 +11,7 @@ import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { submitBooking } from "@/lib/forms";
 import {
   decideMystery,
+  trackBookingStart,
   trackBookingStep,
   trackBookingSubmit,
   useMysteryTracker,
@@ -26,10 +29,118 @@ const sizeCm = (s: string): number | null => {
   return null;
 };
 
+/** Shared pixel mystery-box artwork (closed, ribbon + "?"). */
+function MysteryBoxArt({ size, className }: { size: number; className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 28 24"
+      shapeRendering="crispEdges"
+      width={size}
+      height={(size * 24) / 28}
+      className={className}
+      aria-hidden
+    >
+      {/* lid */}
+      <rect x="4" y="6" width="20" height="5" fill="#c9a227" stroke="#141414" strokeWidth="1.5" />
+      {/* box body */}
+      <rect x="5" y="11" width="18" height="10" fill="#f5c518" stroke="#141414" strokeWidth="1.5" />
+      <rect x="7" y="13" width="2" height="2" fill="#141414" />
+      <rect x="19" y="13" width="2" height="2" fill="#141414" />
+      <rect x="7" y="18" width="2" height="2" fill="#141414" />
+      <rect x="19" y="18" width="2" height="2" fill="#141414" />
+      {/* ? */}
+      <g fill="#141414">
+        <rect x="12" y="13" width="4" height="1.5" />
+        <rect x="15" y="14.5" width="2" height="2" />
+        <rect x="14" y="16.5" width="2" height="1.5" />
+        <rect x="14" y="19.5" width="2" height="1.5" />
+      </g>
+      {/* ribbon */}
+      <rect x="13" y="1" width="2" height="5" fill="#141414" />
+      <rect x="10" y="0" width="8" height="2" fill="#141414" />
+    </svg>
+  );
+}
+
 /**
- * MysteryBoxReveal — shown only on the booking-confirmation screen.
- * A closed pixel box the client taps to open; the discount (decided from
- * their browsing pattern + tattoo size) is revealed here, and only here.
+ * MysteryBoxTeaser — appears THE MOMENT the visitor lands on /book (i.e.
+ * the moment they press Book Now). A wobbling closed box sits beside the
+ * form, promising the discount so they finish the booking to open it.
+ * Doesn't block the form; can be hidden with one tap.
+ */
+function MysteryBoxTeaser() {
+  const reduce = useReducedMotion();
+  const [tapped, setTapped] = useState(false);
+
+  return (
+    <motion.aside
+      initial={reduce ? false : { opacity: 0, y: 32, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.85 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className="pointer-events-auto fixed bottom-4 right-4 z-40 w-[13.5rem] border-2 border-ink bg-[#141414] p-4 text-center shadow-[6px_6px_0_0_var(--blood)] sm:bottom-6 sm:right-6 md:w-60"
+    >
+      <button
+        type="button"
+        onClick={() => setTapped(true)}
+        aria-label="Peek at your mystery box"
+        className="group mx-auto flex w-full cursor-pointer flex-col items-center focus:outline-none"
+      >
+        <motion.div
+          animate={reduce || tapped ? {} : { y: [0, -4, 0], rotate: [-1.5, 1.5, -1.5] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <MysteryBoxArt size={52} className="drop-shadow-[3px_3px_0_rgba(0,0,0,0.45)]" />
+        </motion.div>
+        <p className="mt-3 font-marker text-lg leading-tight text-blood">Your Mystery Box is waiting…</p>
+        <p className="mt-1 text-[9px] font-semibold uppercase leading-relaxed tracking-[0.2em] text-bone/50">
+          Finish your booking → open it for a surprise % off
+        </p>
+        <span
+          className={cn(
+            "mt-3 w-full border-2 px-2 py-2 font-display text-[11px] uppercase tracking-[0.18em] transition-colors",
+            tapped
+              ? "border-blood text-blood"
+              : "border-bone/25 text-bone group-hover:border-blood group-hover:text-blood",
+          )}
+        >
+          {tapped ? "Opens when you book ✓" : "Peek inside"}
+        </span>
+      </button>
+      <button
+        type="button"
+        onClick={() => setTapped(false)}
+        className="mt-2 text-[9px] uppercase tracking-[0.2em] text-bone/30 transition-colors hover:text-bone/60"
+      >
+        reset peek
+      </button>
+      <BoxDismissButton />
+    </motion.aside>
+  );
+}
+
+/** Tiny dismiss control — split out so the teaser stays readable. */
+function BoxDismissButton() {
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        const aside = e.currentTarget.closest("aside");
+        if (aside) {
+          aside.style.display = "none";
+        }
+      }}
+      className="mt-1 text-[8px] uppercase tracking-[0.24em] text-bone/25 transition-colors hover:text-bone/50"
+    >
+      hide box
+    </button>
+  );
+}
+
+/**
+ * MysteryBoxReveal — the box OPENS on the booking-confirmation screen.
+ * The discount (decided from their browsing pattern + tattoo size) is
+ * revealed here, and only here.
  */
 function MysteryBoxReveal({ decision }: { decision: MysteryDecision }) {
   const reduce = useReducedMotion();
@@ -40,36 +151,22 @@ function MysteryBoxReveal({ decision }: { decision: MysteryDecision }) {
       {!open ? (
         <button
           type="button"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setOpen(true);
+            // Best-effort counter log for the studio (decision lives in the ledger).
+            console.info(
+              `[mystery] ${decision.code} — ${decision.percent}% off issued with this booking`,
+            );
+          }}
           aria-label="Open your mystery box"
           className="group flex cursor-pointer flex-col items-center focus:outline-none"
         >
-          <motion.svg
-            viewBox="0 0 28 24"
-            shapeRendering="crispEdges"
-            className="h-16 w-auto drop-shadow-[3px_3px_0_rgba(0,0,0,0.45)]"
+          <motion.div
             animate={reduce ? {} : { y: [0, -4, 0], rotate: [-1.5, 1.5, -1.5] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            {/* lid */}
-            <rect x="4" y="6" width="20" height="5" fill="#c9a227" stroke="#141414" strokeWidth="1.5" />
-            {/* box body */}
-            <rect x="5" y="11" width="18" height="10" fill="#f5c518" stroke="#141414" strokeWidth="1.5" />
-            <rect x="7" y="13" width="2" height="2" fill="#141414" />
-            <rect x="19" y="13" width="2" height="2" fill="#141414" />
-            <rect x="7" y="18" width="2" height="2" fill="#141414" />
-            <rect x="19" y="18" width="2" height="2" fill="#141414" />
-            {/* ? */}
-            <g fill="#141414">
-              <rect x="12" y="13" width="4" height="1.5" />
-              <rect x="15" y="14.5" width="2" height="2" />
-              <rect x="14" y="16.5" width="2" height="1.5" />
-              <rect x="14" y="19.5" width="2" height="1.5" />
-            </g>
-            {/* ribbon */}
-            <rect x="13" y="1" width="2" height="5" fill="#141414" />
-            <rect x="10" y="0" width="8" height="2" fill="#141414" />
-          </motion.svg>
+            <MysteryBoxArt size={64} className="drop-shadow-[3px_3px_0_rgba(0,0,0,0.45)]" />
+          </motion.div>
           <span className="mt-3 font-display text-xs font-bold uppercase tracking-[0.22em] text-bone transition-colors group-hover:text-[#f5c518]">
             🎁 Open your Mystery Box
           </span>
@@ -208,11 +305,17 @@ export default function Book() {
   const [mystery, setMystery] = useState<MysteryDecision | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  /* Feed the (invisible) Mystery Box engine with booking depth. */
+  const issueCode = useMutation(api.mystery.issue);
+
+  /* The mystery box exists the moment they land on /book — the engine is
+     armed on arrival and the visible teaser appears beside the form. */
+  useMysteryTracker();
+  useEffect(() => {
+    trackBookingStart();
+  }, []);
   useEffect(() => {
     trackBookingStep(step);
   }, [step]);
-  useMysteryTracker();
 
   const days = useMemo(() => nextDays(14), []);
   const set = (k: keyof FormState, v: string) => setForm((f) => ({ ...f, [k]: v }));
@@ -256,7 +359,7 @@ export default function Book() {
       budget: form.budget,
       contact: `${form.contactPreference} · ${form.whatsapp}${form.email ? " · " + form.email : ""}`,
       referenceNote: form.referenceName ? `${form.referenceName} (attached via WhatsApp)` : "—",
-    });
+    }) + (mystery ? `\n\n🎁 Mystery Box: ${mystery.code} — ${mystery.percent}% off (unlocked with this booking).` : "");
 
   const onWhatsApp = () => {
     for (const s of [0, 1, 2, 3]) {
@@ -297,7 +400,19 @@ export default function Book() {
     setSubmitting(false);
     // The box opens now: decide the discount from behavior pattern + tattoo size.
     trackBookingSubmit();
-    if (result.ok) setMystery(decideMystery(sizeCm(form.size)));
+    if (result.ok) {
+      const decision = decideMystery(sizeCm(form.size));
+      setMystery(decision);
+      // Register the code in the studio ledger so the counter can validate it.
+      void issueCode({
+        code: decision.code,
+        percent: decision.percent,
+        customer: form.name,
+        service: `${form.serviceType}: ${form.service}`,
+        size: form.size,
+        whatsapp: form.whatsapp,
+      }).catch(() => undefined);
+    }
     setFormOk(result.ok);
     setDone(true);
   };
@@ -341,6 +456,12 @@ export default function Book() {
         title={<>Grab a<br />chair.</>}
         lead="Tattoo, piercing or academy — pick your artist, grab a time slot and tell us the idea. No payment now, ever."
       />
+
+      {/* The Mystery Box appears the moment they land on /book — finish the
+          booking to open it. Pointer-events confined to the card itself. */}
+      <AnimatePresence>
+        <MysteryBoxTeaser />
+      </AnimatePresence>
 
       <section className="py-14 md:py-20">
         <div className="mx-auto w-full max-w-3xl px-5 md:px-8">

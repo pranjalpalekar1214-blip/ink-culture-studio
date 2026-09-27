@@ -30,6 +30,7 @@ const Academy = lazy(() => import("./pages/Academy.tsx"));
 const Blog = lazy(() => import("./pages/Blog.tsx"));
 const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
 const Book = lazy(() => import("./pages/Book.tsx"));
+const Redeem = lazy(() => import("./pages/Redeem.tsx"));
 const Careers = lazy(() => import("./pages/Careers.tsx"));
 const ContactPage = lazy(() => import("./pages/Contact.tsx"));
 const ConceptLab = lazy(() => import("./pages/ConceptLab.tsx"));
@@ -150,6 +151,8 @@ function SiteLayout() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/book" element={<Book />} />
+            {/* Staff-only counter terminal: validate + burn mystery codes. Unlinked. */}
+            <Route path="/redeem" element={<Redeem />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/concept" element={<ConceptLab />} />

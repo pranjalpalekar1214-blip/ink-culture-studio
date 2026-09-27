@@ -34,10 +34,19 @@ const schema = defineSchema(
 
     // add other tables here
 
-    // tableName: defineTable({
-    //   ...
-    //   // table fields
-    // }).index("by_field", ["field"])
+    // Mystery Box discount codes issued on booking confirmation.
+    mysteryCodes: defineTable({
+      code: v.string(),
+      percent: v.number(),
+      status: v.union(v.literal("active"), v.literal("redeemed"), v.literal("void")),
+      customer: v.optional(v.string()),
+      service: v.optional(v.string()),
+      size: v.optional(v.string()),
+      whatsapp: v.optional(v.string()),
+      staff: v.optional(v.string()),
+      createdAt: v.number(),
+      redeemedAt: v.optional(v.number()),
+    }).index("by_code", ["code"]),
   },
   {
     schemaValidation: false,

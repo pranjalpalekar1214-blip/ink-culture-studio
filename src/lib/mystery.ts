@@ -92,6 +92,14 @@ export function trackBookingStep(step: number) {
   write(s);
 }
 
+/** Record that a booking attempt started (arming the on-page mystery box). */
+export function trackBookingStart() {
+  const s = read();
+  s.bookingStarts += 1;
+  s.lastSeen = Date.now();
+  write(s);
+}
+
 /** Record a confirmed booking (the mystery box opens at this moment). */
 export function trackBookingSubmit() {
   const s = read();
@@ -148,8 +156,44 @@ export function engagementScore(): number {
   return Math.round(Math.min(score, 100));
 }
 
+/* ------------------------------ codes ------------------------------ */
+
+/**
+ * Secret salt for the code checksum. Codes embed their own validity so the
+ * studio counter can verify a code even when offline (the Convex ledger is
+ * the online source of truth). Rotate this string occasionally if you want
+ * to retire codes that leaked.
+ */
+const SECRET = "SC-KANDIVALI-2026";
+
+/** Stable hash of percent+secret → one alphabet character (A–Z). */
+function checkChar(percent: number): string {
+  let h = 5381;
+  const input = `${percent}:${SECRET}`;
+  for (let i = 0; i < input.length; i++) {
+    h = ((h << 5) + h + input.charCodeAt(i)) | 0;
+  }
+  return String.fromCharCode(65 + Math.abs(h) % 26);
+}
+
 const code = (p: number) =>
-  `MYSTERY-${String(p).padStart(2, "0")}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+  `MYSTERY-${String(p).padStart(2, "0")}-${checkChar(p)}${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+
+/** Format of a valid mystery code: MYSTERY-PP-CCCC (percent + 4-char suffix, checksum first). */
+export type ParsedMysteryCode = { percent: number; suffix: string };
+
+/**
+ * Client-safe structural validation of a staff/customer code. Returns null
+ * for anything that isn't a well-formed, checksum-valid mystery code.
+ * (This checks the code COULD be ours; the online ledger marks it REDEEMED.)
+ */
+export function parseMysteryCode(raw: string): ParsedMysteryCode | null {
+  const m = /^MYSTERY-(\d{2})-([A-Z])([A-Z0-9]{3})$/.exec(raw.trim().toUpperCase());
+  if (!m) return null;
+  const percent = Number(m[1]);
+  if (percent < 5 || percent > 20 || m[2] !== checkChar(percent)) return null;
+  return { percent, suffix: `${m[2]}${m[3]}` };
+}
 
 /**
  * Decide the mystery discount at booking-confirmation time.

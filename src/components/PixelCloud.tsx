@@ -2,13 +2,13 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-moti
 import { useEffect, useState } from "react";
 
 /**
- * PixelCloud — a tiny silent pixel cloud that drifts around the site.
+ * PixelCloud — a medium silent pixel cloud that drifts around the site.
  * Visitors see a cute mascot; it quietly wanders toward their clicks as
  * part of the invisible Mystery Box engine. No copy, no counters —
  * the mechanic stays secret until the booking reveal.
  */
 
-const SIZE = 52; // px — deliberately small and unassuming
+const SIZE = 72; // px — medium mascot, big enough to notice, small enough to ignore
 
 export function PixelCloud({ className }: { className?: string }) {
   const reduce = useReducedMotion();
