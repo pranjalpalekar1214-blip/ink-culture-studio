@@ -3,6 +3,7 @@ import { Instagram, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
 import { contact } from "@/config/contact";
+import { BrandLogo } from "@/components/BrandLogo";
 import { PixelButton } from "@/components/PixelButton";
 import { cn } from "@/lib/utils";
 import { InkButton, useLockBody } from "./ui-kit";
@@ -63,17 +64,8 @@ export function Navbar() {
           style={{ scaleX: progress }}
         />
         <nav className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-5 md:h-[72px] md:px-8" aria-label="Primary">
-          <Link to="/" className="group flex items-center gap-2.5" aria-label="Street Culture — home">
-            <svg viewBox="0 0 32 32" className="h-7 w-7 text-blood" aria-hidden>
-              <path
-                d="M16 2 L 20 12 L 30 13 L 22 20 L 25 30 L 16 24 L 7 30 L 10 20 L 2 13 L 12 12 Z"
-                fill="currentColor"
-              />
-              <circle cx="16" cy="16" r="4.5" fill="#0d0d0d" />
-            </svg>
-            <span className="font-display text-sm font-bold uppercase tracking-[0.22em] text-bone">
-              Street<span className="text-blood">Culture</span>
-            </span>
+          <Link to="/" className="flex items-center" aria-label="Street Culture — home">
+            <BrandLogo className="text-[13px] transition-transform duration-300 hover:scale-[1.03] md:text-sm" />
           </Link>
 
           <div className="hidden items-center gap-7 lg:flex">
@@ -154,9 +146,7 @@ function FullScreenMenu({ open, onClose }: { open: boolean; onClose: () => void 
         >
           <div className="pointer-events-none absolute inset-0 grain opacity-60" aria-hidden />
           <div className="flex h-16 items-center justify-between border-b border-bone/10 px-5 md:h-[72px] md:px-8">
-            <span className="font-display text-sm font-bold uppercase tracking-[0.22em] text-bone">
-              Street<span className="text-blood">Culture</span>
-            </span>
+            <BrandLogo className="text-[13px] md:text-sm" />
             <button
               onClick={onClose}
               aria-label="Close menu"

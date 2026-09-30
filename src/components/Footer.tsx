@@ -1,6 +1,7 @@
 import { Instagram, MapPin } from "lucide-react";
 import { Link } from "react-router";
 import { contact } from "@/config/contact";
+import { BrandLogo } from "@/components/BrandLogo";
 import { displayWhatsApp } from "@/lib/whatsapp";
 import { InkButton } from "./ui-kit";
 
@@ -21,11 +22,9 @@ export function Footer() {
       <div className="mx-auto w-full max-w-7xl px-5 pb-24 pt-14 sm:pb-14 md:px-8 md:pb-20 md:pt-20">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <p className="font-display text-4xl uppercase leading-[0.95] tracking-tight text-bone sm:text-5xl">
-              Ink is<br />
-              <span className="text-blood">culture.</span>
-            </p>
-            <p className="mt-5 max-w-sm font-body text-sm leading-relaxed text-bone/60">
+            <BrandLogo className="text-xl sm:text-2xl" />
+            <p className="mt-4 font-marker text-2xl text-blood">Ink is culture.</p>
+            <p className="mt-3 max-w-sm font-body text-sm leading-relaxed text-bone/60">
               {contact.studioName} — custom tattoos & professional training in {contact.address.locality}, {contact.address.city}.
             </p>
             <div className="mt-6 flex gap-3">
