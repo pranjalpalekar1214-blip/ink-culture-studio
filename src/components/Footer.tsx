@@ -22,7 +22,7 @@ export function Footer() {
       <div className="mx-auto w-full max-w-7xl px-5 pb-24 pt-14 sm:pb-14 md:px-8 md:pb-20 md:pt-20">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <BrandLogo className="text-xl sm:text-2xl" />
+            <BrandLogo className="text-2xl sm:text-3xl" />
             <p className="mt-4 font-marker text-2xl text-blood">Ink is culture.</p>
             <p className="mt-3 max-w-sm font-body text-sm leading-relaxed text-bone/60">
               {contact.studioName} — custom tattoos & professional training in {contact.address.locality}, {contact.address.city}.

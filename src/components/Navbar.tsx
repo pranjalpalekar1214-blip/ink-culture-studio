@@ -65,7 +65,7 @@ export function Navbar() {
         />
         <nav className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-5 md:h-[72px] md:px-8" aria-label="Primary">
           <Link to="/" className="flex items-center" aria-label="Street Culture — home">
-            <BrandLogo className="text-[13px] transition-transform duration-300 hover:scale-[1.03] md:text-sm" />
+            <BrandLogo className="text-sm transition-transform duration-300 hover:scale-[1.03] md:text-base" />
           </Link>
 
           <div className="hidden items-center gap-7 lg:flex">
@@ -146,7 +146,7 @@ function FullScreenMenu({ open, onClose }: { open: boolean; onClose: () => void 
         >
           <div className="pointer-events-none absolute inset-0 grain opacity-60" aria-hidden />
           <div className="flex h-16 items-center justify-between border-b border-bone/10 px-5 md:h-[72px] md:px-8">
-            <BrandLogo className="text-[13px] md:text-sm" />
+            <BrandLogo className="text-base md:text-lg" />
             <button
               onClick={onClose}
               aria-label="Close menu"
