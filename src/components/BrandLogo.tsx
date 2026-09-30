@@ -1,36 +1,41 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Brand emblem — bold star badge inside a broken ring (diagonal notches),
- * echoing the studio's circular badge mark. Uses currentColor so it can be
- * tinted per context. The star spins one point (72°) on group hover.
+ * Brand emblem — faithful vector recreation of the studio's logo mark:
+ * the hexagram-heart (two interlocked circles forming the heart, full
+ * hexagram star beneath) inside a solid ring. Uses currentColor so it can
+ * be tinted per context. The inner mark does a full spin on group hover.
  */
 export function BrandMark({
   className,
-  starClassName,
+  markClassName,
 }: {
   className?: string;
-  starClassName?: string;
+  markClassName?: string;
 }) {
   return (
-    <svg viewBox="0 0 48 48" className={className} aria-hidden="true" focusable="false">
-      <circle
-        cx="24"
-        cy="24"
-        r="20"
+    <svg viewBox="0 0 64 64" className={className} aria-hidden="true" focusable="false">
+      {/* solid outer ring */}
+      <circle cx="32" cy="32" r="26.5" fill="none" stroke="currentColor" strokeWidth="5" />
+      {/* hexagram-heart mark (spins on hover) */}
+      <g
         fill="none"
         stroke="currentColor"
-        strokeWidth="5"
-        strokeDasharray="13.7 4 27.4 4 27.4 4 27.4 4 13.7"
-      />
-      <path
-        d="M24 7.5 28.1 18.3 39.7 18.9 30.7 26.2 33.7 37.4 24 31 14.3 37.4 17.3 26.2 8.3 18.9 19.9 18.3Z"
-        fill="currentColor"
+        strokeWidth="4.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         className={cn(
-          "[transform-box:fill-box] origin-center transition-transform duration-500 ease-out",
-          starClassName,
+          "[transform-box:fill-box] origin-center transition-transform duration-700 ease-out",
+          markClassName,
         )}
-      />
+      >
+        {/* heart — two interlocked circles */}
+        <circle cx="25" cy="23.5" r="10.5" />
+        <circle cx="39" cy="23.5" r="10.5" />
+        {/* hexagram — downward + upward triangles */}
+        <path d="M13 21 L51 21 L32 54 Z" />
+        <path d="M32 14 L47 39.5 L17 39.5 Z" />
+      </g>
     </svg>
   );
 }
@@ -39,7 +44,7 @@ export function BrandMark({
  * Full identity lockup: [badge] STREET CULTURE / TATTOO AND ACADEMY.
  * Scales from a single root font-size (all inner sizing is in em), so
  * `<BrandLogo className="text-sm" />` … `text-3xl` gives nav → hero sizes.
- * Hover: star spins a point, CULTURE throws a hard offset shadow.
+ * Hover: the hexagram-heart spins, CULTURE throws a hard offset shadow.
  */
 export function BrandLogo({ className }: { className?: string }) {
   return (
@@ -52,7 +57,7 @@ export function BrandLogo({ className }: { className?: string }) {
       <span className="sr-only">Street Culture — Tattoo and Academy</span>
       <BrandMark
         className="size-[2.35em] shrink-0 text-blood drop-shadow-[0_0_8px_rgba(245,197,24,0.35)]"
-        starClassName="group-hover/brand:rotate-[72deg] motion-reduce:transition-none motion-reduce:group-hover/brand:rotate-0"
+        markClassName="group-hover/brand:rotate-[360deg]"
       />
       <span aria-hidden="true" className="flex flex-col">
         <span className="text-[1.6em] font-bold uppercase leading-[0.85] tracking-[0.02em] text-bone">

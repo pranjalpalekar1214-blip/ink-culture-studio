@@ -37,7 +37,7 @@ export function Intro() {
           aria-hidden
         >
           <div className="flex flex-col items-center">
-            {/* brand badge — drawn star inside its ring, then the lockup below */}
+            {/* hexagram-heart badge pops in, then the lockup below */}
             <motion.div
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
