@@ -3,21 +3,22 @@ import { cn } from "@/lib/utils";
 /**
  * Brand emblem — static recreation of the studio's supplied logo: the
  * heartagram (two heart-lobe circles over an interlocked diamond) inside a
- * solid ring, with clear margin from the ring. Monochrome via currentColor.
- * No animations or effects.
+ * solid ring, with bold thick strokes and the mark filling the ring the way
+ * the original artwork does. Monochrome via currentColor. No animations or
+ * effects.
  */
 export function BrandMark({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 100 100" className={className} aria-hidden="true" focusable="false">
       {/* solid outer ring */}
-      <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="7" />
-      {/* heartagram mark — kept well clear of the ring */}
-      <g fill="none" stroke="currentColor" strokeWidth="5">
+      <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="8" />
+      {/* heartagram mark — fills the ring, minimal margin like the original */}
+      <g fill="none" stroke="currentColor" strokeWidth="6.5">
         {/* heart lobes — two overlapping circles */}
-        <circle cx="37" cy="35.5" r="17" />
-        <circle cx="63" cy="35.5" r="17" />
+        <circle cx="36" cy="33" r="20" />
+        <circle cx="64" cy="33" r="20" />
         {/* interlocked diamond — upward + downward triangle sharing the mid chord */}
-        <path d="M50 23 L78.9 54.5 L50 79 L21.1 54.5 Z" />
+        <path d="M50 19.5 L81.5 54 L50 82 L18.5 54 Z" />
       </g>
     </svg>
   );
