@@ -42,9 +42,9 @@ export function Intro() {
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.15, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="text-blood"
+              className="text-bone"
             >
-              <BrandMark className="size-16 drop-shadow-[0_0_14px_rgba(245,197,24,0.4)] sm:size-20" />
+              <BrandMark className="size-16 drop-shadow-[0_0_14px_rgba(241,237,228,0.35)] sm:size-20" />
             </motion.div>
 
             <div className="mt-5 overflow-hidden">
