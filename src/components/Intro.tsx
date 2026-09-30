@@ -44,7 +44,7 @@ export function Intro() {
               transition={{ delay: 0.15, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               className="text-bone"
             >
-              <BrandMark className="size-20 drop-shadow-[0_0_14px_rgba(241,237,228,0.35)] sm:size-24" />
+              <BrandMark className="size-20 sm:size-24" />
             </motion.div>
 
             <div className="mt-5 overflow-hidden">

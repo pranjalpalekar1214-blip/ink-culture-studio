@@ -65,7 +65,7 @@ export function Navbar() {
         />
         <nav className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-5 md:h-[72px] md:px-8" aria-label="Primary">
           <Link to="/" className="flex items-center" aria-label="Street Culture — home">
-            <BrandLogo className="text-sm transition-transform duration-300 hover:scale-[1.03] md:text-base" />
+            <BrandLogo className="text-sm md:text-base" />
           </Link>
 
           <div className="hidden items-center gap-7 lg:flex">
