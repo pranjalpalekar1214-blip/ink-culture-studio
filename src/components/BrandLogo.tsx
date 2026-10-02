@@ -1,24 +1,26 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Brand emblem — static recreation of the studio's supplied logo: the
- * heartagram (two heart-lobe circles over an interlocked diamond) inside a
- * solid ring, with bold thick strokes and the mark filling the ring the way
- * the original artwork does. Monochrome via currentColor. No animations or
- * effects.
+ * Brand emblem — a faithful, static recreation of the supplied logo artwork:
+ * the heartagram (two large overlapping heart-lobe circles over an interlocked
+ * diamond whose mid-chord runs all the way to the ring) inside a solid ring
+ * that fills the frame with only a minimal margin. Bold, even stroke weights,
+ * monochrome via currentColor. No animations or effects.
  */
 export function BrandMark({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 100 100" className={className} aria-hidden="true" focusable="false">
-      {/* solid outer ring */}
-      <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="8" />
+      {/* solid outer ring — nearly edge-to-edge like the original */}
+      <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="7" />
       {/* heartagram mark — fills the ring, minimal margin like the original */}
       <g fill="none" stroke="currentColor" strokeWidth="6.5">
-        {/* heart lobes — two overlapping circles */}
-        <circle cx="36" cy="33" r="20" />
-        <circle cx="64" cy="33" r="20" />
-        {/* interlocked diamond — upward + downward triangle sharing the mid chord */}
-        <path d="M50 19.5 L81.5 54 L50 82 L18.5 54 Z" />
+        {/* heart lobes — two large overlapping circles, tops near the ring,
+            crossing at the cleavage (top centre) and at the centre point */}
+        <circle cx="35" cy="32" r="21" />
+        <circle cx="65" cy="32" r="21" />
+        {/* interlocked diamond — apex tucked into the cleavage, mid-chord
+            spanning wall-to-wall against the ring, bottom point at the base */}
+        <path d="M50 17 L90.5 60 L50 88 L9.5 60 Z" />
       </g>
     </svg>
   );
