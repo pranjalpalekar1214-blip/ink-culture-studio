@@ -98,7 +98,7 @@ function Hero() {
           className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
           <p className="max-w-xl font-body text-base leading-relaxed text-bone/70 md:text-lg">
-            <BrandLogo className="text-xl md:text-2xl" />
+            <BrandLogo className="text-base md:text-lg" />
             <span className="mt-1.5 block">
               Custom tattoos drawn for your body, your story, your streets — in Kandivali West, Mumbai.
             </span>

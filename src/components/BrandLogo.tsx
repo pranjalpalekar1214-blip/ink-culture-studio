@@ -29,9 +29,9 @@ export function BrandMark({ className }: { className?: string }) {
 /**
  * Full identity lockup: [badge] STREET CULTURE / TATTOO AND ACADEMY.
  * Monochrome bone/white to match the supplied artwork, static — no hover
- * effects. Scales from a single root font-size (all inner sizing is in em),
- * so `<BrandLogo className="text-sm" />` … `text-3xl` gives nav → hero
- * sizes.
+ * effects. Kept small on purpose: scales from a single root font-size (all
+ * inner sizing is in em), so `<BrandLogo className="text-xs" />` … `text-lg`
+ * gives nav → footer sizes with the badge staying compact.
  */
 export function BrandLogo({ className }: { className?: string }) {
   return (

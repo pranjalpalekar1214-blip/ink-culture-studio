@@ -44,7 +44,7 @@ export function Intro() {
               transition={{ delay: 0.15, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               className="text-bone"
             >
-              <BrandMark className="size-20 sm:size-24" />
+              <BrandMark className="size-16 sm:size-20" />
             </motion.div>
 
             <div className="mt-5 overflow-hidden">
