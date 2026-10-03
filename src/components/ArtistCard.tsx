@@ -299,6 +299,15 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
               Dossier · {artist.name}
             </p>
 
+            {/* studio portrait — appears on the flipped face too */}
+            <div className="mt-3 overflow-hidden border border-bone/15 bg-ink">
+              <ArtistPhoto
+                artist={artist}
+                className="h-28 w-full object-cover object-[center_28%] grayscale contrast-[1.05] sm:h-32"
+                fallbackClassName="h-28 sm:h-32"
+              />
+            </div>
+
             <div className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto pr-1 text-sm leading-relaxed text-bone/75">
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-bone/40">Signature Techniques</p>

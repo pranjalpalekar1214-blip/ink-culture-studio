@@ -239,9 +239,9 @@ function EnquireSection() {
     setError("");
     const result = await submitAcademyEnquiry(buildPayload());
     // No Google Form endpoint configured yet — don't claim the enquiry was
-    // received. Hand it to WhatsApp so it actually reaches the studio.
+    // received. The confirmation screen hands the user one explicit WhatsApp
+    // button so they choose when to send it.
     if (!result.configured) {
-      onWhatsApp();
       setSent(true);
       return;
     }
@@ -262,7 +262,7 @@ function EnquireSection() {
             <div className="border border-acid/40 bg-[#131a12] p-8 text-center">
               <p className="font-display text-2xl uppercase text-bone">Enquiry ready to send.</p>
               <p className="mt-3 font-body text-sm text-bone/65">
-                WhatsApp should have opened with your details — press send there to finish. Seats are limited
+                Tap the button below to send your enquiry on WhatsApp. Seats are limited
                 and shortlisting happens in order.
               </p>
               <div className="mt-6">

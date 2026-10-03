@@ -70,18 +70,9 @@ export default function Careers() {
     setError("");
     const result = await submitCareersApplication({ ...form });
     // No Google Form endpoint configured yet — don't claim the application was
-    // received. Hand it to WhatsApp so the enquiry actually reaches the studio.
+    // received. The confirmation screen hands the user one explicit WhatsApp
+    // button so they choose when to send it.
     if (!result.configured) {
-      openWhatsApp(
-        careersMessage({
-          name: form.name,
-          role: form.role,
-          experience: form.experience,
-          portfolio: form.portfolio,
-          instagram: form.instagram,
-          message: form.message,
-        }),
-      );
       setSent(true);
       return;
     }
@@ -153,8 +144,8 @@ export default function Careers() {
               <div className="border border-acid/40 bg-[#131a12] p-8 text-center md:p-10">
                 <p className="font-display text-2xl uppercase text-bone">Application ready to send.</p>
                 <p className="mx-auto mt-3 max-w-md font-body text-sm text-bone/65">
-                  We go through every portfolio when a seat opens. WhatsApp should have opened with your
-                  details — press send there to finish. You can also send it again below.
+                  We go through every portfolio when a seat opens. Tap the button below to send your
+                  full application on WhatsApp.
                 </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                   <InkButton onClick={onWhatsApp}>Apply via WhatsApp</InkButton>

@@ -414,9 +414,9 @@ export default function Book() {
       }).catch(() => undefined);
     }
     setFormOk(result.ok);
-    // No Google Form endpoint configured yet — send the booking through
-    // WhatsApp so it genuinely reaches the studio, and flag it in the UI.
-    if (!result.configured) openWhatsApp(waMessage());
+    // No Google Form endpoint configured yet — don't silently swallow the
+    // booking. The confirmation screen hands the user one explicit WhatsApp
+    // button so they choose when to send it.
     setDone(true);
   };
 
@@ -437,11 +437,12 @@ export default function Book() {
               {form.date} · {form.time} with {form.artist === "No Preference" ? "our next-available artist" : form.artist}.{" "}
               {formOk
                 ? "We'll confirm shortly — it's in our intake."
-                : `WhatsApp should have opened with your full booking details on ${displayWhatsApp()} — press send there to finish.`}
+                : `Your booking isn't sent yet. Tap the button below to send the full details to ${displayWhatsApp()} on WhatsApp.`}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <InkButton onClick={() => openWhatsApp(waMessage())}>
-                <MessageCircle className="size-4" /> Nudge us on WhatsApp
+                <MessageCircle className="size-4" />
+                {formOk ? "Nudge us on WhatsApp" : "Send booking on WhatsApp"}
               </InkButton>
               <InkButton href="/" variant="outline">Back Home</InkButton>
             </div>

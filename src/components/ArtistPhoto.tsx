@@ -10,7 +10,7 @@ import type { Artist } from "@/data/artists";
  * back to the illustrated stick figure if the file isn't there yet, so dropping
  * the photos in later needs no code change.
  *
- * `className` styles the image box; `fallbackClassName` styles the illustration.
+ * `className` styles the photo box, `fallbackClassName` the illustration.
  */
 export function ArtistPhoto({
   artist,
