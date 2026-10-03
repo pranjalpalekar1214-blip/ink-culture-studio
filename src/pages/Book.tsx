@@ -17,7 +17,7 @@ import {
   useMysteryTracker,
   type MysteryDecision,
 } from "@/lib/mystery";
-import { bookingMessage, openWhatsApp } from "@/lib/whatsapp";
+import { bookingMessage, displayWhatsApp, openWhatsApp } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
 /** Map the booking size option to an approximate cm figure for the Mystery Box engine. */
@@ -414,6 +414,9 @@ export default function Book() {
       }).catch(() => undefined);
     }
     setFormOk(result.ok);
+    // No Google Form endpoint configured yet — send the booking through
+    // WhatsApp so it genuinely reaches the studio, and flag it in the UI.
+    if (!result.configured) openWhatsApp(waMessage());
     setDone(true);
   };
 
@@ -428,11 +431,13 @@ export default function Book() {
               <Check className="size-6" />
             </span>
             <h1 className="mt-6 font-display text-3xl uppercase tracking-tight text-bone md:text-4xl">
-              Slot requested!
+              {formOk ? "Slot requested!" : "Finish on WhatsApp"}
             </h1>
             <p className="mt-4 font-body text-sm leading-relaxed text-bone/65">
-              {form.date} · {form.time} with {form.artist === "No Preference" ? "our next-available artist" : form.artist}. We'll
-              confirm shortly{formOk ? " — it's in our intake" : ""}.
+              {form.date} · {form.time} with {form.artist === "No Preference" ? "our next-available artist" : form.artist}.{" "}
+              {formOk
+                ? "We'll confirm shortly — it's in our intake."
+                : `WhatsApp should have opened with your full booking details on ${displayWhatsApp()} — press send there to finish.`}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <InkButton onClick={() => openWhatsApp(waMessage())}>

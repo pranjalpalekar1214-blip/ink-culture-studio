@@ -51,21 +51,20 @@ function Tile({ item, onOpen, index }: { item: GalleryItem; onOpen: () => void; 
         <button
           onClick={onOpen}
           className="block w-full text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-blood"
-          aria-label={`View ${item.title} — ${item.category} tattoo by ${item.artistName}`}
+          aria-label={`View ${item.category} tattoo by ${item.artistName}`}
         >
           <div style={{ aspectRatio: `3.2 / ${item.ratio * 2}` }} className="w-full">
             <PlaceholderImage
               seed={item.id}
               label={item.category}
-              sub={`${item.artistName} · ${item.title}`}
               className="transition-transform duration-700 ease-out group-hover:scale-[1.05]"
             />
           </div>
-          {/* hover overlay */}
+          {/* hover overlay — no piece name, just style + ink */}
           <div className="pointer-events-none absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-ink/95 via-ink/20 to-transparent p-4 opacity-0 transition-opacity duration-400 group-hover:opacity-100">
-            <p className="font-display text-lg uppercase tracking-tight text-bone">{item.title}</p>
+            <p className="font-display text-lg uppercase tracking-tight text-bone">{item.category}</p>
             <p className="mt-1 text-[10px] uppercase tracking-[0.22em] text-bone/60">
-              {item.category} · {item.inkColor}
+              {item.inkColor} ink · by {item.artistName}
             </p>
             <span className="mt-3 inline-flex w-max items-center gap-1.5 border-2 border-blood bg-blood px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-ink">
               View Tattoo
@@ -224,14 +223,14 @@ function Lightbox({
   }, []);
 
   const waHref = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(
-    `Hey ${contact.studioName}! I saw "${item.title}" (${item.category}) by ${item.artistName} in your gallery. I'd love something similar.`,
+    `Hey ${contact.studioName}! I saw a ${item.category} piece (${item.inkColor} ink) by ${item.artistName} in your gallery. I'd love something similar.`,
   )}`;
 
   return (
     <motion.div
       role="dialog"
       aria-modal="true"
-      aria-label={`${item.title} by ${item.artistName}`}
+      aria-label={`${item.category} tattoo by ${item.artistName}`}
       className="fixed inset-0 z-[120] flex items-center justify-center bg-ink/95 p-4 backdrop-blur-sm sm:p-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -282,14 +281,14 @@ function Lightbox({
         onClick={(e) => e.stopPropagation()}
       >
         <div style={{ aspectRatio: "3.2 / 4" }} className="w-full">
-          <PlaceholderImage seed={item.id} label={item.category} sub={`${item.artistName} · ${item.title}`} />
+          <PlaceholderImage seed={item.id} label={item.category} />
         </div>
         <figcaption className="border-t-2 border-bone/10 p-5 sm:p-6">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <h3 className="font-display text-2xl uppercase tracking-tight text-bone">{item.title}</h3>
+              <h3 className="font-display text-2xl uppercase tracking-tight text-bone">{item.category}</h3>
               <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-bone/50">
-                {item.category} · {item.inkColor} ink · piece {index + 1}/{total}
+                {item.inkColor} ink · piece {index + 1}/{total}
               </p>
             </div>
             <Link

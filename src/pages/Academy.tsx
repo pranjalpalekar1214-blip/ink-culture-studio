@@ -237,7 +237,19 @@ function EnquireSection() {
     e.preventDefault();
     if (!valid) return setError("Add your name and an email or WhatsApp number so we can reply.");
     setError("");
-    await submitAcademyEnquiry(buildPayload());
+    const result = await submitAcademyEnquiry(buildPayload());
+    // No Google Form endpoint configured yet — don't claim the enquiry was
+    // received. Hand it to WhatsApp so it actually reaches the studio.
+    if (!result.configured) {
+      onWhatsApp();
+      setSent(true);
+      return;
+    }
+    if (!result.ok) {
+      return setError(
+        result.error ?? "We couldn't send that just now. Please try WhatsApp instead.",
+      );
+    }
     setSent(true);
   };
 
@@ -248,9 +260,10 @@ function EnquireSection() {
         {sent ? (
           <Reveal>
             <div className="border border-acid/40 bg-[#131a12] p-8 text-center">
-              <p className="font-display text-2xl uppercase text-bone">Application noted.</p>
+              <p className="font-display text-2xl uppercase text-bone">Enquiry ready to send.</p>
               <p className="mt-3 font-body text-sm text-bone/65">
-                For the fastest reply, send it on WhatsApp too — seats are limited and shortlisting happens in order.
+                WhatsApp should have opened with your details — press send there to finish. Seats are limited
+                and shortlisting happens in order.
               </p>
               <div className="mt-6">
                 <InkButton onClick={onWhatsApp}>Send on WhatsApp</InkButton>

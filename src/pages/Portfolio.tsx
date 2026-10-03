@@ -180,12 +180,11 @@ export default function Portfolio() {
                       <PlaceholderImage
                         seed={g.id}
                         label={g.category}
-                        sub={g.title}
                         className="transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                     </div>
                     <div className="flex items-center justify-between border-t-2 border-bone/10 px-3 py-2.5">
-                      <span className="font-display text-[10px] uppercase tracking-[0.16em] text-bone/70">{g.title}</span>
+                      <span className="font-display text-[10px] uppercase tracking-[0.16em] text-bone/70">{g.category}</span>
                       <StarMotif className={cn("h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100", accentText[artist.accent])} />
                     </div>
                   </Link>

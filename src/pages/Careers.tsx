@@ -68,7 +68,28 @@ export default function Careers() {
     if (form.portfolio && !/^https?:\/\//.test(form.portfolio.trim()))
       return setError("Portfolio link should start with https:// (or leave it empty).");
     setError("");
-    await submitCareersApplication({ ...form });
+    const result = await submitCareersApplication({ ...form });
+    // No Google Form endpoint configured yet — don't claim the application was
+    // received. Hand it to WhatsApp so the enquiry actually reaches the studio.
+    if (!result.configured) {
+      openWhatsApp(
+        careersMessage({
+          name: form.name,
+          role: form.role,
+          experience: form.experience,
+          portfolio: form.portfolio,
+          instagram: form.instagram,
+          message: form.message,
+        }),
+      );
+      setSent(true);
+      return;
+    }
+    if (!result.ok) {
+      return setError(
+        result.error ?? "We couldn't send that just now. Please try WhatsApp instead.",
+      );
+    }
     setSent(true);
   };
 
@@ -130,10 +151,10 @@ export default function Careers() {
           {sent ? (
             <Reveal>
               <div className="border border-acid/40 bg-[#131a12] p-8 text-center md:p-10">
-                <p className="font-display text-2xl uppercase text-bone">Application received.</p>
+                <p className="font-display text-2xl uppercase text-bone">Application ready to send.</p>
                 <p className="mx-auto mt-3 max-w-md font-body text-sm text-bone/65">
-                  We go through every portfolio when a seat opens. To put yourself on top of the pile, send the
-                  same details on WhatsApp.
+                  We go through every portfolio when a seat opens. WhatsApp should have opened with your
+                  details — press send there to finish. You can also send it again below.
                 </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                   <InkButton onClick={onWhatsApp}>Apply via WhatsApp</InkButton>
