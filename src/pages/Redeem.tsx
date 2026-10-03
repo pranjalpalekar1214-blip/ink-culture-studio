@@ -31,6 +31,8 @@ export default function Redeem() {
     path: "/redeem",
     keywords: ["staff"],
     type: "website",
+    // Counter terminal — must never be indexed.
+    noindex: true,
   });
 
   const [code, setCode] = useState("");

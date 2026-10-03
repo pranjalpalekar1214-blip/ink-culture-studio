@@ -3,10 +3,15 @@ import { contact, siteUrl } from "./contact";
 /** Brand accent (yellow). Single source of truth for schema colors. */
 export const BRAND_COLOR = "#F5C518";
 
-export const siteName = "Street Culture Tattoo Studio and Academy";
+/** Site name used in <title>/og:site_name. Driven by the contact config so the
+ *  NAP name can never drift between schema, meta and on-page copy. */
+export const siteName = contact.studioName;
 
 /** Shared OG image path — replace public/og-image.png with a real 1200×630 image. */
 export const ogImage = "/og-image.png";
+
+/** Intrinsic size of the OG image, declared so Facebook/LinkedIn don't guess. */
+export const ogImageSize = { width: 1200, height: 630 };
 
 export type SeoInput = {
   title: string;
@@ -20,6 +25,8 @@ export type SeoInput = {
   publishedTime?: string;
   author?: string;
   keywords?: string[];
+  /** Staff/internal pages opt out of indexing. */
+  noindex?: boolean;
 };
 
 export function seoUrl(path: string) {
@@ -51,6 +58,7 @@ export function buildPageMeta(input: SeoInput) {
     keywords: [...(input.keywords ?? []), ...defaultKeywords],
     publishedTime: input.publishedTime,
     author: input.author,
+    noindex: input.noindex ?? false,
     siteName,
     locale: "en_IN",
   };
@@ -62,9 +70,9 @@ export function buildPageMeta(input: SeoInput) {
 
 export const pageMeta = {
   home: buildPageMeta({
-    title: `${siteName} | Tattoo Studio in Kandivali West, Mumbai`,
+    title: `${contact.googleListingName}`,
     description:
-      "Street Culture is a custom tattoo studio & academy in Kandivali West, Mumbai. Artists Karan & Lucky specialise in black & grey, fine line, realism and custom tattoos. Book a consultation.",
+      `Custom tattoo & piercing studio in Kandivali West, Mumbai — 4.86★ on Google. Colour, black & grey, fine line and realism by Karan & Lucky. WhatsApp ${contact.displayPhone}.`,
     path: "/",
   }),
   about: buildPageMeta({
@@ -124,7 +132,7 @@ export const pageMeta = {
   contact: buildPageMeta({
     title: `Contact & Location — Kandivali West, Mumbai | ${siteName}`,
     description:
-      "Find Street Culture Tattoo Studio in Kandivali West, Mumbai. Address, WhatsApp number, opening hours, directions and how to reach us by train.",
+      `Custom tattoo & piercing studio in Kandivali West, Mumbai. Pillar No. 283, opp. Gaurav Heights. 4.86★ Google, 12–9 PM (Fri off). WhatsApp ${contact.displayPhone}.`,
     path: "/contact",
   }),
   concept: buildPageMeta({

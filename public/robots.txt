@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+# Staff-only counter terminal — never in the index.
+Disallow: /redeem
+Disallow: /api/
 
 Sitemap: https://streetculture.tattoo/sitemap.xml

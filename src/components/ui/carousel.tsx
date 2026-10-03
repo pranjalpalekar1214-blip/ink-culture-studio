@@ -86,18 +86,35 @@ function Carousel({
     [scrollPrev, scrollNext]
   )
 
+  // Notify the consumer from embla's own lifecycle rather than setting state
+  // synchronously inside the effect body (which triggers a cascading render).
   React.useEffect(() => {
     if (!api || !setApi) return
-    setApi(api)
+    let notified = false
+    const notify = () => {
+      if (notified) return
+      notified = true
+      setApi(api)
+    }
+    api.on("init", notify)
+    // embla may already have initialised before this subscription exists
+    queueMicrotask(notify)
+    return () => {
+      api.off("init", notify)
+    }
   }, [api, setApi])
 
   React.useEffect(() => {
     if (!api) return
-    onSelect(api)
+    // Sync the initial prev/next availability off the effect body so the
+    // first paint isn't followed by a cascading render; later updates come
+    // from embla's own events.
+    queueMicrotask(() => onSelect(api))
     api.on("reInit", onSelect)
     api.on("select", onSelect)
 
     return () => {
+      api?.off("reInit", onSelect)
       api?.off("select", onSelect)
     }
   }, [api, onSelect])
