@@ -180,8 +180,19 @@ export function localBusinessSchema() {
       latitude: contact.geo.latitude,
       longitude: contact.geo.longitude,
     },
+    ...(contact.googleRating > 0 && {
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: contact.googleRating.toFixed(2),
+        bestRating: 5,
+        worstRating: 1,
+      },
+    }),
     openingHoursSpecification: contact.openingHours
-      .filter((h) => !h.hours.toLowerCase().includes("appointment"))
+      .filter((h) => {
+        const t = h.hours.toLowerCase();
+        return !t.includes("appointment") && !t.includes("closed");
+      })
       .map((h) => ({
         "@type": "OpeningHoursSpecification",
         dayOfWeek: h.day,

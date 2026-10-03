@@ -59,11 +59,20 @@ export default function Contact() {
                     </a>
                   </li>
                 </ul>
-                {contact.googleReviewUrl && (
-                  <a href={contact.googleReviewUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-block text-[11px] uppercase tracking-[0.2em] text-blood underline underline-offset-4">
-                    Leave us a Google review
-                  </a>
-                )}
+                <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+                  {contact.googleRating > 0 && (
+                    <span className="inline-flex items-center gap-1.5 font-body text-sm text-bone/80">
+                      <span aria-hidden className="text-blood">★★★★★</span>
+                      <span className="font-semibold text-bone">{contact.googleRating.toFixed(2)}</span>
+                      <span className="text-bone/60">on Google</span>
+                    </span>
+                  )}
+                  {contact.googleReviewUrl && (
+                    <a href={contact.googleReviewUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] uppercase tracking-[0.2em] text-blood underline underline-offset-4">
+                      Leave us a Google review
+                    </a>
+                  )}
+                </div>
               </div>
             </Reveal>
 
@@ -76,7 +85,7 @@ export default function Contact() {
                   {contact.openingHours.map((h) => (
                     <li key={h.day} className="flex justify-between gap-4 border-b border-bone/8 pb-2 text-bone/65 last:border-0">
                       <span>{h.day}</span>
-                      <span className="text-bone/85">{h.hours}</span>
+                      <span className={h.hours === "Closed" ? "text-blood" : "text-bone/85"}>{h.hours}</span>
                     </li>
                   ))}
                 </ul>

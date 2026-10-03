@@ -58,6 +58,9 @@ export const contact = {
   /** Google reviews — replace with real review link */
   googleReviewUrl: "",
 
+  /** Average Google rating (out of 5) — shown on the contact page */
+  googleRating: 4.58,
+
   social: {
     instagram: "https://instagram.com/streetculture.tattoo",
     instagramHandle: "@streetculture.tattoo",
@@ -65,15 +68,15 @@ export const contact = {
     youtube: "",
   },
 
-  /** Editable opening hours — key order is display order */
+  /** Editable opening hours — key order is display order. "Closed" = day off. */
   openingHours: [
-    { day: "Monday", hours: "11:00 AM – 8:00 PM" },
-    { day: "Tuesday", hours: "11:00 AM – 8:00 PM" },
-    { day: "Wednesday", hours: "11:00 AM – 8:00 PM" },
-    { day: "Thursday", hours: "11:00 AM – 8:00 PM" },
-    { day: "Friday", hours: "11:00 AM – 9:00 PM" },
-    { day: "Saturday", hours: "11:00 AM – 9:00 PM" },
-    { day: "Sunday", hours: "By appointment" },
+    { day: "Monday", hours: "12:00 PM – 9:00 PM" },
+    { day: "Tuesday", hours: "12:00 PM – 9:00 PM" },
+    { day: "Wednesday", hours: "12:00 PM – 9:00 PM" },
+    { day: "Thursday", hours: "12:00 PM – 9:00 PM" },
+    { day: "Friday", hours: "Closed" },
+    { day: "Saturday", hours: "12:00 PM – 9:00 PM" },
+    { day: "Sunday", hours: "12:00 PM – 9:00 PM" },
   ],
 } as const;
 
