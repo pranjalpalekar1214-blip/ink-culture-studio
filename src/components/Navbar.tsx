@@ -194,10 +194,10 @@ function FullScreenMenu({ open, onClose }: { open: boolean; onClose: () => void 
             </div>
             <div className="flex items-center gap-3">
               <a
-                href={contact.social.instagram}
+                href={contact.social.instagramStudio.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram"
+                aria-label={`Instagram — ${contact.social.instagramStudio.handle}`}
                 className="flex size-9 items-center justify-center border border-bone/20 text-bone/70 transition-colors hover:border-blood hover:text-blood"
               >
                 <Instagram className="size-4" />

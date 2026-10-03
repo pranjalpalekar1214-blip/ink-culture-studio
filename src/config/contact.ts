@@ -89,11 +89,28 @@ export const contact = {
   googleRating: 4.86,
 
   social: {
-    /** PLACEHOLDER — replace with the real Instagram profile URL */
-    instagram: "https://instagram.com/streetculture.tattoo",
-    /** PLACEHOLDER — replace with the real handle */
-    instagramHandle: "@streetculture.tattoo",
+    /**
+     * Instagram accounts. `studio` is the main profile (also used as
+     * `social.instagram` for schema sameAs + existing single links).
+     */
+    instagram: "https://instagram.com/streetculturetattoo_official",
+    instagramHandle: "@streetculturetattoo_official",
+    instagramStudio: {
+      handle: "@streetculturetattoo_official",
+      url: "https://instagram.com/streetculturetattoo_official",
+      label: "Studio",
+    },
+    instagramAcademy: {
+      handle: "@streetculturetattoo_academy",
+      url: "https://instagram.com/streetculturetattoo_academy",
+      label: "Academy",
+    },
+    /**
+     * Facebook — PLACEHOLDER. Send the page URL/handle and it will switch on
+     * across the footer, the contact page and the social dock.
+     */
     facebook: "",
+    facebookHandle: "",
     youtube: "",
   },
 

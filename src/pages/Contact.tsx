@@ -55,9 +55,21 @@ export default function Contact() {
                   </li>
                   <li className="flex items-center gap-3">
                     <MessageCircle className="size-4 shrink-0 text-blood" />
-                    <a href={contact.social.instagram} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-bone">
-                      Instagram — {contact.social.instagramHandle}
-                    </a>
+                    <span className="flex flex-col gap-1">
+                      {[
+                        contact.social.instagramStudio,
+                        contact.social.instagramAcademy,
+                      ].map((ig) => (
+                        <a key={ig.handle} href={ig.url} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-bone">
+                          Instagram {ig.label} — {ig.handle}
+                        </a>
+                      ))}
+                      {contact.social.facebook && (
+                        <a href={contact.social.facebook} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-bone">
+                          Facebook{contact.social.facebookHandle ? ` — ${contact.social.facebookHandle}` : ""}
+                        </a>
+                      )}
+                    </span>
                   </li>
                 </ul>
                 <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
@@ -130,11 +142,11 @@ export default function Contact() {
         <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
           <div className="grid gap-6 sm:grid-cols-3">
             {[
-              { t: "By Train", d: "Western Line to Kandivali station, west side. A short auto-rickshaw ride or a walk from the station exit." },
-              { t: "By Road", d: "Right off S.V. Road in Kandivali West — easy drop-off point, parking nearby." },
-              { t: "From the Airport", d: "Roughly 40–60 minutes depending on traffic, via the western express highway corridor." },
+              { t: "By Metro", d: "Metro Line 2B (Blue Line) to Kandivali station — a short walk to Pillar No. 283, opp. Gaurav Heights." },
+              { t: "By Road", d: "Off S.V. Road in Kandivali West, near Adarsh Nagar — easy drop-off point." },
+              { t: "By Rickshaw / Cab", d: "Ask for Pillar No. 283, opp. Gaurav Heights, Kandivali West — a 2-minute ride from Kandivali station." },
             ].map((x, i) => (
-              <Reveal key={x.t} delay={i * 0.07}>
+              <Reveal key={`${x.t}-${i}`} delay={i * 0.07}>
                 <div className="h-full border border-bone/12 p-6">
                   <h3 className="font-display text-lg uppercase tracking-tight text-bone">{x.t}</h3>
                   <p className="mt-2 font-body text-sm leading-relaxed text-bone/60">{x.d}</p>

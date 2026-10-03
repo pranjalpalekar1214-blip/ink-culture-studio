@@ -1,4 +1,4 @@
-import { Instagram, MapPin } from "lucide-react";
+import { Facebook, Instagram, MapPin } from "lucide-react";
 import { Link } from "react-router";
 import { contact } from "@/config/contact";
 import { BrandLogo } from "@/components/BrandLogo";
@@ -27,20 +27,61 @@ export function Footer() {
             <p className="mt-3 max-w-sm font-body text-sm leading-relaxed text-bone/60">
               {contact.studioName} — custom tattoos & professional training in {contact.address.locality}, {contact.address.city}.
             </p>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
               <InkButton href="/book" size="sm">
                 Book Now
               </InkButton>
               <a
-                href={contact.social.instagram}
+                href={contact.social.instagramStudio.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram"
+                aria-label={`Instagram — Studio (${contact.social.instagramStudio.handle})`}
+                title={`Instagram — ${contact.social.instagramStudio.handle}`}
                 className="flex size-10 items-center justify-center border border-bone/20 text-bone/70 transition-colors hover:border-blood hover:text-blood"
               >
                 <Instagram className="size-4" />
               </a>
+              <a
+                href={contact.social.instagramAcademy.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Instagram — Academy (${contact.social.instagramAcademy.handle})`}
+                title={`Instagram — ${contact.social.instagramAcademy.handle}`}
+                className="flex size-10 items-center justify-center border border-bone/20 text-bone/70 transition-colors hover:border-blood hover:text-blood"
+              >
+                <Instagram className="size-4" />
+              </a>
+              {contact.social.facebook && (
+                <a
+                  href={contact.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="flex size-10 items-center justify-center border border-bone/20 text-bone/70 transition-colors hover:border-blood hover:text-blood"
+                >
+                  <Facebook className="size-4" />
+                </a>
+              )}
             </div>
+            <ul className="mt-4 space-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-bone/50">
+              <li>
+                <a href={contact.social.instagramStudio.url} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-blood">
+                  Instagram Studio — {contact.social.instagramStudio.handle}
+                </a>
+              </li>
+              <li>
+                <a href={contact.social.instagramAcademy.url} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-blood">
+                  Instagram Academy — {contact.social.instagramAcademy.handle}
+                </a>
+              </li>
+              {contact.social.facebookHandle && (
+                <li>
+                  <a href={contact.social.facebook || `https://facebook.com/${contact.social.facebookHandle}`} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-blood">
+                    Facebook — {contact.social.facebookHandle}
+                  </a>
+                </li>
+              )}
+            </ul>
           </div>
 
           <nav aria-label="Footer">

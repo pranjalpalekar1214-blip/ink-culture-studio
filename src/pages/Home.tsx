@@ -12,6 +12,7 @@ import { artists } from "@/data/artists";
 import { faqs, testimonials } from "@/data/faqs";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { breadcrumbSchema, faqSchema, localBusinessSchema, organizationSchema, pageMeta } from "@/config/seo";
+import { displayWhatsApp } from "@/lib/whatsapp";
 
 export default function Home() {
   useSeo(pageMeta.home);
@@ -26,6 +27,10 @@ export default function Home() {
           "CUSTOM ONLY — NO REPEATS",
           "PIERCINGS · TATTOOS · TRAINING",
           "KANDIVALI WEST, MUMBAI",
+          `${contact.googleRating.toFixed(2)}★ ON GOOGLE — WALK-INS WELCOME`,
+          contact.social.instagramStudio.handle.toUpperCase(),
+          contact.social.instagramAcademy.handle.toUpperCase(),
+          `WHATSAPP ${displayWhatsApp()}`,
           "WALK IN LOUD, WALK OUT ICONIC",
         ]}
       />

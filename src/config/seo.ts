@@ -200,7 +200,11 @@ export function localBusinessSchema() {
         opens: toSchemaTime(h.hours.split("–")[0]?.trim() || "11:00 AM"),
         closes: toSchemaTime(h.hours.split("–")[1]?.trim() || "8:00 PM"),
       })),
-    sameAs: [contact.social.instagram].filter(Boolean),
+    sameAs: [
+      contact.social.instagramStudio.url,
+      contact.social.instagramAcademy.url,
+      contact.social.facebook,
+    ].filter(Boolean),
     areaServed: [
       ...contact.address.areas,
       "Kandivali West",
@@ -221,7 +225,11 @@ export function organizationSchema() {
     url: siteUrl,
     logo: absoluteUrl("/logo.svg"),
     slogan: contact.tagline,
-    sameAs: [contact.social.instagram].filter(Boolean),
+    sameAs: [
+      contact.social.instagramStudio.url,
+      contact.social.instagramAcademy.url,
+      contact.social.facebook,
+    ].filter(Boolean),
   };
 }
 
