@@ -158,8 +158,9 @@ export function localBusinessSchema() {
     "@type": ["TattooShop", "LocalBusiness"],
     "@id": `${siteUrl}/#business`,
     name: contact.studioName,
-    alternateName: contact.shortName,
+    alternateName: [contact.shortName, contact.googleListingName],
     slogan: contact.tagline,
+    description: contact.description,
     url: siteUrl,
     image: absoluteUrl(ogImage),
     telephone: `+${contact.whatsappNumber}`,
@@ -200,9 +201,14 @@ export function localBusinessSchema() {
         closes: toSchemaTime(h.hours.split("–")[1]?.trim() || "8:00 PM"),
       })),
     sameAs: [contact.social.instagram].filter(Boolean),
-    areaServed: ["Kandivali West", "Kandivali", "Malad", "Borivali", "Goregaon", "Mumbai"].map(
-      (name) => ({ "@type": "Place", name }),
-    ),
+    areaServed: [
+      ...contact.address.areas,
+      "Kandivali West",
+      "Malad",
+      "Borivali",
+      "Goregaon",
+      "Mumbai",
+    ].map((name) => ({ "@type": "Place", name })),
   };
 }
 

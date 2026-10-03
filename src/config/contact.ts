@@ -10,63 +10,96 @@
 
 export const contact = {
   /** Studio display name */
-  studioName: "Street Culture Tattoo Studio and Academy",
+  studioName: "Street Culture Tattoo & Academy",
   shortName: "Street Culture",
   tagline: "INK IS CULTURE.",
+
+  /**
+   * Google listing title (the verified business name on Google Maps).
+   * Used for SEO titles where the full brand name is wanted.
+   */
+  googleListingName:
+    "Street Culture Tattoo & Academy | Best Colour Tattoo Studio in Mumbai",
+
+  /** Short business description used in meta/structured data. */
+  description:
+    "Professional tattoo and piercing studio specialising in custom designs and hygienic artistry.",
 
   /**
    * WhatsApp number in international format WITHOUT "+", spaces or dashes.
    * Used for wa.me links. Example: 919999999999
    */
-  whatsappNumber: "910000000000",
+  whatsappNumber: "919819700071",
 
   /** Number shown to humans on the site */
-  displayPhone: "+91 00000 00000",
+  displayPhone: "+91 98197 00071",
 
-  /** Email shown on the site + used in mailto links */
+  /** Email shown on the site + used in mailto links — PLACEHOLDER */
   email: "hello@streetculture.tattoo",
 
   /** Address — keep NAP (Name / Address / Phone) consistent everywhere */
   address: {
-    street: "Shop G-XX, Example Plaza, S.V. Road",
+    street:
+      "Metro Station Pillar No. 283, Street Culture Tattoo & Academy, opp. Gaurav Heights",
     locality: "Kandivali West",
     city: "Mumbai",
     state: "Maharashtra",
     postalCode: "400067",
     country: "India",
+    /** Landmarks / neighbourhoods that make the shop findable */
+    areas: ["Adarsh Nagar", "Shravan Nagar", "Kandivali"],
     /** Full one-line address used in footer / schema */
-    full: "Kandivali West, Mumbai, Maharashtra 400067, India",
+    full:
+      "Metro Station Pillar No. 283, Street Culture Tattoo & Academy, opp. Gaurav Heights, Adarsh Nagar, Shravan Nagar, Kandivali West, Mumbai, Maharashtra 400067",
   },
 
-  /** Geo coordinates for LocalBusiness schema (Kandivali West approx.) */
+  /**
+   * Geo coordinates for LocalBusiness schema + map pin.
+   * NOTE: still an approximation for the Kandivali West area — send the Google
+   * Maps share link to replace with the exact shopfront coordinates.
+   */
   geo: { latitude: 19.2046, longitude: 72.8497 },
 
   /**
-   * Google Maps embed (interactive map). Replace with the studio's real
-   * embed URL from Google Maps → Share → Embed a map.
+   * Google Maps embed (interactive map) and directions link. Both resolve to
+   * the shopfront via the full street address. For a hard-pinned map, replace
+   * with the embed URL from Google Maps → Share → Embed a map.
    */
   mapEmbedUrl:
-    "https://www.google.com/maps?q=Kandivali+West,+Mumbai,+Maharashtra&output=embed",
+    "https://www.google.com/maps?q=" +
+    encodeURIComponent(
+      "Street Culture Tattoo & Academy, Metro Station Pillar No. 283, opp. Gaurav Heights, Kandivali West, Mumbai 400067",
+    ) +
+    "&output=embed",
 
-  /** Directions link (opens Google Maps with directions) */
+  /** Directions link (opens Google Maps with directions to the shopfront) */
   directionsUrl:
-    "https://www.google.com/maps/dir/?api=1&destination=Kandivali+West,+Mumbai,+Maharashtra",
+    "https://www.google.com/maps/dir/?api=1&destination=" +
+    encodeURIComponent(
+      "Street Culture Tattoo & Academy, Metro Station Pillar No. 283, opp. Gaurav Heights, Kandivali West, Mumbai 400067",
+    ),
 
-  /** Google Business Profile — replace with real profile URL */
+  /** Google Business Profile — paste the "Own this business" listing URL */
   googleBusinessUrl: "",
 
-  /** Google reviews — replace with real review link */
+  /** Google reviews — paste the listing's reviews URL */
   googleReviewUrl: "",
 
-  /** Average Google rating (out of 5) — shown on the contact page */
-  googleRating: 4.58,
+  /** Average Google rating (out of 5) — shown on the contact page + schema */
+  googleRating: 4.86,
 
   social: {
+    /** PLACEHOLDER — replace with the real Instagram profile URL */
     instagram: "https://instagram.com/streetculture.tattoo",
+    /** PLACEHOLDER — replace with the real handle */
     instagramHandle: "@streetculture.tattoo",
     facebook: "",
     youtube: "",
   },
+
+  /** Landing page (Instagram) description, verbatim from the profile */
+  profileBio:
+    "TATTOOS | PIERCING | ACADEMY. Team of multiple award winning tattoo artists. Sharing Art - Culture & Love.",
 
   /** Editable opening hours — key order is display order. "Closed" = day off. */
   openingHours: [

@@ -61,7 +61,11 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5 font-body text-sm text-bone/70">
               <li className="flex items-start gap-2">
                 <MapPin className="mt-0.5 size-4 shrink-0 text-blood/70" />
-                <span>{contact.address.locality}, {contact.address.city}<br />{contact.address.state}</span>
+                <span>
+                  {contact.address.street}<br />
+                  {contact.address.locality}, {contact.address.city}<br />
+                  {contact.address.state} {contact.address.postalCode}
+                </span>
               </li>
               <li>
                 <a href={`https://wa.me/${contact.whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-blood">
@@ -74,7 +78,7 @@ export function Footer() {
                 </a>
               </li>
               <li className="pt-2 text-[11px] uppercase tracking-[0.2em] text-bone/40">
-                {contact.openingHours[0].hours.split("–")[0]?.trim()} – late · Tue–Sun
+                12 PM – 9 PM · Closed Friday
               </li>
             </ul>
           </div>

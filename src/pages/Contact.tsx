@@ -38,6 +38,7 @@ export default function Contact() {
                     <MapPin className="mt-0.5 size-4 shrink-0 text-blood" />
                     <span>
                       {a.street}<br />
+                      {a.areas.join(", ")}<br />
                       {a.locality}, {a.city}<br />
                       {a.state} {a.postalCode}
                     </span>
