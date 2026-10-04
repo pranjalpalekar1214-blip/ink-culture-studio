@@ -94,7 +94,10 @@ export function useJsonLd(schema: object | object[] | null) {
 
   useEffect(() => {
     if (!key) return;
-    const blocks = JSON.parse(key) as object[];
+    const parsed = JSON.parse(key) as object | object[];
+    // Pages pass either a single schema object or an array of them — normalise
+    // so a bare object (e.g. breadcrumbSchema(...)) doesn't crash on .forEach.
+    const blocks = Array.isArray(parsed) ? parsed : [parsed];
     const ids: string[] = [];
     blocks.forEach((block, i) => {
       const id = `ld-page-${i}`;
