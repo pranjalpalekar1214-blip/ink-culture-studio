@@ -84,7 +84,7 @@ export default function About() {
             </Reveal>
             <Reveal delay={0.24}>
               <div className="mt-8 flex flex-wrap gap-3">
-                <InkButton href="/artists">Meet the Artists</InkButton>
+                <InkButton href="/artists">Meet your artists</InkButton>
                 <InkButton href="/gallery" variant="outline">See the Work</InkButton>
               </div>
             </Reveal>
@@ -181,7 +181,7 @@ export default function About() {
           </Reveal>
           <Reveal delay={0.12}>
             <p className="mx-auto mt-5 max-w-md font-body text-sm text-bone/60 md:text-base">
-              Walk the space, meet the artists, talk the idea. First consultations are always free.
+              Walk the space, meet your artists, talk the idea. First consultations are always free.
             </p>
           </Reveal>
           <Reveal delay={0.2}>

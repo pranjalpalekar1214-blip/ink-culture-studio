@@ -8,7 +8,7 @@
  * configured: false } and the UI falls back to WhatsApp / mailto.
  */
 
-import { googleForm } from "@/config/contact";
+import { contact, googleForm } from "@/config/contact";
 
 type EntryMap = Record<string, string>;
 
@@ -64,7 +64,7 @@ export function submitAcademyEnquiry(data: Record<string, string>): Promise<Subm
 
 /** mailto fallback so every form has a working submit path pre-configuration. */
 export function mailtoLink(subject: string, body: string): string {
-  return `mailto:${"hello@streetculture.tattoo"}?subject=${encodeURIComponent(
+  return `mailto:${contact.email}?subject=${encodeURIComponent(
     subject,
   )}&body=${encodeURIComponent(body)}`;
 }

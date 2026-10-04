@@ -223,7 +223,7 @@ function ArtistsSection() {
   return (
     <section className="relative border-t border-bone/10 py-24 md:py-36" aria-labelledby="artists-heading">
       <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
-        <SectionHeading index="02" kicker="The Roster" title={<>Meet the<br />artists.</>} />
+        <SectionHeading index="02" kicker="The Roster" title={<>Meet your<br />artists.</>} />
         <div className="grid gap-8 md:grid-cols-2 md:gap-10">
           {artists.map((a, i) => (
             <ArtistCard key={a.id} artist={a} index={i} />

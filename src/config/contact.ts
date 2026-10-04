@@ -34,8 +34,8 @@ export const contact = {
   /** Number shown to humans on the site */
   displayPhone: "+91 98197 00071",
 
-  /** Email shown on the site + used in mailto links — PLACEHOLDER */
-  email: "hello@streetculture.tattoo",
+  /** Email shown on the site + used in mailto links */
+  email: "streetculturetattoos@gmail.com",
 
   /** Address — keep NAP (Name / Address / Phone) consistent everywhere */
   address: {

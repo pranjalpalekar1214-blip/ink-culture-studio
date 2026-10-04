@@ -21,7 +21,7 @@ export default function Artists() {
       <PageHero
         index="01"
         kicker="The Roster"
-        title={<>Meet the<br />artists.</>}
+        title={<>Meet your<br />artists.</>}
         lead="Two resident artists, one standard: custom work only, drawn for your body and your story. Every booking starts with a free consultation."
       >
         <Reveal delay={0.3} className="mt-8">

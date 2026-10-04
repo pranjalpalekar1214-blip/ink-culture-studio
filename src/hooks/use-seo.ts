@@ -85,24 +85,43 @@ export function useSeo(input: SeoArgs | null) {
   }, [key]);
 }
 
+/**
+ * Data boundary for JSON-LD: pages pass either a bare schema object
+ * (breadcrumbSchema(...) etc.) or an array of them — always return a clean
+ * array of non-null objects so downstream code can rely on `.forEach`.
+ */
+function normalizeBlocks(schema: object | object[] | null): object[] {
+  if (!schema) return [];
+  const list = Array.isArray(schema) ? schema : [schema];
+  return list.filter(
+    (block): block is object => typeof block === "object" && block !== null,
+  );
+}
+
 /** Inject one or more JSON-LD structured-data blocks scoped to this page. */
 export function useJsonLd(schema: object | object[] | null) {
   // Same reason as useSeo: new array/object literal per render, so serialise
   // once and let the effect depend on the string. Stops JSON.stringify +
   // DOM writes on every render of motion-heavy pages.
-  const key = schema ? JSON.stringify(schema) : null;
+  const blocks = normalizeBlocks(schema);
+  const key = blocks.length > 0 ? JSON.stringify(blocks) : null;
 
   useEffect(() => {
     if (!key) return;
-    const parsed = JSON.parse(key) as object | object[];
-    // Pages pass either a single schema object or an array of them — normalise
-    // so a bare object (e.g. breadcrumbSchema(...)) doesn't crash on .forEach.
-    const blocks = Array.isArray(parsed) ? parsed : [parsed];
+    const parsed: unknown = JSON.parse(key);
+    if (!Array.isArray(parsed)) {
+      // Invariant: `key` is serialised from an array above, so this cannot
+      // happen — but if it ever does, fail with a real message instead of a
+      // cryptic `blocks.forEach is not a function` deeper in the effect.
+      throw new Error(
+        `useJsonLd: expected an array of schema blocks, got ${typeof parsed}`,
+      );
+    }
     const ids: string[] = [];
-    blocks.forEach((block, i) => {
+    parsed.forEach((block, i) => {
       const id = `ld-page-${i}`;
       ids.push(id);
-      upsertJsonLd(id, block);
+      upsertJsonLd(id, block as object);
     });
     return () => {
       ids.forEach((id) => document.getElementById(id)?.remove());
