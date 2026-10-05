@@ -6,7 +6,7 @@ import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { InkButton, MaskReveal, PageHero, Reveal, SectionHeading } from "@/components/ui-kit";
 import { breadcrumbSchema, pageMeta, personSchema } from "@/config/seo";
 import { galleryItems } from "@/data/gallery";
-import { getArtist, statLabels } from "@/data/artists";
+import { getArtist, statLabelsFor } from "@/data/artists";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
 import NotFound from "./NotFound";
@@ -95,7 +95,7 @@ export default function Portfolio() {
       <section className="border-b border-bone/10 py-10 md:py-14" aria-label="Artist stat strip">
         <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-            {statLabels.map(({ key, label }, i) => (
+            {statLabelsFor(artist).map(({ key, label }, i) => (
               <Reveal key={key} delay={i * 0.06}>
                 <div className="border-2 border-bone/12 p-4">
                   <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-bone/45">{label}</p>

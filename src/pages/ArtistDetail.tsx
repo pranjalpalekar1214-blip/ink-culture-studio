@@ -7,7 +7,7 @@ import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { InkButton, MaskReveal, PageHero, Reveal, SectionHeading } from "@/components/ui-kit";
 import { breadcrumbSchema, pageMeta, personSchema } from "@/config/seo";
 import { galleryItems } from "@/data/gallery";
-import { getArtist, statLabels } from "@/data/artists";
+import { getArtist, statLabelsFor } from "@/data/artists";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
 import NotFound from "./NotFound";
@@ -94,7 +94,7 @@ export default function ArtistDetail() {
                     loading="lazy"
                     decoding="async"
                     onError={() => setPhotoFailed(true)}
-                    className="absolute inset-0 h-full w-full object-contain p-4 pb-10 sm:p-6 sm:pb-12"
+                    className="absolute inset-0 h-full w-full object-cover object-[center_20%]"
                   />
                 ) : (
                   <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
@@ -154,7 +154,7 @@ export default function ArtistDetail() {
                     </div>
                   ) : (
                     <div className="mt-5 space-y-2.5 border-t border-bone/10 pt-4">
-                      {statLabels.slice(0, 3).map(({ key, label }) => (
+                      {statLabelsFor(artist).slice(0, 3).map(({ key, label }) => (
                         <div key={key} className="flex items-center justify-between">
                           <span className="text-[10px] uppercase tracking-[0.2em] text-bone/60">{label}</span>
                           <span className={cn("font-mono text-xs font-bold", accentText[artist.accent])}>{artist.stats[key]}</span>

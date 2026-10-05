@@ -2,7 +2,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
-import { statLabels, type Artist } from "@/data/artists";
+import { statLabelsFor, type Artist } from "@/data/artists";
 import { cn } from "@/lib/utils";
 import { BoltMotif, SparkMotif, StarMotif, StickArtistFigure } from "./art";
 import { CursorLabel } from "./CursorLabel";
@@ -255,7 +255,7 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
 
             {/* stats */}
             <div className="mt-5 space-y-2.5">
-              {statLabels.map(({ key, label }, i) => (
+              {statLabelsFor(artist).map(({ key, label }, i) => (
                 <StatBar
                   key={key}
                   label={label}

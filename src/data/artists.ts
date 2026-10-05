@@ -26,6 +26,8 @@ export type Artist = {
   /** Pokémon-card-style flavor line printed at the bottom of the collectible card */
   cardFlavor: string;
   stats: ArtistStats;
+  /** Per-artist label overrides for the shared stat bars (Karan's "shading" prints as "COLOUR") */
+  statLabelOverrides?: Partial<Record<keyof ArtistStats, string>>;
   /** Accent tint used across card + profile page */
   accent: "red" | "green" | "orange" | "cream";
   /** Studio photo, only referenced by JSON-LD person markup — the site itself renders stick-figure doodles */
@@ -75,19 +77,19 @@ export const artists: Artist[] = [
     name: "Karan",
     role: "Tattoo Artist",
     epithet: "The Linework Surgeon",
-    specialties: ["Black & Grey", "Realism", "Geometric"],
-    style: "Black & Grey Realism",
-    experience: "[X]+ years",
-    signatureTechniques: ["Whip-shading", "Single-needle detail", "Negative space"],
+    specialties: ["Fine Line", "Lettering", "Miniature", "Colour", "Neo School"],
+    style: "Fine Line & Lettering",
+    experience: "9 years",
+    signatureTechniques: ["Fine line detailing", "Comic character", "Clean script & lettering", "Miniature tattoos"],
     personality: "Quiet focus, loud tattoos. Karan believes every line should earn its place.",
-    bio: "Karan is a resident artist at Street Culture, Kandivali West. He works primarily in black & grey, building portraits and geometric compositions with patient, deliberate linework. Every piece starts with a consultation and a custom drawing — never a repeat of someone else's flash.",
-    artisticStyle:
-      "High-contrast black & grey with cinematic depth. Fine single-needle detail over soft whip-shaded gradients, with negative space doing half the work.",
+    bio: "Karan is a resident artist at Street Culture, Kandivali West. He works in fine line detailing, comic characters, clean script and lettering, and miniature tattoos. Every piece starts with a consultation and a custom drawing — never a repeat of someone else's flash.",
+    artisticStyle: "Fine line, lettering, miniature, colour, neo school.",
     philosophy:
       "A tattoo should look like it grew there. I design around the body — its lines, its movement, its story — so the piece belongs to you, not to a trend.",
     cardFlavor:
-      "Says only 14 words per session — all of them are about your linework. Weakness: being told his shading is \"nice\".",
-    stats: { linework: 96, shading: 90, detail: 94, creativity: 88, customDesign: 92 },
+      "Fine line detailing, comic characters, clean script & lettering, and miniature tattoos.",
+    stats: { linework: 98, shading: 98, detail: 92, creativity: 88, customDesign: 86 },
+    statLabelOverrides: { shading: "COLOUR" },
     accent: "red",
     image: "/images/artists/karan.jpg",
     portrait: "karan",
@@ -104,3 +106,7 @@ export const statLabels: { key: keyof ArtistStats; label: string }[] = [
   { key: "creativity", label: "CREATIVITY" },
   { key: "customDesign", label: "CUSTOM DESIGN" },
 ];
+
+/** Stat labels for one artist, applying any per-artist label overrides. */
+export const statLabelsFor = (artist: Artist): { key: keyof ArtistStats; label: string }[] =>
+  statLabels.map(({ key, label }) => ({ key, label: artist.statLabelOverrides?.[key] ?? label }));
