@@ -1,6 +1,19 @@
 import { cn } from "@/lib/utils";
 
-export function BrandLogo({ className }: { className?: string }) {
+type BrandLogoProps = { className?: string };
+
+export function BrandMark({ className }: BrandLogoProps) {
+  return (
+    <img
+      src="/logo.png"
+      alt="Street Culture Tattoo and Academy"
+      className={cn("size-12 object-contain", className)}
+      draggable="false"
+    />
+  );
+}
+
+export function BrandLogo({ className }: BrandLogoProps) {
   return (
     <span
       className={cn(
