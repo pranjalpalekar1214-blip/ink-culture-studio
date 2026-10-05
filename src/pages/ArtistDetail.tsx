@@ -86,11 +86,11 @@ export default function ArtistDetail() {
                 <span aria-hidden className="absolute bottom-0 left-0 z-10 h-5 w-5 border-b-2 border-l-2 border-blood" />
                 <span aria-hidden className="absolute bottom-0 right-0 z-10 h-5 w-5 border-b-2 border-r-2 border-blood" />
                 <div className="absolute inset-0 grain opacity-50" aria-hidden />
-                {/* Lucky's real studio photo — this page only; Karan keeps the doodle */}
-                {artist.id === "lucky" && !photoFailed ? (
+                {/* Real studio photo — profile pages only; listing, home and the collectible card keep the doodle */}
+                {(artist.id === "lucky" || artist.id === "karan") && !photoFailed ? (
                   <img
-                    src="/images/artists/lucky.jpg"
-                    alt="Lucky, tattoo artist at Street Culture, Kandivali West"
+                    src={`/images/artists/${artist.id}.jpg`}
+                    alt={`${artist.name}, tattoo artist at Street Culture, Kandivali West`}
                     loading="lazy"
                     decoding="async"
                     onError={() => setPhotoFailed(true)}
