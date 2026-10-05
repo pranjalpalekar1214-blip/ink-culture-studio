@@ -91,7 +91,7 @@ function Hero() {
           Tattoo Studio & Academy — Kandivali West, Mumbai
         </motion.p>
 
-        <h1 className="mt-6 font-display text-[11vw] font-black uppercase leading-[0.85] tracking-[-0.02em] text-bone sm:text-[9vw] lg:text-[6.5rem]">
+        <h1 className="mt-6 font-display text-[11vw] font-black uppercase leading-[0.85] tracking-[0.04em] text-bone sm:text-[9vw] lg:text-[6.5rem]">
           <span className="block">{word("Ink", 0)}&nbsp;{word("Is", 1)}</span>
           <span className="block text-blood">{word("Culture.", 2)}</span>
         </h1>
