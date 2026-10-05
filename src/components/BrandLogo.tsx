@@ -2,15 +2,14 @@ import { cn } from "@/lib/utils";
 
 type BrandLogoProps = { className?: string };
 
-const brandMarkSrc =
-  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo%20icon-PLLW2xOjeNkZ6RaiVasReNC2CrkySE.png";
+const brandMarkSrc = "/images/sct-logo-white.png";
 
 export function BrandMark({ className }: BrandLogoProps) {
   return (
     <img
       src={brandMarkSrc}
       alt="Street Culture Tattoo and Academy"
-      className={cn("size-20 object-contain brightness-0 invert", className)}
+      className={cn("size-20 object-contain", className)}
       draggable="false"
     />
   );
