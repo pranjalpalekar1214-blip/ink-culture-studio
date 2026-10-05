@@ -83,12 +83,9 @@ export default function Portfolio() {
         lead={`${artist.style} — every piece below was drawn from scratch for one body, one story. Custom only, no repeats.`}
       >
         <Reveal delay={0.25} className="mt-8 flex flex-wrap items-center gap-3">
-          <InkButton href="/book" size="lg">
-            Book with {artist.name}
-          </InkButton>
-          <InkButton href={`/artists/${artist.id}`} variant="outline" size="lg">
-            Full Profile
-          </InkButton>
+  <InkButton href="/book" size="lg">
+    Book with {artist.name}
+  </InkButton>
         </Reveal>
       </PageHero>
 
