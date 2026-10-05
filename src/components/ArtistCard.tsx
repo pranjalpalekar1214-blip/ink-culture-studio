@@ -4,8 +4,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { statLabels, type Artist } from "@/data/artists";
 import { cn } from "@/lib/utils";
-import { BoltMotif, SparkMotif, StarMotif } from "./art";
-import { ArtistPhoto } from "./ArtistPhoto";
+import { ArtistPortrait, BoltMotif, SparkMotif, StarMotif } from "./art";
 import { CursorLabel } from "./CursorLabel";
 
 const accentText: Record<Artist["accent"], string> = {
@@ -231,7 +230,9 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
               className="relative mt-5 block overflow-hidden border border-bone/10 bg-ink transition-transform duration-300 hover:-rotate-1"
             >
               <div className="pointer-events-none absolute inset-0 grain opacity-40" aria-hidden />
-              <ArtistPhoto artist={artist} />
+              <div className="relative aspect-[4/5] bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d]">
+                <ArtistPortrait who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
+              </div>
               <div className="absolute inset-x-0 bottom-0 flex justify-between border-t border-bone/10 bg-ink/80 px-3 py-2 text-[9px] uppercase tracking-[0.25em] text-bone/50 backdrop-blur-sm">
                 <span>{artist.style}</span>
                 <span className="text-blood">tap for portfolio →</span>
@@ -270,7 +271,7 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
               <Link
                 to={`/artists/${artist.id}/portfolio`}
                 tabIndex={flipped ? -1 : undefined}
-                className="group/v flex flex-1 items-center justify-center gap-2 border border-bone/25 bg-bone/5 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone hover:text-ink"
+                className="group/v flex flex-1 items-center justify-center gap-2 border border-bone/25 bg-bone/5 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone/10"
               >
                 View Portfolio
                 <ArrowUpRight className="size-4 transition-transform group-hover/v:translate-x-0.5 group-hover/v:-translate-y-0.5" />
@@ -301,11 +302,9 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
 
             {/* studio portrait — appears on the flipped face too */}
             <div className="mt-3 overflow-hidden border border-bone/15 bg-ink">
-              <ArtistPhoto
-                artist={artist}
-                className="h-28 w-full object-cover object-[center_28%] grayscale contrast-[1.05] sm:h-32"
-                fallbackClassName="h-28 sm:h-32"
-              />
+              <div className="relative aspect-[4/5] bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d]">
+                <ArtistPortrait who={artist.portrait} className="absolute inset-0 m-auto h-3/4 text-bone/70" />
+              </div>
             </div>
 
             <div className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto pr-1 text-sm leading-relaxed text-bone/75">
@@ -337,7 +336,7 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
             <button
               onClick={() => setFlipped(false)}
               tabIndex={flipped ? 0 : -1}
-              className="mt-4 flex items-center justify-center gap-2 border border-bone/25 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone hover:text-ink"
+              className="mt-4 flex items-center justify-center gap-2 border border-bone/25 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone/5"
             >
               <RefreshCw className="size-4" /> Flip Back
             </button>
