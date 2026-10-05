@@ -132,6 +132,21 @@ function RouteSyncer() {
 }
 
 /** Marketing-site shell: cursor + chrome around every public page. */
+function ConvexUnavailable() {
+  return (
+    <main className="flex min-h-[60vh] items-center justify-center bg-ink px-6 py-24 text-center">
+      <div>
+        <p className="font-display text-xs uppercase tracking-[0.3em] text-bone/50">
+          Studio services unavailable
+        </p>
+        <p className="mt-3 max-w-md text-sm text-bone/70">
+          This preview is running without its Convex backend. The rest of the studio remains available.
+        </p>
+      </div>
+    </main>
+  );
+}
+
 function SiteLayout() {
   return (
     <CursorProvider>
@@ -152,12 +167,12 @@ function SiteLayout() {
             <Route path="/academy" element={<Academy />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/book" element={<Book />} />
+            <Route path="/book" element={convex ? <Book /> : <ConvexUnavailable />} />
             {/* Staff-only counter terminal: validate + burn mystery codes. Unlinked. */}
-            <Route path="/redeem" element={<Redeem />} />
+            <Route path="/redeem" element={convex ? <Redeem /> : <ConvexUnavailable />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/concept" element={<ConceptLab />} />
+            <Route path="/concept" element={convex ? <ConceptLab /> : <ConvexUnavailable />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

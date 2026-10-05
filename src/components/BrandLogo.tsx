@@ -10,7 +10,7 @@ export function BrandMark({ className }: BrandLogoProps) {
     <img
       src={brandMarkSrc}
       alt="Street Culture Tattoo and Academy"
-      className={cn("size-16 object-contain", className)}
+      className={cn("size-20 object-contain brightness-0 invert", className)}
       draggable="false"
     />
   );
