@@ -104,7 +104,8 @@ class RootErrorBoundary extends React.Component<
   }
 }
 
-const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
+const convexUrl = import.meta.env.VITE_CONVEX_URL as string | undefined;
+const convex = convexUrl ? new ConvexReactClient(convexUrl) : null;
 
 function RouteSyncer() {
   useMysteryTracker();
@@ -168,19 +169,31 @@ function SiteLayout() {
   );
 }
 
+function AppProviders() {
+  const content = (
+    <>
+      <BrowserRouter>
+        <RouteSyncer />
+        <SiteLayout />
+      </BrowserRouter>
+      <Toaster />
+    </>
+  );
+
+  return convex ? (
+    <ConvexAuthProvider client={convex}>{content}</ConvexAuthProvider>
+  ) : (
+    content
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RootErrorBoundary>
       <ToolbarErrorBoundary>
         <VlyToolbar />
       </ToolbarErrorBoundary>
-      <ConvexAuthProvider client={convex}>
-        <BrowserRouter>
-          <RouteSyncer />
-          <SiteLayout />
-        </BrowserRouter>
-        <Toaster />
-      </ConvexAuthProvider>
+      <AppProviders />
     </RootErrorBoundary>
   </StrictMode>,
 );
