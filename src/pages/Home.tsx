@@ -108,9 +108,10 @@ function Hero() {
               Custom tattoos drawn for your body, your story, your streets — in Kandivali West, Mumbai.
             </span>
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col items-start gap-3">
             <InkButton href="/book" size="lg">Book Your Tattoo</InkButton>
             <InkButton href="/artists" variant="outline" size="lg">Explore the Artists</InkButton>
+            <InkButton href="/gallery" variant="outline" size="lg">Explore the Gallery</InkButton>
           </div>
         </motion.div>
 
