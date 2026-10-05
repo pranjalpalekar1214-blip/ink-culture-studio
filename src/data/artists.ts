@@ -28,7 +28,7 @@ export type Artist = {
   stats: ArtistStats;
   /** Accent tint used across card + profile page */
   accent: "red" | "green" | "orange" | "cream";
-  /** Photo — drop a real image in /public/images/artists/ and update */
+  /** Photo served from /public/images/artists/<id>.jpg — ArtistPhoto falls back to the illustration if missing */
   image: string;
   /** Illustrated caricature (SVG component name rendered by <ArtistPortrait/>) */
   portrait: "karan" | "lucky";
@@ -65,7 +65,7 @@ export const artists: Artist[] = [
       "Face like a thundercloud, punchlines like a comedian. Temper sparks the second you touch his stencil. Weakness: his own jokes — he always laughs first.",
     stats: { linework: 94, shading: 86, detail: 92, creativity: 95, customDesign: 97 },
     accent: "green",
-    image: "/images/artists/lucky.svg",
+    image: "/images/artists/lucky.jpg",
     portrait: "lucky",
     instagram: "",
   },
@@ -89,7 +89,7 @@ export const artists: Artist[] = [
       "Says only 14 words per session — all of them are about your linework. Weakness: being told his shading is \"nice\".",
     stats: { linework: 96, shading: 90, detail: 94, creativity: 88, customDesign: 92 },
     accent: "red",
-    image: "/images/artists/karan.svg",
+    image: "/images/artists/karan.jpg",
     portrait: "karan",
     instagram: "",
   },

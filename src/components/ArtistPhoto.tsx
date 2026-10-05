@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { StickArtistFigure } from "@/components/art";
 import { cn } from "@/lib/utils";
 import type { Artist } from "@/data/artists";
@@ -10,23 +10,28 @@ import type { Artist } from "@/data/artists";
  * back to the illustrated stick figure if the file isn't there yet, so dropping
  * the photos in later needs no code change.
  *
- * `className` styles the photo box, `fallbackClassName` the illustration.
+ * `className` styles the photo box, `fallbackClassName` the illustration, and
+ * `fallback` swaps in a custom illustration entirely (the collectible card uses
+ * it so a missing photo degrades to the artist's caricature, not a stick figure).
  */
 export function ArtistPhoto({
   artist,
   className,
   fallbackClassName,
   alt,
+  fallback,
 }: {
   artist: Artist;
   className?: string;
   fallbackClassName?: string;
   alt?: string;
+  fallback?: ReactNode;
 }) {
   const [failed, setFailed] = useState(false);
   const src = `/images/artists/${artist.id}.jpg`;
 
   if (failed) {
+    if (fallback) return <>{fallback}</>;
     return (
       <StickArtistFigure
         who={artist.portrait}

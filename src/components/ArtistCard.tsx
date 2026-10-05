@@ -5,6 +5,7 @@ import { Link } from "react-router";
 import { statLabels, type Artist } from "@/data/artists";
 import { cn } from "@/lib/utils";
 import { ArtistPortrait, BoltMotif, SparkMotif, StarMotif } from "./art";
+import { ArtistPhoto } from "./ArtistPhoto";
 import { CursorLabel } from "./CursorLabel";
 
 const accentText: Record<Artist["accent"], string> = {
@@ -230,8 +231,19 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
               className="relative mt-5 block overflow-hidden border border-bone/10 bg-ink transition-transform duration-300 hover:-rotate-1"
             >
               <div className="pointer-events-none absolute inset-0 grain opacity-40" aria-hidden />
-              <div className="relative aspect-[4/5] bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d]">
-                <ArtistPortrait who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
+              <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d]">
+                <ArtistPhoto
+                  artist={artist}
+                  className="absolute inset-0 h-full w-full object-cover object-[center_18%] grayscale contrast-[1.05]"
+                  fallback={
+                    <ArtistPortrait who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
+                  }
+                />
+                {/* holographic foil sweep — collectible-card sheen */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.08] to-transparent mix-blend-screen"
+                />
               </div>
               <div className="absolute inset-x-0 bottom-0 flex justify-between border-t border-bone/10 bg-ink/80 px-3 py-2 text-[9px] uppercase tracking-[0.25em] text-bone/50 backdrop-blur-sm">
                 <span>{artist.style}</span>
@@ -302,8 +314,14 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
 
             {/* studio portrait — appears on the flipped face too */}
             <div className="mt-3 overflow-hidden border border-bone/15 bg-ink">
-              <div className="relative aspect-[4/5] bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d]">
-                <ArtistPortrait who={artist.portrait} className="absolute inset-0 m-auto h-3/4 text-bone/70" />
+              <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d]">
+                <ArtistPhoto
+                  artist={artist}
+                  className="absolute inset-0 h-full w-full object-cover object-[center_18%] grayscale contrast-[1.05]"
+                  fallback={
+                    <ArtistPortrait who={artist.portrait} className="absolute inset-0 m-auto h-3/4 text-bone/70" />
+                  }
+                />
               </div>
             </div>
 

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Link, useParams } from "react-router";
-import { ArtistPortrait, InkStroke, StarMotif } from "@/components/art";
+import { InkStroke, StarMotif } from "@/components/art";
 import { ArtistPhoto } from "@/components/ArtistPhoto";
 import { CursorLabel } from "@/components/CursorLabel";
 import { PlaceholderImage } from "@/components/PlaceholderImage";

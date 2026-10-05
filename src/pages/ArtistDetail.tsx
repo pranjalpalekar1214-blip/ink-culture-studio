@@ -81,10 +81,14 @@ export default function ArtistDetail() {
           <div className="relative">
             <MaskReveal>
               <div className="relative aspect-[4/5] border border-bone/10 bg-gradient-to-br from-[#1b1b1b] to-[#0f0f0f]">
+                <span aria-hidden className="absolute left-0 top-0 z-10 h-5 w-5 border-l-2 border-t-2 border-blood" />
+                <span aria-hidden className="absolute right-0 top-0 z-10 h-5 w-5 border-r-2 border-t-2 border-blood" />
+                <span aria-hidden className="absolute bottom-0 left-0 z-10 h-5 w-5 border-b-2 border-l-2 border-blood" />
+                <span aria-hidden className="absolute bottom-0 right-0 z-10 h-5 w-5 border-b-2 border-r-2 border-blood" />
                 <div className="absolute inset-0 grain opacity-50" aria-hidden />
                 <ArtistPhoto
                   artist={artist}
-                  className="absolute inset-0 h-full w-full object-contain object-center grayscale contrast-[1.05]"
+                  className="absolute inset-0 h-full w-full object-cover object-[center_18%] grayscale contrast-[1.05]"
                   fallbackClassName="absolute inset-0 m-auto h-4/5 text-bone/80"
                 />
                 <p className="absolute bottom-5 left-5 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
@@ -124,6 +128,18 @@ export default function ArtistDetail() {
                       <p className="font-marker text-sm text-bone/60">{artist.epithet}</p>
                     </div>
                     <StarMotif className={cn("h-6 w-6", accentText[artist.accent])} />
+                  </div>
+
+                  {/* card art — the collectible shows the studio photo */}
+                  <div className="mt-4 overflow-hidden border border-bone/15 bg-ink">
+                    <div className="relative h-36 sm:h-44">
+                      <ArtistPhoto
+                        artist={artist}
+                        className="absolute inset-0 h-full w-full object-cover object-[center_18%] grayscale contrast-[1.05]"
+                        fallbackClassName="absolute inset-0 m-auto h-full w-auto text-bone/70"
+                      />
+                      <span aria-hidden className="pointer-events-none absolute inset-0 grain opacity-40" />
+                    </div>
                   </div>
 
                   {showCard ? (
