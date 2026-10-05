@@ -89,7 +89,7 @@ export default function ArtistDetail() {
                 {/* Real studio photo — profile pages only; listing, home and the collectible card keep the doodle */}
                 {(artist.id === "lucky" || artist.id === "karan") && !photoFailed ? (
                   <img
-                    src={`/images/artists/${artist.id}.jpg`}
+                    src={artist.image}
                     alt={`${artist.name}, tattoo artist at Street Culture, Kandivali West`}
                     loading="lazy"
                     decoding="async"

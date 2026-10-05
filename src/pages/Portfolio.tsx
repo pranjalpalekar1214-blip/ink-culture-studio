@@ -119,7 +119,7 @@ export default function Portfolio() {
                 <div className="absolute inset-0 grain opacity-50" aria-hidden />
                 {!photoFailed && (artist.id === "lucky" || artist.id === "karan") ? (
                   <img
-                    src={`/images/artists/${artist.id}.jpg`}
+                    src={artist.image}
                     alt={`${artist.name}, tattoo artist at Street Culture`}
                     onError={() => setPhotoFailed(true)}
                     className="absolute inset-0 h-full w-full object-cover object-[center_20%]"
