@@ -30,6 +30,7 @@ export default function ArtistDetail() {
   const { artistId } = useParams();
   const artist = getArtist(artistId ?? "");
   const [showCard, setShowCard] = useState(false);
+  const [photoFailed, setPhotoFailed] = useState(false);
 
   useSeo(
     artist
@@ -85,7 +86,19 @@ export default function ArtistDetail() {
                 <span aria-hidden className="absolute bottom-0 left-0 z-10 h-5 w-5 border-b-2 border-l-2 border-blood" />
                 <span aria-hidden className="absolute bottom-0 right-0 z-10 h-5 w-5 border-b-2 border-r-2 border-blood" />
                 <div className="absolute inset-0 grain opacity-50" aria-hidden />
-                <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
+                {/* Lucky's real studio photo — this page only; Karan keeps the doodle */}
+                {artist.id === "lucky" && !photoFailed ? (
+                  <img
+                    src="/images/artists/lucky.jpg"
+                    alt="Lucky, tattoo artist at Street Culture, Kandivali West"
+                    loading="lazy"
+                    decoding="async"
+                    onError={() => setPhotoFailed(true)}
+                    className="absolute inset-0 h-full w-full object-contain p-4 pb-10 sm:p-6 sm:pb-12"
+                  />
+                ) : (
+                  <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
+                )}
                 <p className="absolute bottom-5 left-5 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
                   SC·{artist.number} — {artist.name}, in the studio
                 </p>
