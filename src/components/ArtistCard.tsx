@@ -274,11 +274,12 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
 
             <div className="mt-5 flex items-center gap-3">
               <Link
-to={`/artists/${artist.id}`}
+to={`/artists/${artist.id}/portfolio`}
   tabIndex={flipped ? -1 : undefined}
+  aria-label={`View ${artist.name}'s portfolio`}
   className="group/v flex flex-1 items-center justify-center gap-2 border border-bone/25 bg-bone/5 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone/10"
   >
-  View Full Profile
+  View Portfolio
                 <ArrowUpRight className="size-4 transition-transform group-hover/v:translate-x-0.5 group-hover/v:-translate-y-0.5" />
               </Link>
               <button

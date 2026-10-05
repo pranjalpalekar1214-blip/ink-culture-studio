@@ -25,6 +25,7 @@ const Landing = lazy(() => import("./pages/Home.tsx"));
 const About = lazy(() => import("./pages/About.tsx"));
 const Artists = lazy(() => import("./pages/Artists.tsx"));
 const ArtistDetail = lazy(() => import("./pages/ArtistDetail.tsx"));
+const Portfolio = lazy(() => import("./pages/Portfolio.tsx"));
 const Gallery = lazy(() => import("./pages/Gallery.tsx"));
 const Academy = lazy(() => import("./pages/Academy.tsx"));
 const Blog = lazy(() => import("./pages/Blog.tsx"));
@@ -161,6 +162,7 @@ function SiteLayout() {
             <Route path="/about" element={<About />} />
             <Route path="/artists" element={<Artists />} />
             <Route path="/artists/:artistId" element={<ArtistDetail />} />
+            <Route path="/artists/:artistId/portfolio" element={<Portfolio />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/academy" element={<Academy />} />
             <Route path="/blog" element={<Blog />} />
