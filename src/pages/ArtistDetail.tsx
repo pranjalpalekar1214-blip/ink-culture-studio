@@ -1,8 +1,7 @@
 import { RefreshCw } from "lucide-react";
 import { Link, useParams } from "react-router";
 import { useState } from "react";
-import { InkStroke, StarMotif } from "@/components/art";
-import { ArtistPhoto } from "@/components/ArtistPhoto";
+import { ArtistPortrait, InkStroke, StarMotif } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { InkButton, MaskReveal, PageHero, Reveal, SectionHeading } from "@/components/ui-kit";
@@ -82,9 +81,9 @@ export default function ArtistDetail() {
             <MaskReveal>
               <div className="relative aspect-[4/5] border border-bone/10 bg-gradient-to-br from-[#1b1b1b] to-[#0f0f0f]">
                 <div className="absolute inset-0 grain opacity-50" aria-hidden />
-                <ArtistPhoto artist={artist} className="absolute inset-0 h-full w-full object-cover object-[center_22%] grayscale contrast-[1.05]" fallbackClassName="absolute inset-0 m-auto h-4/5 w-auto text-bone/80" />
+                <ArtistPortrait who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
                 <p className="absolute bottom-5 left-5 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
-                  SC·{artist.number} — {artist.name}, in the studio
+                  SC·{artist.number} — original caricature
                 </p>
               </div>
             </MaskReveal>
@@ -222,7 +221,7 @@ export default function ArtistDetail() {
           <Reveal>
             <InkStroke className="mx-auto mb-6 text-blood" />
             <blockquote className="font-display text-2xl uppercase leading-tight tracking-tight text-bone sm:text-3xl md:text-4xl">
-              “{artist.philosophy}”
+              "{artist.philosophy}"
             </blockquote>
             <cite className="mt-6 block font-mono text-[11px] uppercase not-italic tracking-[0.3em] text-bone/50">
               — {artist.name}, Street Culture
