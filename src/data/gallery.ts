@@ -12,32 +12,36 @@
  */
 
 export type GalleryCategory =
-  | "Black & Grey"
-  | "Realism"
-  | "Fine Line"
-  | "Traditional"
-  | "Neo Traditional"
-  | "Lettering"
-  | "Custom"
+  | "Portfolio"
+  | "Colour Tattoos"
+  | "Religious"
+  | "Animal"
   | "Cover Ups"
-  | "Small Tattoos"
-  | "Large Tattoos";
+  | "Line Art"
+  | "Script"
+  | "Feminine Tattoo Inspo"
+  | "Academy + Studio"
+  | "BTS"
+  | "Healed Tattoos"
+  | "Students, Convocation + Awards";
 
 /** Ink palette used for the "colour" filter dimension. */
 export type InkColor = "Black" | "Black & Grey" | "Colour" | "Fine B&W";
 
 export const galleryCategories: ("All" | GalleryCategory)[] = [
   "All",
-  "Black & Grey",
-  "Realism",
-  "Fine Line",
-  "Traditional",
-  "Neo Traditional",
-  "Lettering",
-  "Custom",
+  "Portfolio",
+  "Colour Tattoos",
+  "Religious",
+  "Animal",
   "Cover Ups",
-  "Small Tattoos",
-  "Large Tattoos",
+  "Line Art",
+  "Script",
+  "Feminine Tattoo Inspo",
+  "Academy + Studio",
+  "BTS",
+  "Healed Tattoos",
+  "Students, Convocation + Awards",
 ];
 
 /** Derived from items — but ordered explicitly for the UI. */
@@ -69,18 +73,18 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 /** Placeholder pool — duplicated across categories to fill the grid until real work is added. */
 const styles: { style: string; artist: 0 | 1; cat: GalleryCategory; ink: InkColor }[] = [
-  { style: "Black & Grey", artist: 0, cat: "Black & Grey", ink: "Black & Grey" },
-  { style: "Realism", artist: 0, cat: "Realism", ink: "Black & Grey" },
-  { style: "Geometric", artist: 0, cat: "Black & Grey", ink: "Black" },
-  { style: "Fine Line", artist: 1, cat: "Fine Line", ink: "Fine B&W" },
-  { style: "Lettering", artist: 1, cat: "Lettering", ink: "Black" },
-  { style: "Neo Trad", artist: 1, cat: "Neo Traditional", ink: "Colour" },
-  { style: "Traditional", artist: 1, cat: "Traditional", ink: "Colour" },
-  { style: "Custom", artist: 0, cat: "Custom", ink: "Black & Grey" },
-  { style: "Cover Up", artist: 0, cat: "Cover Ups", ink: "Black" },
-  { style: "Small", artist: 1, cat: "Small Tattoos", ink: "Fine B&W" },
-  { style: "Large", artist: 0, cat: "Large Tattoos", ink: "Black & Grey" },
-  { style: "Portrait", artist: 0, cat: "Realism", ink: "Black & Grey" },
+  { style: "Portfolio", artist: 0, cat: "Portfolio", ink: "Black & Grey" },
+  { style: "Colour Tattoos", artist: 1, cat: "Colour Tattoos", ink: "Colour" },
+  { style: "Religious", artist: 0, cat: "Religious", ink: "Black & Grey" },
+  { style: "Animal", artist: 1, cat: "Animal", ink: "Colour" },
+  { style: "Cover Ups", artist: 0, cat: "Cover Ups", ink: "Black" },
+  { style: "Line Art", artist: 1, cat: "Line Art", ink: "Fine B&W" },
+  { style: "Script", artist: 0, cat: "Script", ink: "Black" },
+  { style: "Feminine", artist: 1, cat: "Feminine Tattoo Inspo", ink: "Fine B&W" },
+  { style: "Academy Studio", artist: 0, cat: "Academy + Studio", ink: "Black & Grey" },
+  { style: "BTS", artist: 1, cat: "BTS", ink: "Black & Grey" },
+  { style: "Healed", artist: 0, cat: "Healed Tattoos", ink: "Black & Grey" },
+  { style: "Students Awards", artist: 1, cat: "Students, Convocation + Awards", ink: "Colour" },
 ];
 
 const titles = [
