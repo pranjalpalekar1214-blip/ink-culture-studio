@@ -27,37 +27,22 @@ export function BrandMark({ className }: { className?: string }) {
 }
 
 /**
- * Full identity lockup: [badge] STREET CULTURE / TATTOO AND ACADEMY.
- * Monochrome bone/white to match the supplied artwork, static — no hover
- * effects. Kept small on purpose: scales from a single root font-size (all
- * inner sizing is in em), so `<BrandLogo className="text-xs" />` … `text-lg`
- * gives nav → footer sizes with the badge staying compact.
+ * Full identity lockup — the supplied logo artwork on its own (wordmark
+ * removed by request). Scales from the call site's root font-size
+ * (`text-xs` … `text-lg`), so `<BrandLogo className="text-xs" />` … `text-lg`
+ * gives nav → footer sizes, with the image's aspect ratio preserved exactly.
  */
 export function BrandLogo({ className }: { className?: string }) {
   return (
     <span
-      className={cn(
-        "inline-flex select-none items-center gap-[0.75em] font-display uppercase",
-        className,
-      )}
+      className={cn("inline-flex select-none items-center", className)}
     >
-      <span className="sr-only">Street Culture - Tattoo and Academy</span>
-
       <img
         src="/logo.png"
         alt="Street Culture Tattoo and Academy"
-        className="size-[2.75em] shrink-0 object-contain"
+        className="h-[3.5em] w-auto max-w-none shrink-0"
         draggable="false"
       />
-
-      <span aria-hidden="true" className="flex flex-col">
-        <span className="text-[1.6em] font-bold uppercase leading-[0.95] tracking-[-0.04em]">
-          Street Culture
-        </span>
-        <span className="mt-[0.35em] text-[0.6em] font-semibold uppercase leading-none tracking-[0.42em] text-bone/80">
-          Tattoo <span className="text-bone">and</span> Academy
-        </span>
-      </span>
     </span>
   );
 }
