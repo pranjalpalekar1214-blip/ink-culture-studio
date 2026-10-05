@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router";
 import { InkStroke, StarMotif, StickArtistFigure } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
@@ -36,6 +36,7 @@ const accentBg = {
 export default function Portfolio() {
   const { artistId } = useParams();
   const artist = getArtist(artistId ?? "");
+  const [photoFailed, setPhotoFailed] = useState(false);
 
   useSeo(
     artist
@@ -119,7 +120,16 @@ export default function Portfolio() {
             <MaskReveal>
               <div className="relative aspect-[4/5] border border-bone/10 bg-gradient-to-br from-[#1b1b1b] to-[#0f0f0f]">
                 <div className="absolute inset-0 grain opacity-50" aria-hidden />
-                <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
+                {!photoFailed && (artist.id === "lucky" || artist.id === "karan") ? (
+                  <img
+                    src={`/images/artists/${artist.id}.jpg`}
+                    alt={`${artist.name}, tattoo artist at Street Culture`}
+                    onError={() => setPhotoFailed(true)}
+                    className="absolute inset-0 h-full w-full object-cover object-[center_20%]"
+                  />
+                ) : (
+                  <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
+                )}
                 <p className="absolute bottom-5 left-5 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
                   SC·{artist.number} — {artist.name}, in the studio
                 </p>
