@@ -222,11 +222,11 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
               <StarMotif className={cn("h-7 w-7 shrink-0", accentText[artist.accent])} />
             </div>
 
-            {/* portrait plate — tap to open portfolio */}
+            {/* portrait plate — tap to open the full artist profile */}
             <Link
-              to={`/artists/${artist.id}/portfolio`}
+              to={`/artists/${artist.id}`}
               tabIndex={flipped ? -1 : undefined}
-              aria-label={`Open ${artist.name}'s portfolio`}
+              aria-label={`Open ${artist.name}'s full profile`}
               className="relative mt-5 block overflow-hidden border border-bone/10 bg-ink transition-transform duration-300 hover:-rotate-1"
             >
               <div className="pointer-events-none absolute inset-0 grain opacity-40" aria-hidden />
@@ -240,7 +240,7 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
               </div>
               <div className="absolute inset-x-0 bottom-0 flex justify-between border-t border-bone/10 bg-ink/80 px-3 py-2 text-[9px] uppercase tracking-[0.25em] text-bone/50 backdrop-blur-sm">
                 <span>{artist.style}</span>
-                <span className="text-blood">tap for portfolio →</span>
+                <span className="text-blood">tap for full profile →</span>
               </div>
             </Link>
 
@@ -274,11 +274,11 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
 
             <div className="mt-5 flex items-center gap-3">
               <Link
-                to={`/artists/${artist.id}/portfolio`}
-                tabIndex={flipped ? -1 : undefined}
-                className="group/v flex flex-1 items-center justify-center gap-2 border border-bone/25 bg-bone/5 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone/10"
-              >
-                View Portfolio
+to={`/artists/${artist.id}`}
+  tabIndex={flipped ? -1 : undefined}
+  className="group/v flex flex-1 items-center justify-center gap-2 border border-bone/25 bg-bone/5 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone/10"
+  >
+  View Full Profile
                 <ArrowUpRight className="size-4 transition-transform group-hover/v:translate-x-0.5 group-hover/v:-translate-y-0.5" />
               </Link>
               <button
