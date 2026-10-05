@@ -1,8 +1,7 @@
 import { RefreshCw } from "lucide-react";
 import { Link, useParams } from "react-router";
 import { useState } from "react";
-import { ArtistPhoto } from "@/components/ArtistPhoto";
-import { InkStroke, StarMotif } from "@/components/art";
+import { InkStroke, StarMotif, StickArtistFigure } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { InkButton, MaskReveal, PageHero, Reveal, SectionHeading } from "@/components/ui-kit";
@@ -86,11 +85,7 @@ export default function ArtistDetail() {
                 <span aria-hidden className="absolute bottom-0 left-0 z-10 h-5 w-5 border-b-2 border-l-2 border-blood" />
                 <span aria-hidden className="absolute bottom-0 right-0 z-10 h-5 w-5 border-b-2 border-r-2 border-blood" />
                 <div className="absolute inset-0 grain opacity-50" aria-hidden />
-                <ArtistPhoto
-                  artist={artist}
-                  className="absolute inset-0 h-full w-full object-cover object-[center_18%] grayscale contrast-[1.05]"
-                  fallbackClassName="absolute inset-0 m-auto h-4/5 text-bone/80"
-                />
+                <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
                 <p className="absolute bottom-5 left-5 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
                   SC·{artist.number} — {artist.name}, in the studio
                 </p>
@@ -130,14 +125,10 @@ export default function ArtistDetail() {
                     <StarMotif className={cn("h-6 w-6", accentText[artist.accent])} />
                   </div>
 
-                  {/* card art — the collectible shows the studio photo */}
+                  {/* card art — the collectible's stick-figure doodle */}
                   <div className="mt-4 overflow-hidden border border-bone/15 bg-ink">
                     <div className="relative h-36 sm:h-44">
-                      <ArtistPhoto
-                        artist={artist}
-                        className="absolute inset-0 h-full w-full object-cover object-[center_18%] grayscale contrast-[1.05]"
-                        fallbackClassName="absolute inset-0 m-auto h-full w-auto text-bone/70"
-                      />
+                      <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-full w-auto text-bone/70" />
                       <span aria-hidden className="pointer-events-none absolute inset-0 grain opacity-40" />
                     </div>
                   </div>

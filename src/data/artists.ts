@@ -28,7 +28,7 @@ export type Artist = {
   stats: ArtistStats;
   /** Accent tint used across card + profile page */
   accent: "red" | "green" | "orange" | "cream";
-  /** Photo served from /public/images/artists/<id>.jpg — ArtistPhoto falls back to the illustration if missing */
+  /** Studio photo, only referenced by JSON-LD person markup — the site itself renders stick-figure doodles */
   image: string;
   /** Illustrated caricature (SVG component name rendered by <ArtistPortrait/>) */
   portrait: "karan" | "lucky";
