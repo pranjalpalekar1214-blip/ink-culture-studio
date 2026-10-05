@@ -33,7 +33,7 @@ export function BrandLogo({ className }: BrandLogoProps) {
       />
 
       <span aria-hidden="true" className="flex flex-col">
-        <span className="text-[1.6em] font-normal uppercase leading-[0.95] tracking-[0.02em] text-bone/80">
+        <span className="text-[1.6em] font-semibold uppercase leading-[0.95] tracking-[0.045em] text-bone/85 drop-shadow-[0_2px_5px_rgba(0,0,0,0.45)]">
           Street Culture
         </span>
 
