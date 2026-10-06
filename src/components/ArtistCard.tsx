@@ -281,16 +281,14 @@ export function ArtistCard({ artist, index, showPhoto = false }: { artist: Artis
               <p className="mt-1 font-marker text-[15px] leading-snug text-cream/90">{artist.cardFlavor}</p>
             </div>
 
-            {artist.id === "lucky" && (
-              <Link
-                to="/book"
-                tabIndex={flipped ? -1 : undefined}
-                aria-label="Book an appointment with Lucky"
-                className="mt-5 flex items-center justify-center gap-2 bg-blood px-4 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-blood/80"
-              >
-                Book an Appointment <ArrowUpRight className="size-4" />
-              </Link>
-            )}
+            <Link
+              to="/book"
+              tabIndex={flipped ? -1 : undefined}
+              aria-label={`Book an appointment with ${artist.name}`}
+              className="mt-5 flex items-center justify-center gap-2 bg-blood px-4 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-blood/80"
+            >
+              Book an Appointment with {artist.name} <ArrowUpRight className="size-4" />
+            </Link>
 
             <div className="mt-5 flex items-center gap-3">
               <Link
