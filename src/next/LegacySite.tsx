@@ -2,7 +2,7 @@
 
 import "../index.css";
 import React, { Suspense, lazy, useEffect } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router";
+import { MemoryRouter, Route, Routes, useLocation } from "react-router";
 import { Toaster } from "@/components/ui/sonner";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { BlockHitLayer } from "@/components/BlockHitLayer";
@@ -82,13 +82,13 @@ function SiteLayout() {
   );
 }
 
-export default function LegacySite() {
+export default function LegacySite({ routePath = "/" }: { routePath?: string }) {
   return (
     <>
-      <BrowserRouter>
+      <MemoryRouter initialEntries={[routePath]}>
         <RouteSyncer />
         <SiteLayout />
-      </BrowserRouter>
+      </MemoryRouter>
       <Toaster />
       <SpeedInsights />
     </>

@@ -22,5 +22,5 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ArtistPortfolioRoute({ params }: PageProps) {
   const { artistId } = await params;
   if (!getArtist(artistId)) notFound();
-  return <ClientRouteBoundary route="artist" />;
+  return <ClientRouteBoundary routePath={`/artists/${artistId}/portfolio`} />;
 }

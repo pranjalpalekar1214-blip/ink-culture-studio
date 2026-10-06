@@ -22,5 +22,5 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function BlogPostRoute({ params }: PageProps) {
   const { slug } = await params;
   if (!getPost(slug)) notFound();
-  return <ClientRouteBoundary route="blog" />;
+  return <ClientRouteBoundary routePath={`/blog/${slug}`} />;
 }
