@@ -1,5 +1,27 @@
 import { cn } from "@/lib/utils";
 
+/**
+ * Standalone badge mark (the "hexagram-heart" emblem from /logo.svg),
+ * drawn inline so it inherits currentColor and scales with className.
+ * Used on its own where the full wordmark lockup would be too heavy
+ * (e.g. the Intro splash).
+ */
+export function BrandMark({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 100 100" fill="none" aria-hidden className={className}>
+      <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="7" />
+      <circle cx="35" cy="32" r="21" stroke="currentColor" strokeWidth="6.5" />
+      <circle cx="65" cy="32" r="21" stroke="currentColor" strokeWidth="6.5" />
+      <path
+        d="M50 17 L90.5 60 L50 88 L9.5 60 Z"
+        stroke="currentColor"
+        strokeWidth="6.5"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function BrandLogo({ className }: { className?: string }) {
   return (
     <span
