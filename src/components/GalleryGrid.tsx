@@ -5,6 +5,7 @@ import { Link } from "@/next/Link";
 import { galleryCategories, galleryItems, inkColorFilters, type GalleryItem } from "@/data/gallery";
 import { contact } from "@/config/contact";
 import { cn } from "@/lib/utils";
+import { trackFunnelEvent } from "@/lib/funnel";
 import { CursorLabel } from "./CursorLabel";
 import { PlaceholderImage } from "./PlaceholderImage";
 
@@ -81,6 +82,10 @@ export function GalleryGrid() {
   const [artist, setArtist] = useState<string>("All");
   const [ink, setInk] = useState<string>("All");
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
+
+  useEffect(() => {
+    if (filter !== "All") trackFunnelEvent("style_viewed", filter);
+  }, [filter]);
 
   const items = useMemo(
     () =>
@@ -167,7 +172,7 @@ export function GalleryGrid() {
           <AnimatePresence mode="popLayout">
             {items.map((item, i) => (
               <div key={item.id} className="mb-4 break-inside-avoid">
-                <Tile item={item} index={i} onOpen={() => setLightbox(item)} />
+                <Tile item={item} index={i} onOpen={() => { trackFunnelEvent("gallery_piece_viewed", item.id); setLightbox(item); }} />
               </div>
             ))}
           </AnimatePresence>

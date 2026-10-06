@@ -17,6 +17,7 @@ import {
 } from "@/lib/mystery";
 import { bookingMessage, displayWhatsApp, openWhatsApp } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
+import { trackFunnelEvent } from "@/lib/funnel";
 
 /** Map the booking size option to an approximate cm figure for the Mystery Box engine. */
 const sizeCm = (s: string): number | null => {
@@ -313,13 +314,24 @@ export default function Book() {
   useMysteryTracker();
   useEffect(() => {
     trackBookingStart();
+    trackFunnelEvent("book_clicked");
   }, []);
   useEffect(() => {
     trackBookingStep(step);
   }, [step]);
 
   const days = useMemo(() => nextDays(14), []);
-  const set = (k: keyof FormState, v: string) => setForm((f) => ({ ...f, [k]: v }));
+  const set = (k: keyof FormState, v: string) => {
+    setForm((f) => ({ ...f, [k]: v }));
+    const eventByField: Partial<Record<keyof FormState, "artist_selected" | "style_selected" | "size_selected" | "placement_selected">> = {
+      artist: "artist_selected",
+      style: "style_selected",
+      size: "size_selected",
+      placement: "placement_selected",
+    };
+    const event = eventByField[k];
+    if (event && v.trim()) trackFunnelEvent(event, v);
+  };
 
   const validate = (s: number): string => {
     if (s === 0 && (!form.serviceType || !form.service)) return "Pick a service to continue.";
@@ -411,6 +423,7 @@ export default function Book() {
     setSubmitting(false);
     // The box opens now: decide the discount from behavior pattern + tattoo size.
     trackBookingSubmit();
+    trackFunnelEvent("enquiry_submitted", form.artist || "No Preference");
     if (result.ok) {
       bookedSlots.add(slotKey(form.date, form.time));
     }

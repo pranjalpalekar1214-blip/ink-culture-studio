@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router";
 import { InkStroke, StarMotif, StickArtistFigure } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
@@ -9,6 +9,7 @@ import { galleryItems } from "@/data/gallery";
 import { getArtist, statLabelsFor } from "@/data/artists";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
+import { trackFunnelEvent } from "@/lib/funnel";
 import NotFound from "./NotFound";
 
 const accentText = {
@@ -36,6 +37,9 @@ const accentBg = {
 export default function Portfolio() {
   const { artistId } = useParams();
   const artist = getArtist(artistId ?? "");
+  useEffect(() => {
+    if (artist) trackFunnelEvent("artist_viewed", artist.name);
+  }, [artist]);
   const [photoFailed, setPhotoFailed] = useState(false);
 
   useSeo(

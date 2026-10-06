@@ -1,6 +1,6 @@
 import { RefreshCw } from "lucide-react";
 import { Link, useParams } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InkStroke, StarMotif, StickArtistFigure } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
@@ -10,6 +10,7 @@ import { galleryItems } from "@/data/gallery";
 import { getArtist, statLabelsFor } from "@/data/artists";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
+import { trackFunnelEvent } from "@/lib/funnel";
 import NotFound from "./NotFound";
 
 const accentText = {
@@ -29,6 +30,9 @@ const accentBorder = {
 export default function ArtistDetail() {
   const { artistId } = useParams();
   const artist = getArtist(artistId ?? "");
+  useEffect(() => {
+    if (artist) trackFunnelEvent("artist_viewed", artist.name);
+  }, [artist]);
   const [showCard, setShowCard] = useState(false);
   const [photoFailed, setPhotoFailed] = useState(false);
 
