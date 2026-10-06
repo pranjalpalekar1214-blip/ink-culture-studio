@@ -1,8 +1,6 @@
 import '@vly-ai/integrations';
 import { Toaster } from "@/components/ui/sonner";
 import { VlyToolbar } from "../vly-toolbar-readonly.tsx";
-import { ConvexAuthProvider } from "@convex-dev/auth/react";
-import { ConvexReactClient } from "convex/react";
 import React, { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
@@ -29,11 +27,8 @@ const Gallery = lazy(() => import("./pages/Gallery.tsx"));
 const Academy = lazy(() => import("./pages/Academy.tsx"));
 const Blog = lazy(() => import("./pages/Blog.tsx"));
 const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
-const Book = lazy(() => import("./pages/Book.tsx"));
-const Redeem = lazy(() => import("./pages/Redeem.tsx"));
 const Careers = lazy(() => import("./pages/Careers.tsx"));
 const ContactPage = lazy(() => import("./pages/Contact.tsx"));
-const ConceptLab = lazy(() => import("./pages/ConceptLab.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 // Simple loading fallback for route transitions
@@ -103,9 +98,6 @@ class RootErrorBoundary extends React.Component<
   }
 }
 
-const convexUrl = import.meta.env.VITE_CONVEX_URL as string | undefined;
-const convex = convexUrl ? new ConvexReactClient(convexUrl) : null;
-
 function RouteSyncer() {
   useMysteryTracker();
   const location = useLocation();
@@ -166,12 +158,12 @@ function SiteLayout() {
             <Route path="/academy" element={<Academy />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/book" element={convex ? <Book /> : <ConvexUnavailable />} />
+            <Route path="/book" element={<ConvexUnavailable />} />
             {/* Staff-only counter terminal: validate + burn mystery codes. Unlinked. */}
-            <Route path="/redeem" element={convex ? <Redeem /> : <ConvexUnavailable />} />
+            <Route path="/redeem" element={<ConvexUnavailable />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/concept" element={convex ? <ConceptLab /> : <ConvexUnavailable />} />
+            <Route path="/concept" element={<ConvexUnavailable />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
@@ -194,11 +186,7 @@ function AppProviders() {
     </>
   );
 
-  return convex ? (
-    <ConvexAuthProvider client={convex}>{content}</ConvexAuthProvider>
-  ) : (
-    content
-  );
+  return content;
 }
 
 createRoot(document.getElementById("root")!).render(
