@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Street Culture Tattoo & Academy | Tattoo Studio in Mumbai",
   description:
     "Street Culture is a custom tattoo and piercing studio and academy in Kandivali West, Mumbai.",
-  metadataBase: new URL("https://streetculture.in"),
+  metadataBase: new URL("https://streetculture.tattoo"),
   robots: { index: true, follow: true },
 };
 
