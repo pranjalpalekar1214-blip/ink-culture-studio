@@ -4,7 +4,25 @@ type BrandLogoProps = { className?: string };
 
 const brandMarkSrc = "/images/sct-logo-white.png";
 
+/** Standalone inline badge mark used where the full wordmark is too heavy. */
 export function BrandMark({ className }: BrandLogoProps) {
+  return (
+    <svg viewBox="0 0 100 100" fill="none" aria-hidden className={className}>
+      <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="7" />
+      <circle cx="35" cy="32" r="21" stroke="currentColor" strokeWidth="6.5" />
+      <circle cx="65" cy="32" r="21" stroke="currentColor" strokeWidth="6.5" />
+      <path
+        d="M50 17 L90.5 60 L50 88 L9.5 60 Z"
+        stroke="currentColor"
+        strokeWidth="6.5"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Image-backed mark retained for contexts that need the supplied logo asset. */
+export function BrandImage({ className }: BrandLogoProps) {
   return (
     <img
       src={brandMarkSrc}
