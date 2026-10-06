@@ -13,6 +13,9 @@ const SIZE = 72; // px — medium mascot, big enough to notice, small enough to 
 export function PixelCloud({ className }: { className?: string }) {
   const reduce = useReducedMotion();
   const [blink, setBlink] = useState(false);
+  const [isFinePointer] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches,
+  );
   const [hop, setHop] = useState(0);
 
   // Drift target — the cloud floats near its last rest spot and glides
@@ -23,7 +26,7 @@ export function PixelCloud({ className }: { className?: string }) {
   const sy = useSpring(y, { stiffness: 90, damping: 16, mass: 0.7 });
 
   useEffect(() => {
-    if (reduce) return;
+    if (reduce || !isFinePointer) return;
     const onDown = (e: PointerEvent) => {
       const pad = 40;
       const tx = Math.min(Math.max(e.clientX + 34, pad), window.innerWidth - SIZE - pad);
@@ -34,17 +37,17 @@ export function PixelCloud({ className }: { className?: string }) {
     };
     document.addEventListener("pointerdown", onDown, { capture: true });
     return () => document.removeEventListener("pointerdown", onDown, { capture: true });
-  }, [x, y, reduce]);
+  }, [x, y, reduce, isFinePointer]);
 
   // occasional blink so it feels alive
   useEffect(() => {
-    if (reduce) return;
+    if (reduce || !isFinePointer) return;
     const t = window.setInterval(() => {
       setBlink(true);
       window.setTimeout(() => setBlink(false), 140);
     }, 4200);
     return () => window.clearInterval(t);
-  }, [reduce]);
+  }, [reduce, isFinePointer]);
 
   return (
     <motion.div

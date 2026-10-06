@@ -1,6 +1,5 @@
 import '@vly-ai/integrations';
 import { Toaster } from "@/components/ui/sonner";
-import { VlyToolbar } from "../vly-toolbar-readonly.tsx";
 import React, { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
@@ -32,6 +31,9 @@ const ContactPage = lazy(() => import("./pages/Contact.tsx"));
 const Book = lazy(() => import("./pages/Book.tsx"));
 const ConceptLab = lazy(() => import("./pages/ConceptLab.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+const DevToolbar = import.meta.env.DEV
+  ? lazy(() => import("../vly-toolbar-readonly.tsx").then((module) => ({ default: module.VlyToolbar })))
+  : null;
 
 // Simple loading fallback for route transitions
 function RouteLoading() {
@@ -194,9 +196,13 @@ function AppProviders() {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RootErrorBoundary>
-      <ToolbarErrorBoundary>
-        <VlyToolbar />
-      </ToolbarErrorBoundary>
+      {DevToolbar && (
+        <ToolbarErrorBoundary>
+          <Suspense fallback={null}>
+            <DevToolbar />
+          </Suspense>
+        </ToolbarErrorBoundary>
+      )}
       <AppProviders />
     </RootErrorBoundary>
   </StrictMode>,
