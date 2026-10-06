@@ -231,9 +231,14 @@ const sizeOptions = ["Small (≤ 5 cm)", "Medium (5–15 cm)", "Large (15–30 c
 const budgetOptions = ["Under ₹5,000", "₹5,000 – ₹15,000", "₹15,000 – ₹30,000", "₹30,000+", "Let's discuss"];
 
 /** Bookable slots per day — surface a realistic, editable schedule. */
-const TIME_SLOTS = ["11:00 AM", "12:30 PM", "2:00 PM", "3:30 PM", "5:00 PM", "6:30 PM", "8:00 PM"];
-/** Demo availability — replace with real calendar feed when available. */
-const takenSlots = new Set(["2:00 PM", "6:30 PM"]);
+const TIME_SLOTS = ["12:00 PM", "1:30 PM", "3:00 PM", "4:30 PM", "6:00 PM", "7:30 PM", "9:00 PM"];
+
+/** Temporary browser-session availability until CRM storage is connected. */
+const bookedSlots = new Set<string>();
+
+function slotKey(date: string, time: string) {
+  return `${date}:${time}`;
+}
 
 function nextDays(n: number) {
   const days: { iso: string; label: string; day: string }[] = [];
@@ -318,7 +323,7 @@ export default function Book() {
 
   const validate = (s: number): string => {
     if (s === 0 && (!form.serviceType || !form.service)) return "Pick a service to continue.";
-    if (s === 1 && !form.artist) return "Choose an artist (or no preference).";
+    if (s === 1 && form.serviceType !== "Piercing" && !form.artist) return "Choose an artist (or no preference).";
     if (s === 2 && (!form.date || !form.time)) return "Pick a date and an available time slot.";
     if (s === 3) {
       if (form.name.trim().length < 2) return "Tell us your name.";
@@ -334,7 +339,10 @@ export default function Book() {
     const err = validate(step);
     if (err) return setError(err);
     setError("");
-    setStep((s) => Math.min(s + 1, 4));
+    setStep((s) => {
+      const nextStep = s + 1;
+      return form.serviceType === "Piercing" && nextStep === 1 ? 2 : Math.min(nextStep, 4);
+    });
   };
   const back = () => {
     setError("");
@@ -377,6 +385,7 @@ export default function Book() {
       }
     }
     setSubmitting(true);
+    const decision = decideMystery(sizeCm(form.size));
     const result = await submitBooking({
       name: form.name,
       whatsapp: form.whatsapp,
@@ -391,15 +400,17 @@ export default function Book() {
       date: form.date,
       time: form.time,
       contactPreference: form.contactPreference,
-      notes: form.referenceName,
+      notes: `${form.referenceName}${mystery ? `\nMystery Box: ${mystery.code} — ${mystery.percent}% off` : ""}`,
+      mysteryCode: decision.code,
+      mysteryDiscount: String(decision.percent),
     });
     setSubmitting(false);
     // The box opens now: decide the discount from behavior pattern + tattoo size.
     trackBookingSubmit();
     if (result.ok) {
-      const decision = decideMystery(sizeCm(form.size));
-      setMystery(decision);
+      bookedSlots.add(slotKey(form.date, form.time));
     }
+    setMystery(decision);
     setFormOk(result.ok);
     // No Google Form endpoint configured yet — don't silently swallow the
     // booking. The confirmation screen hands the user one explicit WhatsApp
@@ -534,7 +545,7 @@ export default function Book() {
                   </StepShell>
                 )}
 
-                {step === 1 && (
+                {step === 1 && form.serviceType !== "Piercing" && (
                   <StepShell title="Who's holding the machine?" hint="Both residents draw custom — or leave it to fate.">
                     <div className="grid gap-4 sm:grid-cols-3">
                       {artistOptions.map((a) => {
@@ -600,7 +611,7 @@ export default function Book() {
                         ) : (
                           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                             {TIME_SLOTS.map((t) => {
-                              const taken = takenSlots.has(t);
+                              const taken = bookedSlots.has(slotKey(form.date, t));
                               return (
                                 <button
                                   key={t}
@@ -709,7 +720,7 @@ export default function Book() {
                     <dl className="grid gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
                       {[
                         ["Service", `${form.serviceType}: ${form.service}`],
-                        ["Artist", form.artist],
+                        ...(form.serviceType === "Piercing" ? [] : [["Artist", form.artist] as const]),
                         ["Date", form.date],
                         ["Time", form.time],
                         ["Name", form.name],
