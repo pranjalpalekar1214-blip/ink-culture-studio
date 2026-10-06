@@ -1,5 +1,6 @@
 import '@vly-ai/integrations';
 import { Toaster } from "@/components/ui/sonner";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import React, { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
@@ -187,6 +188,7 @@ function AppProviders() {
         <SiteLayout />
       </BrowserRouter>
       <Toaster />
+      <SpeedInsights />
     </>
   );
 

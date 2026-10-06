@@ -12,7 +12,7 @@ import { artists } from "@/data/artists";
 import { faqs, testimonials } from "@/data/faqs";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { breadcrumbSchema, faqSchema, localBusinessSchema, organizationSchema, pageMeta } from "@/config/seo";
-import { displayWhatsApp } from "@/lib/whatsapp";
+import { displayWhatsApp, generalEnquiryMessage } from "@/lib/whatsapp";
 
 export default function Home() {
   useSeo(pageMeta.home);
@@ -483,7 +483,7 @@ function FinalCta() {
         <Reveal delay={0.25}>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
             <InkButton href="/book" size="lg">Book Your Tattoo</InkButton>
-            <InkButton href={`https://wa.me/${contact.whatsappNumber}`} external variant="outline" size="lg">
+            <InkButton href={`https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(generalEnquiryMessage())}`} external variant="outline" size="lg">
               WhatsApp Us
             </InkButton>
           </div>

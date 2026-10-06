@@ -86,7 +86,7 @@ export const contact = {
   googleReviewUrl: "",
 
   /** Average Google rating (out of 5) — shown on the contact page + schema */
-  googleRating: 4.86,
+  googleRating: 4.8,
 
   social: {
     /**

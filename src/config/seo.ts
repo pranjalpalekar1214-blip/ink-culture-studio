@@ -72,7 +72,7 @@ export const pageMeta = {
   home: buildPageMeta({
     title: `${contact.googleListingName}`,
     description:
-      `Custom tattoo & piercing studio in Kandivali West, Mumbai — 4.86★ on Google. Colour, black & grey, fine line and realism by Karan & Lucky. WhatsApp ${contact.displayPhone}.`,
+      `Custom tattoo & piercing studio in Kandivali West, Mumbai — 4.8★ on Google. Colour, black & grey, fine line and realism by Karan & Lucky. WhatsApp ${contact.displayPhone}.`,
     path: "/",
   }),
   about: buildPageMeta({
@@ -132,7 +132,7 @@ export const pageMeta = {
   contact: buildPageMeta({
     title: `Contact & Location — Kandivali West, Mumbai | ${siteName}`,
     description:
-      `Custom tattoo & piercing studio in Kandivali West, Mumbai. Pillar No. 283, opp. Gaurav Heights. 4.86★ Google, 12–9 PM (Fri off). WhatsApp ${contact.displayPhone}.`,
+      `Custom tattoo & piercing studio in Kandivali West, Mumbai. Pillar No. 283, opp. Gaurav Heights. 4.8★ Google, 12–9 PM (Fri off). WhatsApp ${contact.displayPhone}.`,
     path: "/contact",
   }),
   concept: buildPageMeta({

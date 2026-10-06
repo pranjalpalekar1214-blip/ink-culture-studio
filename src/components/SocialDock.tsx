@@ -2,7 +2,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { Facebook, Instagram, MessageCircle } from "lucide-react";
 import { contact } from "@/config/contact";
-import { displayWhatsApp } from "@/lib/whatsapp";
+import { displayWhatsApp, generalEnquiryMessage } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
 /**
@@ -21,7 +21,7 @@ export function SocialDock() {
   const items = [
     {
       key: "wa",
-      href: `https://wa.me/${contact.whatsappNumber}`,
+      href: `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(generalEnquiryMessage())}`,
       label: `WhatsApp ${displayWhatsApp()}`,
       Icon: MessageCircle,
       accent: "hover:bg-[#25D366] hover:text-ink",
@@ -67,7 +67,7 @@ export function SocialDock() {
         {/* collapsed handle — always visible, the primary CTA */}
         <li>
           <motion.a
-            href={`https://wa.me/${contact.whatsappNumber}`}
+            href={`https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(generalEnquiryMessage())}`}
             target="_blank"
             rel="noopener noreferrer"
             whileTap={reduce ? undefined : { scale: 0.94 }}

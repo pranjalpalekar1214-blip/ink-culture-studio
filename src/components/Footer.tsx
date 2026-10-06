@@ -2,7 +2,7 @@ import { Facebook, Instagram, MapPin } from "lucide-react";
 import { Link } from "react-router";
 import { contact } from "@/config/contact";
 import { BrandLogo } from "@/components/BrandLogo";
-import { displayWhatsApp } from "@/lib/whatsapp";
+import { displayWhatsApp, generalEnquiryMessage } from "@/lib/whatsapp";
 import { InkButton } from "./ui-kit";
 
 const nav = [
@@ -109,7 +109,7 @@ export function Footer() {
                 </span>
               </li>
               <li>
-                <a href={`https://wa.me/${contact.whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-blood">
+                <a href={`https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(generalEnquiryMessage())}`} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-blood">
                   WhatsApp {displayWhatsApp()}
                 </a>
               </li>
