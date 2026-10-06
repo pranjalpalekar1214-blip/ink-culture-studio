@@ -216,29 +216,29 @@ function FaqSection() {
 
 function EnquireSection() {
   const [name, setName] = useState("");
+  const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [location, setLocation] = useState("");
   const [applicantType, setApplicantType] = useState("Fresher");
   const [experience, setExperience] = useState("");
-  const [course, setCourse] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
 
-  const valid = name.trim().length > 1 && (email.includes("@") || whatsapp.trim().length >= 8) && course.trim().length > 0;
+  const valid = name.trim().length > 1 && age.trim().length > 0 && (email.includes("@") || whatsapp.trim().length >= 8);
 
-  const buildPayload = () => ({ name, email, whatsapp, location, applicantType, experience, course, message });
+  const buildPayload = () => ({ name, age, email, whatsapp, location, applicantType, experience, message });
 
   const onWhatsApp = () => {
-    if (!valid) return setError("Add your name and an email or WhatsApp number so we can reply.");
+    if (!valid) return setError("Add your name, age, and an email or WhatsApp number so we can reply.");
     setError("");
-    openWhatsApp(academyMessage({ name, experience: `${applicantType}${experience ? ` — ${experience}` : ""}`, message: `Course: ${course}\nLocation: ${location}\nEmail: ${email}\nWhatsApp: ${whatsapp}\n${message}` }));
+    openWhatsApp(academyMessage({ name, age, location, email, whatsapp, applicantType, experience, message }));
   };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!valid) return setError("Add your name and an email or WhatsApp number so we can reply.");
+    if (!valid) return setError("Add your name, age, and an email or WhatsApp number so we can reply.");
     setError("");
     const result = await submitAcademyEnquiry(buildPayload());
     // No Google Form endpoint configured yet — don't claim the enquiry was
@@ -280,7 +280,13 @@ function EnquireSection() {
                 <Field label="Name *">
                   <input value={name} onChange={(e) => setName(e.target.value)} required className={inputCls} placeholder="Your name" />
                 </Field>
+                <Field label="Age *">
+                  <input value={age} onChange={(e) => setAge(e.target.value)} required type="number" min="16" max="80" className={inputCls} placeholder="Your age" />
+                </Field>
+              </div>
+              <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="WhatsApp">
+
                   <input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} className={inputCls} placeholder="+91 …" inputMode="tel" />
                 </Field>
               </div>
@@ -303,12 +309,6 @@ function EnquireSection() {
                   <input value={experience} onChange={(e) => setExperience(e.target.value)} className={inputCls} placeholder="How long have you been tattooing?" />
                 </Field>
               )}
-              <Field label="Interested in which course?">
-                <select value={course} onChange={(e) => setCourse(e.target.value)} required className={inputCls}>
-                  <option value="">Select a course</option>
-                  {courses.map((item) => <option key={item.id}>{item.title}</option>)}
-                </select>
-              </Field>
               <Field label="Anything else we should know?">
                 <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3} className={inputCls} placeholder="Your goals or questions…" />
               </Field>

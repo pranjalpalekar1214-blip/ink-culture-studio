@@ -8,11 +8,11 @@ import { contact } from "@/config/contact";
 export type BookingEnquiry = {
   name: string;
   service: string;
-  artist: string;
-  idea: string;
-  placement: string;
-  size: string;
-  style: string;
+  artist?: string;
+  idea?: string;
+  placement?: string;
+  size?: string;
+  style?: string;
   date: string;
   time: string;
   budget: string;
@@ -50,11 +50,11 @@ export function bookingMessage(b: BookingEnquiry): string {
     `I'd like to request a session.\n\n` +
     line("Name", b.name) +
     line("Looking for", b.service) +
-    line("Artist", b.artist) +
-    line("Tattoo idea", b.idea) +
-    line("Placement", b.placement) +
-    line("Size", b.size) +
-    line("Style", b.style) +
+    (b.artist ? line("Artist", b.artist) : "") +
+    (b.idea ? line("Tattoo idea", b.idea) : "") +
+    (b.placement ? line("Placement", b.placement) : "") +
+    (b.size ? line("Size", b.size) : "") +
+    (b.style ? line("Style", b.style) : "") +
     line("Preferred date", b.date) +
     line("Preferred time", b.time) +
     line("Budget", b.budget) +
@@ -88,6 +88,11 @@ export function careersMessage(fields: {
 /** Academy enquiry message. */
 export function academyMessage(fields: {
   name: string;
+  age: string;
+  location: string;
+  email: string;
+  whatsapp: string;
+  applicantType: string;
   experience: string;
   message: string;
 }): string {
@@ -96,7 +101,12 @@ export function academyMessage(fields: {
     `Hey ${contact.studioName} Academy!\n\n` +
     `I want to learn the craft.\n\n` +
     line("Name", fields.name) +
-    line("Experience level", fields.experience) +
+    line("Age", fields.age) +
+    line("Location", fields.location) +
+    line("Email", fields.email) +
+    line("WhatsApp", fields.whatsapp) +
+    line("Applicant type", fields.applicantType) +
+    (fields.applicantType === "Artist" ? line("Artist experience", fields.experience) : "") +
     line("Message", fields.message)
   );
 }

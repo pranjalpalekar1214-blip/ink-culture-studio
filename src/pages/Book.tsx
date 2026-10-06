@@ -391,11 +391,15 @@ export default function Book() {
       whatsapp: form.whatsapp,
       email: form.email,
       service: `${form.serviceType}: ${form.service}`,
-      artist: form.artist,
-      idea: form.idea,
-      placement: form.placement,
-      size: form.size,
-      style: form.style,
+      ...(form.serviceType === "Piercing"
+        ? {}
+        : {
+            artist: form.artist,
+            idea: form.idea,
+            placement: form.placement,
+            size: form.size,
+            style: form.style,
+          }),
       budget: form.budget,
       date: form.date,
       time: form.time,
@@ -432,7 +436,7 @@ export default function Book() {
               {formOk ? "Slot requested!" : "Finish on WhatsApp"}
             </h1>
             <p className="mt-4 font-body text-sm leading-relaxed text-bone/65">
-              {form.date} · {form.time} with {form.artist === "No Preference" ? "our next-available artist" : form.artist}.{" "}
+              {form.date} · {form.time}{form.serviceType === "Piercing" ? " for your piercing." : ` with ${form.artist === "No Preference" ? "our next-available artist" : form.artist}. `}
               {formOk
                 ? "We'll confirm shortly — it's in our intake."
                 : `Your booking isn't sent yet. Tap the button below to send the full details to ${displayWhatsApp()} on WhatsApp.`}
@@ -654,9 +658,11 @@ export default function Book() {
                       <Field label="Email">
                         <input className={inputCls} value={form.email} onChange={(e) => set("email", e.target.value)} type="email" placeholder="you@example.com" />
                       </Field>
-                      <Field label={form.serviceType === "Piercing" ? "Piercing placement" : "Tattoo placement"}>
-                        <input className={inputCls} value={form.placement} onChange={(e) => set("placement", e.target.value)} placeholder="Forearm, ribs, lobe…" />
-                      </Field>
+                      {form.serviceType === "Tattoo" && (
+                        <Field label="Tattoo placement">
+                          <input className={inputCls} value={form.placement} onChange={(e) => set("placement", e.target.value)} placeholder="Forearm, ribs, lobe…" />
+                        </Field>
+                      )}
                       {form.serviceType === "Tattoo" && (
                         <>
                           <Field label="Approximate size">
@@ -679,18 +685,20 @@ export default function Book() {
                           </Field>
                         </>
                       )}
-                      <div className={cn("sm:col-span-2", form.serviceType !== "Tattoo" && "sm:col-span-2")}>
-                        <Field label={form.serviceType === "Tattoo" ? "Tattoo idea *" : "Anything we should know? *"}>
-                          <textarea
-                            className={inputCls}
-                            value={form.idea}
-                            onChange={(e) => set("idea", e.target.value)}
-                            rows={4}
-                            placeholder={form.serviceType === "Tattoo" ? "Describe the idea — subject, meaning, references." : "Questions, context, goals…"}
-                            required
-                          />
-                        </Field>
-                      </div>
+                      {form.serviceType === "Tattoo" && (
+                        <div className="sm:col-span-2">
+                          <Field label="Tattoo idea *">
+                            <textarea
+                              className={inputCls}
+                              value={form.idea}
+                              onChange={(e) => set("idea", e.target.value)}
+                              rows={4}
+                              placeholder="Describe the idea — subject, meaning, references."
+                              required
+                            />
+                          </Field>
+                        </div>
+                      )}
                       {form.serviceType === "Tattoo" && (
                         <div className="sm:col-span-2">
                           <Field label="Reference image (optional)">
