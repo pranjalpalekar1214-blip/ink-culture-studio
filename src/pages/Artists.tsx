@@ -33,7 +33,7 @@ export default function Artists() {
         <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
           <div className="grid gap-8 md:grid-cols-2 md:gap-10">
             {artists.map((a, i) => (
-              <ArtistCard key={a.id} artist={a} index={i} />
+              <ArtistCard key={a.id} artist={a} index={i} showPhoto />
             ))}
           </div>
           <Reveal className="mt-14">

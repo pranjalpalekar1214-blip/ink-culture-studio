@@ -170,7 +170,7 @@ function PowerAura({ accent, active }: { accent: Artist["accent"]; active: boole
 /* ==================== CARD ==================== */
 
 /** Large collectible artist card with flip-to-details interaction. */
-export function ArtistCard({ artist, index }: { artist: Artist; index: number }) {
+export function ArtistCard({ artist, index, showPhoto = false }: { artist: Artist; index: number; showPhoto?: boolean }) {
   const [flipped, setFlipped] = useState(false);
   const reduce = useReducedMotion();
 
@@ -231,7 +231,7 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
             >
               <div className="pointer-events-none absolute inset-0 grain opacity-40" aria-hidden />
               <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d]">
-                {artist.id === "lucky" ? (
+                {showPhoto ? (
                   <img
                     src={artist.image}
                     alt="Lucky, tattoo artist at Street Culture"
@@ -325,22 +325,6 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
             <p className={cn("font-mono text-[10px] font-bold uppercase tracking-[0.3em]", accentText[artist.accent])}>
               Dossier · {artist.name}
             </p>
-
-            {/* artist doodle — appears on the flipped face too */}
-            <div className="mt-3 overflow-hidden border border-bone/15 bg-ink">
-              <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d]">
-                {artist.id === "lucky" ? (
-                  <img
-                    src={artist.image}
-                    alt="Lucky, tattoo artist at Street Culture"
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover object-center"
-                  />
-                ) : (
-                  <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-3/4 text-bone/70" />
-                )}
-              </div>
-            </div>
 
             <div className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto pr-1 text-sm leading-relaxed text-bone/75">
               <div>
