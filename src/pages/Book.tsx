@@ -1,9 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useMutation } from "convex/react";
 import { ArrowLeft, ArrowRight, Calendar, Check, Clock, MessageCircle, Upload } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
-import { api } from "@/convex/_generated/api";
 import { SparkMotif } from "@/components/art";
 import { InkButton, PageHero, Reveal } from "@/components/ui-kit";
 import { breadcrumbSchema, pageMeta } from "@/config/seo";
@@ -305,8 +303,6 @@ export default function Book() {
   const [mystery, setMystery] = useState<MysteryDecision | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const issueCode = useMutation(api.mystery.issue);
-
   /* The mystery box exists the moment they land on /book — the engine is
      armed on arrival and the visible teaser appears beside the form. */
   useMysteryTracker();
@@ -403,15 +399,6 @@ export default function Book() {
     if (result.ok) {
       const decision = decideMystery(sizeCm(form.size));
       setMystery(decision);
-      // Register the code in the studio ledger so the counter can validate it.
-      void issueCode({
-        code: decision.code,
-        percent: decision.percent,
-        customer: form.name,
-        service: `${form.serviceType}: ${form.service}`,
-        size: form.size,
-        whatsapp: form.whatsapp,
-      }).catch(() => undefined);
     }
     setFormOk(result.ok);
     // No Google Form endpoint configured yet — don't silently swallow the

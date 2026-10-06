@@ -29,6 +29,8 @@ const Blog = lazy(() => import("./pages/Blog.tsx"));
 const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
 const Careers = lazy(() => import("./pages/Careers.tsx"));
 const ContactPage = lazy(() => import("./pages/Contact.tsx"));
+const Book = lazy(() => import("./pages/Book.tsx"));
+const ConceptLab = lazy(() => import("./pages/ConceptLab.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 // Simple loading fallback for route transitions
@@ -158,12 +160,12 @@ function SiteLayout() {
             <Route path="/academy" element={<Academy />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/book" element={<ConvexUnavailable />} />
+            <Route path="/book" element={<Book />} />
             {/* Staff-only counter terminal: validate + burn mystery codes. Unlinked. */}
             <Route path="/redeem" element={<ConvexUnavailable />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/concept" element={<ConvexUnavailable />} />
+            <Route path="/concept" element={<ConceptLab />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

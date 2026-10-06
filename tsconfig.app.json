@@ -29,10 +29,5 @@
     }
   },
   "include": ["src", "vly-toolbar-readonly.tsx"],
-  "exclude": [
-    "src/convex",
-    "src/pages/Book.tsx",
-    "src/pages/ConceptLab.tsx",
-    "src/pages/Redeem.tsx"
-  ]
+  "exclude": ["src/convex", "src/pages/Redeem.tsx"]
 }
