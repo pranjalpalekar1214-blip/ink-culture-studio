@@ -47,7 +47,7 @@ export function Magnetic({
 /*  InkButton — primary CTA with ink-fill hover                        */
 /* ------------------------------------------------------------------ */
 
-import { Link } from "react-router";
+import { Link } from "@/next/Link";
 import { StarMotif } from "./art";
 
 type InkButtonProps = {
@@ -285,7 +285,7 @@ export function PageHero({
 /*  Breadcrumbs                                                        */
 /* ------------------------------------------------------------------ */
 
-import { Link as RouterLink } from "react-router";
+import { Link as RouterLink } from "@/next/Link";
 import { ChevronRight } from "lucide-react";
 
 export function Breadcrumbs({ items }: { items: { name: string; path?: string }[] }) {

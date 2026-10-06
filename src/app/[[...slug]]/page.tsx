@@ -1,5 +1,5 @@
-import LegacySite from "@/next/LegacySite";
+import LegacySiteIsland from "@/next/LegacySiteIsland";
 
 export default function Page() {
-  return <LegacySite />;
+  return <LegacySiteIsland />;
 }

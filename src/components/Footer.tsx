@@ -1,5 +1,5 @@
 import { Facebook, Instagram, MapPin } from "lucide-react";
-import { Link } from "react-router";
+import { Link } from "@/next/Link";
 import { contact } from "@/config/contact";
 import { BrandLogo } from "@/components/BrandLogo";
 import { displayWhatsApp, generalEnquiryMessage } from "@/lib/whatsapp";

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, RefreshCw } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link } from "@/next/Link";
 import { statLabelsFor, type Artist } from "@/data/artists";
 import { cn } from "@/lib/utils";
 import { BoltMotif, SparkMotif, StarMotif, StickArtistFigure } from "./art";
