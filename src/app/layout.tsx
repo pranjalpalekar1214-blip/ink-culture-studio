@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "@/index.css";
+import { JsonLd } from "@/next/JsonLd";
+import { homeJsonLd } from "@/next/route-metadata";
 
 export const metadata: Metadata = {
   title: "Street Culture Tattoo & Academy | Tattoo Studio in Mumbai",
@@ -13,7 +15,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <JsonLd data={homeJsonLd()} />
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { metadataFromPage } from "@/next/metadata";
+import { staticMetadata } from "@/next/route-metadata";
 import { getArtist, artists } from "@/data/artists";
 import { blogPosts } from "@/data/blog";
 import LegacySiteIsland from "@/next/LegacySiteIsland";
@@ -20,6 +23,12 @@ const staticRoutes = new Set([
   "contact",
   "concept",
 ]);
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug = [] } = await params;
+  const key = slug.length === 0 ? "home" : slug[0] as keyof typeof staticMetadata;
+  return metadataFromPage(staticMetadata[key] ?? staticMetadata.home);
+}
 
 export default async function Page({ params }: PageProps) {
   const { slug = [] } = await params;
