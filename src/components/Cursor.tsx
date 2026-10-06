@@ -44,9 +44,15 @@ function CursorDot({ label, variant }: CursorState) {
 
     let raf = 0;
     let tx = 0, ty = 0, x = 0, y = 0;
+    let hasPosition = false;
     const onMove = (e: MouseEvent) => {
       tx = e.clientX;
       ty = e.clientY;
+      if (!hasPosition) {
+        x = tx;
+        y = ty;
+        hasPosition = true;
+      }
       setVisible(true);
       if (document.body.dataset.cursorHidden !== "1") {
         document.body.dataset.cursorHidden = "1";
@@ -67,8 +73,8 @@ function CursorDot({ label, variant }: CursorState) {
     const onUp = () => setPressed(false);
 
     const loop = () => {
-      x += (tx - x) * 0.2;
-      y += (ty - y) * 0.2;
+      x += (tx - x) * 0.55;
+      y += (ty - y) * 0.55;
       dot.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
       raf = requestAnimationFrame(loop);
     };
@@ -100,16 +106,11 @@ function CursorDot({ label, variant }: CursorState) {
       style={{ opacity: visible ? 1 : 0, transition: "opacity 0.25s" }}
     >
       <div
-        className="flex items-center justify-center rounded-full border border-bone/70 mix-blend-difference"
-        style={{
-          width: isView ? 72 : pressed ? 14 : 18,
-          height: isView ? 72 : pressed ? 14 : 18,
-          background: isView ? "rgba(232,226,213,0.92)" : "rgba(232,226,213,0.9)",
-          transition: "width 0.25s cubic-bezier(0.22,1,0.36,1), height 0.25s cubic-bezier(0.22,1,0.36,1), background 0.25s",
-        }}
+        className={`relative h-0 w-0 border-y-[9px] border-y-transparent border-l-[16px] border-l-black drop-shadow-[1px_1px_0_rgba(255,255,255,0.7)] transition-transform duration-100 ${pressed ? "scale-90" : "scale-100"}`}
+        style={{ transform: "rotate(-18deg)" }}
       >
         {isView && (
-          <span className="font-display text-[10px] font-bold uppercase tracking-[0.18em] text-ink mix-blend-normal">
+          <span className="absolute left-3 top-2 whitespace-nowrap bg-black px-2 py-1 font-display text-[9px] font-bold uppercase tracking-[0.16em] text-white">
             {label}
           </span>
         )}
