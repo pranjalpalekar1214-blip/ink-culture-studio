@@ -231,7 +231,16 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
             >
               <div className="pointer-events-none absolute inset-0 grain opacity-40" aria-hidden />
               <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d]">
-                <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
+                {artist.id === "lucky" ? (
+                  <img
+                    src={artist.image}
+                    alt="Lucky, tattoo artist at Street Culture"
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover object-center grayscale-[0.15] transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                ) : (
+                  <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
+                )}
                 {/* holographic foil sweep — collectible-card sheen */}
                 <span
                   aria-hidden
@@ -272,13 +281,24 @@ export function ArtistCard({ artist, index }: { artist: Artist; index: number })
               <p className="mt-1 font-marker text-[15px] leading-snug text-cream/90">{artist.cardFlavor}</p>
             </div>
 
+            {artist.id === "lucky" && (
+              <Link
+                to="/book"
+                tabIndex={flipped ? -1 : undefined}
+                aria-label="Book an appointment with Lucky"
+                className="mt-5 flex items-center justify-center gap-2 bg-blood px-4 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-blood/80"
+              >
+                Book an Appointment <ArrowUpRight className="size-4" />
+              </Link>
+            )}
+
             <div className="mt-5 flex items-center gap-3">
               <Link
-to={`/artists/${artist.id}`}
-  tabIndex={flipped ? -1 : undefined}
-  aria-label={`View ${artist.name}'s profile and portfolio`}
-  className="group/v flex flex-1 items-center justify-center gap-2 border border-bone/25 bg-bone/5 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone/10"
-  >
+                to={`/artists/${artist.id}`}
+                tabIndex={flipped ? -1 : undefined}
+                aria-label={`View ${artist.name}'s profile and portfolio`}
+                className="group/v flex flex-1 items-center justify-center gap-2 border border-bone/25 bg-bone/5 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone/10"
+              >
   View Profile
                 <ArrowUpRight className="size-4 transition-transform group-hover/v:translate-x-0.5 group-hover/v:-translate-y-0.5" />
               </Link>
@@ -309,7 +329,16 @@ to={`/artists/${artist.id}`}
             {/* artist doodle — appears on the flipped face too */}
             <div className="mt-3 overflow-hidden border border-bone/15 bg-ink">
               <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d]">
-                <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-3/4 text-bone/70" />
+                {artist.id === "lucky" ? (
+                  <img
+                    src={artist.image}
+                    alt="Lucky, tattoo artist at Street Culture"
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover object-center"
+                  />
+                ) : (
+                  <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-3/4 text-bone/70" />
+                )}
               </div>
             </div>
 
