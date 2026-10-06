@@ -19,19 +19,19 @@ import { Intro } from "@/components/Intro";
 import { SocialDock } from "@/components/SocialDock";
 
 // Lazy load route components for better code splitting
-const Landing = lazy(() => import("./pages/Home.tsx"));
-const About = lazy(() => import("./pages/About.tsx"));
-const Artists = lazy(() => import("./pages/Artists.tsx"));
-const Portfolio = lazy(() => import("./pages/Portfolio.tsx"));
-const Gallery = lazy(() => import("./pages/Gallery.tsx"));
-const Academy = lazy(() => import("./pages/Academy.tsx"));
-const Blog = lazy(() => import("./pages/Blog.tsx"));
-const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
-const Careers = lazy(() => import("./pages/Careers.tsx"));
-const ContactPage = lazy(() => import("./pages/Contact.tsx"));
-const Book = lazy(() => import("./pages/Book.tsx"));
-const ConceptLab = lazy(() => import("./pages/ConceptLab.tsx"));
-const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+const Landing = lazy(() => import("./legacy-pages/Home.tsx"));
+const About = lazy(() => import("./legacy-pages/About.tsx"));
+const Artists = lazy(() => import("./legacy-pages/Artists.tsx"));
+const Portfolio = lazy(() => import("./legacy-pages/Portfolio.tsx"));
+const Gallery = lazy(() => import("./legacy-pages/Gallery.tsx"));
+const Academy = lazy(() => import("./legacy-pages/Academy.tsx"));
+const Blog = lazy(() => import("./legacy-pages/Blog.tsx"));
+const BlogPost = lazy(() => import("./legacy-pages/BlogPost.tsx"));
+const Careers = lazy(() => import("./legacy-pages/Careers.tsx"));
+const ContactPage = lazy(() => import("./legacy-pages/Contact.tsx"));
+const Book = lazy(() => import("./legacy-pages/Book.tsx"));
+const ConceptLab = lazy(() => import("./legacy-pages/ConceptLab.tsx"));
+const NotFound = lazy(() => import("./legacy-pages/NotFound.tsx"));
 const DevToolbar = import.meta.env.DEV
   ? lazy(() => import("../vly-toolbar-readonly.tsx").then((module) => ({ default: module.VlyToolbar })))
   : null;
