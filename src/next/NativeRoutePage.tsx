@@ -9,10 +9,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { StickyBookBar } from "@/components/StickyBookBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { Intro } from "@/components/Intro";
 import { SocialDock } from "@/components/SocialDock";
-import { BlockHitLayer } from "@/components/BlockHitLayer";
-import { PixelCloud } from "@/components/PixelCloud";
 import Home from "../legacy-pages/Home";
 import About from "../legacy-pages/About";
 import Artists from "../legacy-pages/Artists";
@@ -72,9 +69,6 @@ export default function NativeRoutePage({ routePath = "/" }: { routePath?: strin
         <RouteSyncer />
         <CursorProvider>
           <ScrollToTop />
-          <Intro />
-          <BlockHitLayer />
-          <PixelCloud />
           <Navbar />
           <main id="main"><NativeContent /></main>
           <Footer />

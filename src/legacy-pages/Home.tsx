@@ -62,7 +62,7 @@ function Hero() {
         className="inline-block"
         initial={reduce ? false : { y: "110%" }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.9, delay: 0.25 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.9, delay: 0.04 + i * 0.03, ease: [0.22, 1, 0.36, 1] }}
       >
         {t}
       </motion.span>
@@ -84,7 +84,7 @@ function Hero() {
         <motion.p
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.15, duration: 0.6 }}
+          transition={{ delay: 0, duration: 0.25 }}
           className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.4em] text-bone/50 md:text-[11px]"
         >
           <span className="h-px w-10 bg-blood/70" aria-hidden />
@@ -99,7 +99,7 @@ function Hero() {
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: 0.08, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
           <p className="max-w-xl font-body text-base font-medium leading-[1.65] tracking-[0.01em] text-bone/75 [text-shadow:0_2px_8px_rgba(0,0,0,0.72)] md:text-lg">
@@ -119,7 +119,7 @@ function Hero() {
         <motion.div
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.1, duration: 0.8 }}
+          transition={{ delay: 0.12, duration: 0.4 }}
           className="mt-10 flex items-end justify-between gap-6 text-bone/25 md:mt-14"
         >
           <SnakeMotif className="h-16 w-16 md:h-24 md:w-24" />
@@ -133,7 +133,7 @@ function Hero() {
         <motion.div
           initial={reduce ? false : { opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.3, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: 0.16, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="pointer-events-auto absolute right-5 top-40 z-10 md:right-8 md:top-44"
         >
           <QuestionBlock className="h-11 w-11 md:h-14 md:w-14" />
@@ -144,7 +144,7 @@ function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.6 }}
+        transition={{ delay: 0.2, duration: 0.25 }}
         className="relative z-10 mx-auto flex w-full max-w-7xl items-center gap-3 px-5 pb-8 text-[10px] uppercase tracking-[0.35em] text-bone/45 md:px-8"
       >
         <motion.span animate={reduce ? {} : { y: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>
