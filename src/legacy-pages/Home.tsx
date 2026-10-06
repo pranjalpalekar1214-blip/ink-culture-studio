@@ -3,7 +3,7 @@ import { ArrowDown, ChevronDown } from "lucide-react";
 import { useRef } from "react";
 import { ArtistCard } from "@/components/ArtistCard";
 import { BrandLogo } from "@/components/BrandLogo";
-import { ArtistPortrait, EyeMotif, FloatingMotifs, HandMotif, InkStroke, LocalTrainMotif, QuestionBlock, SnakeMotif, StarMotif, TickerStrip } from "@/components/art";
+import { ArtistPortrait, EyeMotif, HandMotif, InkStroke, LocalTrainMotif, QuestionBlock, SnakeMotif, StarMotif, TickerStrip } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
 import { GalleryGridMini } from "@/components/GalleryGridMini";
 import { InkButton, MaskReveal, Reveal, SectionHeading } from "@/components/ui-kit";
@@ -77,8 +77,6 @@ function Hero() {
         <div className="absolute -right-24 top-1/4 h-[420px] w-[420px] rounded-full bg-blood/10 blur-[120px]" />
         <div className="absolute -left-32 bottom-0 h-[360px] w-[360px] rounded-full bg-acid/5 blur-[100px]" />
       </motion.div>
-
-      <FloatingMotifs className="absolute inset-0 hidden lg:block" />
 
       <motion.div style={{ opacity }} className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pt-28 md:px-8 md:pt-32">
         <motion.p
