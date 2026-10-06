@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router";
+import { Link } from "@/next/Link";
 import { galleryItems } from "@/data/gallery";
 import { CursorLabel } from "./CursorLabel";
 import { PlaceholderImage } from "./PlaceholderImage";

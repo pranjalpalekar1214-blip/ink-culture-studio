@@ -216,26 +216,29 @@ function FaqSection() {
 
 function EnquireSection() {
   const [name, setName] = useState("");
+  const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
-  const [experience, setExperience] = useState("Complete beginner");
+  const [location, setLocation] = useState("");
+  const [applicantType, setApplicantType] = useState("Fresher");
+  const [experience, setExperience] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
 
-  const valid = name.trim().length > 1 && (email.includes("@") || whatsapp.trim().length >= 8);
+  const valid = name.trim().length > 1 && age.trim().length > 0 && (email.includes("@") || whatsapp.trim().length >= 8);
 
-  const buildPayload = () => ({ name, email, whatsapp, experience, message });
+  const buildPayload = () => ({ name, age, email, whatsapp, location, applicantType, experience, message });
 
   const onWhatsApp = () => {
-    if (!valid) return setError("Add your name and an email or WhatsApp number so we can reply.");
+    if (!valid) return setError("Add your name, age, and an email or WhatsApp number so we can reply.");
     setError("");
-    openWhatsApp(academyMessage({ name, experience, message: `${message}\nEmail: ${email}\nWhatsApp: ${whatsapp}` }));
+    openWhatsApp(academyMessage({ name, age, location, email, whatsapp, applicantType, experience, message }));
   };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!valid) return setError("Add your name and an email or WhatsApp number so we can reply.");
+    if (!valid) return setError("Add your name, age, and an email or WhatsApp number so we can reply.");
     setError("");
     const result = await submitAcademyEnquiry(buildPayload());
     // No Google Form endpoint configured yet — don't claim the enquiry was
@@ -277,23 +280,37 @@ function EnquireSection() {
                 <Field label="Name *">
                   <input value={name} onChange={(e) => setName(e.target.value)} required className={inputCls} placeholder="Your name" />
                 </Field>
+                <Field label="Age *">
+                  <input value={age} onChange={(e) => setAge(e.target.value)} required type="number" min="16" max="80" className={inputCls} placeholder="Your age" />
+                </Field>
+              </div>
+              <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="WhatsApp">
+
                   <input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} className={inputCls} placeholder="+91 …" inputMode="tel" />
                 </Field>
               </div>
-              <Field label="Email">
-                <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" className={inputCls} placeholder="you@example.com" />
-              </Field>
-              <Field label="Experience level">
-                <select value={experience} onChange={(e) => setExperience(e.target.value)} className={inputCls}>
-                  <option>Complete beginner</option>
-                  <option>I draw but haven't tattooed</option>
-                  <option>Self-taught tattooist</option>
-                  <option>Trained in another studio</option>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <Field label="Email">
+                  <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" className={inputCls} placeholder="you@example.com" />
+                </Field>
+                <Field label="Location">
+                  <input value={location} onChange={(e) => setLocation(e.target.value)} className={inputCls} placeholder="City / area" />
+                </Field>
+              </div>
+              <Field label="I am a…">
+                <select value={applicantType} onChange={(e) => { setApplicantType(e.target.value); setExperience(""); }} className={inputCls}>
+                  <option>Fresher</option>
+                  <option>Artist</option>
                 </select>
               </Field>
-              <Field label="Why do you want to learn?">
-                <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={4} className={inputCls} placeholder="Tell us a bit about you…" />
+              {applicantType === "Artist" && (
+                <Field label="Artist experience">
+                  <input value={experience} onChange={(e) => setExperience(e.target.value)} className={inputCls} placeholder="How long have you been tattooing?" />
+                </Field>
+              )}
+              <Field label="Anything else we should know?">
+                <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3} className={inputCls} placeholder="Your goals or questions…" />
               </Field>
               {error && <p role="alert" className="text-xs text-blood">{error}</p>}
               <div className="flex flex-wrap gap-3">

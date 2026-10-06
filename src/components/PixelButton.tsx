@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Link } from "react-router";
+import { Link } from "@/next/Link";
 import { trackPress } from "@/lib/mystery";
 import { cn } from "@/lib/utils";
 

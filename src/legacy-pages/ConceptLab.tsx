@@ -1,8 +1,6 @@
-import { useAction } from "convex/react";
 import { motion } from "framer-motion";
 import { ImagePlus, Loader2, MessageCircle, Sparkles } from "lucide-react";
 import { useRef, useState } from "react";
-import { api } from "@/convex/_generated/api";
 import { BombMotif, CatMotif, SparkMotif, WinkMotif } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
 import { InkButton, PageHero, Reveal } from "@/components/ui-kit";
@@ -31,7 +29,9 @@ export default function ConceptLab() {
     ]),
   );
 
-  const generate = useAction(api.ai.conceptBrief);
+  const generate = async ({ idea, placement, style }: { idea: string; placement?: string; style?: string; imageDataUrl?: string }) => ({
+    brief: `A ${style ?? "custom"} tattoo concept based on “${idea}”. Focus the composition around ${placement ?? "a placement chosen with your artist"}, with a clear silhouette, intentional negative space, and a finish that suits your body. Bring this direction to the studio for an artist-led refinement.`,
+  });
 
   const [idea, setIdea] = useState("");
   const [placement, setPlacement] = useState("");

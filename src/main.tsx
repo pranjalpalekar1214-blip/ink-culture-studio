@@ -1,8 +1,6 @@
 import '@vly-ai/integrations';
 import { Toaster } from "@/components/ui/sonner";
-import { VlyToolbar } from "../vly-toolbar-readonly.tsx";
-import { ConvexAuthProvider } from "@convex-dev/auth/react";
-import { ConvexReactClient } from "convex/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import React, { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
@@ -21,21 +19,22 @@ import { Intro } from "@/components/Intro";
 import { SocialDock } from "@/components/SocialDock";
 
 // Lazy load route components for better code splitting
-const Landing = lazy(() => import("./pages/Home.tsx"));
-const About = lazy(() => import("./pages/About.tsx"));
-const Artists = lazy(() => import("./pages/Artists.tsx"));
-const ArtistDetail = lazy(() => import("./pages/ArtistDetail.tsx"));
-const Portfolio = lazy(() => import("./pages/Portfolio.tsx"));
-const Gallery = lazy(() => import("./pages/Gallery.tsx"));
-const Academy = lazy(() => import("./pages/Academy.tsx"));
-const Blog = lazy(() => import("./pages/Blog.tsx"));
-const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
-const Book = lazy(() => import("./pages/Book.tsx"));
-const Redeem = lazy(() => import("./pages/Redeem.tsx"));
-const Careers = lazy(() => import("./pages/Careers.tsx"));
-const ContactPage = lazy(() => import("./pages/Contact.tsx"));
-const ConceptLab = lazy(() => import("./pages/ConceptLab.tsx"));
-const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+const Landing = lazy(() => import("./legacy-pages/Home.tsx"));
+const About = lazy(() => import("./legacy-pages/About.tsx"));
+const Artists = lazy(() => import("./legacy-pages/Artists.tsx"));
+const Portfolio = lazy(() => import("./legacy-pages/Portfolio.tsx"));
+const Gallery = lazy(() => import("./legacy-pages/Gallery.tsx"));
+const Academy = lazy(() => import("./legacy-pages/Academy.tsx"));
+const Blog = lazy(() => import("./legacy-pages/Blog.tsx"));
+const BlogPost = lazy(() => import("./legacy-pages/BlogPost.tsx"));
+const Careers = lazy(() => import("./legacy-pages/Careers.tsx"));
+const ContactPage = lazy(() => import("./legacy-pages/Contact.tsx"));
+const Book = lazy(() => import("./legacy-pages/Book.tsx"));
+const ConceptLab = lazy(() => import("./legacy-pages/ConceptLab.tsx"));
+const NotFound = lazy(() => import("./legacy-pages/NotFound.tsx"));
+const DevToolbar = import.meta.env.DEV
+  ? lazy(() => import("../vly-toolbar-readonly.tsx").then((module) => ({ default: module.VlyToolbar })))
+  : null;
 
 // Simple loading fallback for route transitions
 function RouteLoading() {
@@ -104,8 +103,6 @@ class RootErrorBoundary extends React.Component<
   }
 }
 
-const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
-
 function RouteSyncer() {
   useMysteryTracker();
   const location = useLocation();
@@ -131,6 +128,21 @@ function RouteSyncer() {
 }
 
 /** Marketing-site shell: cursor + chrome around every public page. */
+function ConvexUnavailable() {
+  return (
+    <main className="flex min-h-[60vh] items-center justify-center bg-ink px-6 py-24 text-center">
+      <div>
+        <p className="font-display text-xs uppercase tracking-[0.3em] text-bone/50">
+          Studio services unavailable
+        </p>
+        <p className="mt-3 max-w-md text-sm text-bone/70">
+          This preview is running without its Convex backend. The rest of the studio remains available.
+        </p>
+      </div>
+    </main>
+  );
+}
+
 function SiteLayout() {
   return (
     <CursorProvider>
@@ -145,7 +157,7 @@ function SiteLayout() {
             <Route path="/" element={<Landing />} />
             <Route path="/about" element={<About />} />
             <Route path="/artists" element={<Artists />} />
-            <Route path="/artists/:artistId" element={<ArtistDetail />} />
+            <Route path="/artists/:artistId" element={<Portfolio />} />
             <Route path="/artists/:artistId/portfolio" element={<Portfolio />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/academy" element={<Academy />} />
@@ -153,7 +165,7 @@ function SiteLayout() {
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/book" element={<Book />} />
             {/* Staff-only counter terminal: validate + burn mystery codes. Unlinked. */}
-            <Route path="/redeem" element={<Redeem />} />
+            <Route path="/redeem" element={<ConvexUnavailable />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/concept" element={<ConceptLab />} />
@@ -168,19 +180,32 @@ function SiteLayout() {
   );
 }
 
+function AppProviders() {
+  const content = (
+    <>
+      <BrowserRouter>
+        <RouteSyncer />
+        <SiteLayout />
+      </BrowserRouter>
+      <Toaster />
+      <SpeedInsights />
+    </>
+  );
+
+  return content;
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RootErrorBoundary>
-      <ToolbarErrorBoundary>
-        <VlyToolbar />
-      </ToolbarErrorBoundary>
-      <ConvexAuthProvider client={convex}>
-        <BrowserRouter>
-          <RouteSyncer />
-          <SiteLayout />
-        </BrowserRouter>
-        <Toaster />
-      </ConvexAuthProvider>
+      {DevToolbar && (
+        <ToolbarErrorBoundary>
+          <Suspense fallback={null}>
+            <DevToolbar />
+          </Suspense>
+        </ToolbarErrorBoundary>
+      )}
+      <AppProviders />
     </RootErrorBoundary>
   </StrictMode>,
 );

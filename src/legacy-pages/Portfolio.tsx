@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router";
 import { InkStroke, StarMotif, StickArtistFigure } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
@@ -9,6 +9,7 @@ import { galleryItems } from "@/data/gallery";
 import { getArtist, statLabelsFor } from "@/data/artists";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
+import { trackFunnelEvent } from "@/lib/funnel";
 import NotFound from "./NotFound";
 
 const accentText = {
@@ -36,6 +37,10 @@ const accentBg = {
 export default function Portfolio() {
   const { artistId } = useParams();
   const artist = getArtist(artistId ?? "");
+  useEffect(() => {
+    if (artist) trackFunnelEvent("artist_viewed", artist.name);
+  }, [artist]);
+  const [photoFailed, setPhotoFailed] = useState(false);
 
   useSeo(
     artist
@@ -82,12 +87,9 @@ export default function Portfolio() {
         lead={`${artist.style} — every piece below was drawn from scratch for one body, one story. Custom only, no repeats.`}
       >
         <Reveal delay={0.25} className="mt-8 flex flex-wrap items-center gap-3">
-          <InkButton href="/book" size="lg">
-            Book with {artist.name}
-          </InkButton>
-          <InkButton href={`/artists/${artist.id}`} variant="outline" size="lg">
-            Full Profile
-          </InkButton>
+  <InkButton href="/book" size="lg">
+    Book with {artist.name}
+  </InkButton>
         </Reveal>
       </PageHero>
 
@@ -119,7 +121,16 @@ export default function Portfolio() {
             <MaskReveal>
               <div className="relative aspect-[4/5] border border-bone/10 bg-gradient-to-br from-[#1b1b1b] to-[#0f0f0f]">
                 <div className="absolute inset-0 grain opacity-50" aria-hidden />
-                <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
+                {!photoFailed && (artist.id === "lucky" || artist.id === "karan") ? (
+                  <img
+                    src={artist.image}
+                    alt={`${artist.name}, tattoo artist at Street Culture`}
+                    onError={() => setPhotoFailed(true)}
+                    className="absolute inset-0 h-full w-full object-cover object-[center_20%]"
+                  />
+                ) : (
+                  <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
+                )}
                 <p className="absolute bottom-5 left-5 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
                   SC·{artist.number} — {artist.name}, in the studio
                 </p>

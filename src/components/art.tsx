@@ -370,10 +370,34 @@ export function QuestionBlock({ className }: ArtProps) {
   const [bumping, setBumping] = useState(false);
   const [coins, setCoins] = useState<number[]>([]);
   const coinId = useRef(0);
+  const audioContext = useRef<AudioContext | null>(null);
+
+  const playTingTing = () => {
+    const AudioContextClass = window.AudioContext ||
+      (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    const context = audioContext.current ?? new AudioContextClass();
+    audioContext.current = context;
+    const now = context.currentTime;
+    [880, 1320].forEach((frequency, index) => {
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(frequency, now + index * 0.13);
+      gain.gain.setValueAtTime(0.0001, now + index * 0.13);
+      gain.gain.exponentialRampToValueAtTime(0.16, now + index * 0.13 + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + index * 0.13 + 0.32);
+      oscillator.connect(gain).connect(context.destination);
+      oscillator.start(now + index * 0.13);
+      oscillator.stop(now + index * 0.13 + 0.34);
+    });
+  };
 
   const hit = () => {
     if (bumping) return;
     setBumping(true);
+    playTingTing();
     const id = ++coinId.current;
     setCoins((c) => [...c, id]);
     window.setTimeout(() => setCoins((c) => c.filter((x) => x !== id)), 800);

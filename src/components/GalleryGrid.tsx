@@ -1,10 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, MessageCircle, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router";
+import { Link } from "@/next/Link";
 import { galleryCategories, galleryItems, inkColorFilters, type GalleryItem } from "@/data/gallery";
 import { contact } from "@/config/contact";
 import { cn } from "@/lib/utils";
+import { trackFunnelEvent } from "@/lib/funnel";
 import { CursorLabel } from "./CursorLabel";
 import { PlaceholderImage } from "./PlaceholderImage";
 
@@ -51,7 +52,7 @@ function Tile({ item, onOpen, index }: { item: GalleryItem; onOpen: () => void; 
         <button
           onClick={onOpen}
           className="block w-full text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-blood"
-          aria-label={`View ${item.category} tattoo by ${item.artistName}`}
+          aria-label={`View ${item.category} tattoo`}
         >
           <div style={{ aspectRatio: `3.2 / ${item.ratio * 2}` }} className="w-full">
             <PlaceholderImage
@@ -64,21 +65,13 @@ function Tile({ item, onOpen, index }: { item: GalleryItem; onOpen: () => void; 
           <div className="pointer-events-none absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-ink/95 via-ink/20 to-transparent p-4 opacity-0 transition-opacity duration-400 group-hover:opacity-100">
             <p className="font-display text-lg uppercase tracking-tight text-bone">{item.category}</p>
             <p className="mt-1 text-[10px] uppercase tracking-[0.22em] text-bone/60">
-              {item.inkColor} ink · by {item.artistName}
+              {item.inkColor} ink
             </p>
             <span className="mt-3 inline-flex w-max items-center gap-1.5 border-2 border-blood bg-blood px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-ink">
               View Tattoo
             </span>
           </div>
         </button>
-        {/* artist credit chip → portfolio */}
-        <Link
-          to={`/artists/${item.artistId}/portfolio`}
-          className="absolute left-2 top-2 z-10 border-2 border-ink bg-ink/85 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.16em] text-bone/85 backdrop-blur-sm transition-colors hover:border-blood hover:text-blood"
-          aria-label={`See all work by ${item.artistName}`}
-        >
-          {item.artistName} →
-        </Link>
       </motion.div>
     </CursorLabel>
   );
@@ -89,6 +82,10 @@ export function GalleryGrid() {
   const [artist, setArtist] = useState<string>("All");
   const [ink, setInk] = useState<string>("All");
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
+
+  useEffect(() => {
+    if (filter !== "All") trackFunnelEvent("style_viewed", filter);
+  }, [filter]);
 
   const items = useMemo(
     () =>
@@ -175,7 +172,7 @@ export function GalleryGrid() {
           <AnimatePresence mode="popLayout">
             {items.map((item, i) => (
               <div key={item.id} className="mb-4 break-inside-avoid">
-                <Tile item={item} index={i} onOpen={() => setLightbox(item)} />
+                <Tile item={item} index={i} onOpen={() => { trackFunnelEvent("gallery_piece_viewed", item.id); setLightbox(item); }} />
               </div>
             ))}
           </AnimatePresence>

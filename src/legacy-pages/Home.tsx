@@ -3,7 +3,7 @@ import { ArrowDown, ChevronDown } from "lucide-react";
 import { useRef } from "react";
 import { ArtistCard } from "@/components/ArtistCard";
 import { BrandLogo } from "@/components/BrandLogo";
-import { ArtistPortrait, EyeMotif, FloatingMotifs, HandMotif, InkStroke, LocalTrainMotif, QuestionBlock, SnakeMotif, StarMotif, TickerStrip } from "@/components/art";
+import { ArtistPortrait, EyeMotif, HandMotif, InkStroke, LocalTrainMotif, QuestionBlock, SnakeMotif, StarMotif, TickerStrip } from "@/components/art";
 import { CursorLabel } from "@/components/CursorLabel";
 import { GalleryGridMini } from "@/components/GalleryGridMini";
 import { InkButton, MaskReveal, Reveal, SectionHeading } from "@/components/ui-kit";
@@ -12,7 +12,7 @@ import { artists } from "@/data/artists";
 import { faqs, testimonials } from "@/data/faqs";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { breadcrumbSchema, faqSchema, localBusinessSchema, organizationSchema, pageMeta } from "@/config/seo";
-import { displayWhatsApp } from "@/lib/whatsapp";
+import { displayWhatsApp, generalEnquiryMessage } from "@/lib/whatsapp";
 
 export default function Home() {
   useSeo(pageMeta.home);
@@ -62,7 +62,7 @@ function Hero() {
         className="inline-block"
         initial={reduce ? false : { y: "110%" }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.9, delay: 0.25 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.9, delay: 0.04 + i * 0.03, ease: [0.22, 1, 0.36, 1] }}
       >
         {t}
       </motion.span>
@@ -78,20 +78,18 @@ function Hero() {
         <div className="absolute -left-32 bottom-0 h-[360px] w-[360px] rounded-full bg-acid/5 blur-[100px]" />
       </motion.div>
 
-      <FloatingMotifs className="absolute inset-0 hidden lg:block" />
-
       <motion.div style={{ opacity }} className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pt-28 md:px-8 md:pt-32">
         <motion.p
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.15, duration: 0.6 }}
+          transition={{ delay: 0, duration: 0.25 }}
           className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.4em] text-bone/50 md:text-[11px]"
         >
           <span className="h-px w-10 bg-blood/70" aria-hidden />
           Tattoo Studio & Academy — Kandivali West, Mumbai
         </motion.p>
 
-        <h1 className="mt-6 font-display text-[11vw] font-black uppercase leading-[0.85] tracking-[-0.02em] text-bone sm:text-[9vw] lg:text-[6.5rem]">
+        <h1 className="mt-6 font-display text-[11vw] font-black uppercase leading-[0.85] tracking-[0.04em] text-bone sm:text-[9vw] lg:text-[6.5rem]">
           <span className="block">{word("Ink", 0)}&nbsp;{word("Is", 1)}</span>
           <span className="block text-blood">{word("Culture.", 2)}</span>
         </h1>
@@ -99,18 +97,19 @@ function Hero() {
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: 0.08, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
-          <p className="max-w-xl font-body text-base leading-relaxed text-bone/70 md:text-lg">
+          <p className="max-w-xl font-body text-base font-medium leading-[1.65] tracking-[0.01em] text-bone/75 [text-shadow:0_2px_8px_rgba(0,0,0,0.72)] md:text-lg">
             <BrandLogo className="text-base md:text-lg" />
-            <span className="mt-1.5 block">
+            <span className="mt-2 block">
               Custom tattoos drawn for your body, your story, your streets — in Kandivali West, Mumbai.
             </span>
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col items-start gap-3">
             <InkButton href="/book" size="lg">Book Your Tattoo</InkButton>
             <InkButton href="/artists" variant="outline" size="lg">Explore the Artists</InkButton>
+            <InkButton href="/gallery" variant="outline" size="lg">Explore the Gallery</InkButton>
           </div>
         </motion.div>
 
@@ -118,7 +117,7 @@ function Hero() {
         <motion.div
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.1, duration: 0.8 }}
+          transition={{ delay: 0.12, duration: 0.4 }}
           className="mt-10 flex items-end justify-between gap-6 text-bone/25 md:mt-14"
         >
           <SnakeMotif className="h-16 w-16 md:h-24 md:w-24" />
@@ -132,7 +131,7 @@ function Hero() {
         <motion.div
           initial={reduce ? false : { opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.3, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: 0.16, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="pointer-events-auto absolute right-5 top-40 z-10 md:right-8 md:top-44"
         >
           <QuestionBlock className="h-11 w-11 md:h-14 md:w-14" />
@@ -143,7 +142,7 @@ function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.6 }}
+        transition={{ delay: 0.2, duration: 0.25 }}
         className="relative z-10 mx-auto flex w-full max-w-7xl items-center gap-3 px-5 pb-8 text-[10px] uppercase tracking-[0.35em] text-bone/45 md:px-8"
       >
         <motion.span animate={reduce ? {} : { y: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>
@@ -482,7 +481,7 @@ function FinalCta() {
         <Reveal delay={0.25}>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
             <InkButton href="/book" size="lg">Book Your Tattoo</InkButton>
-            <InkButton href={`https://wa.me/${contact.whatsappNumber}`} external variant="outline" size="lg">
+            <InkButton href={`https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(generalEnquiryMessage())}`} external variant="outline" size="lg">
               WhatsApp Us
             </InkButton>
           </div>

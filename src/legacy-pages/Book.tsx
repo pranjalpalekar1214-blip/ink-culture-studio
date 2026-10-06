@@ -1,9 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useMutation } from "convex/react";
 import { ArrowLeft, ArrowRight, Calendar, Check, Clock, MessageCircle, Upload } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
-import { api } from "@/convex/_generated/api";
 import { SparkMotif } from "@/components/art";
 import { InkButton, PageHero, Reveal } from "@/components/ui-kit";
 import { breadcrumbSchema, pageMeta } from "@/config/seo";
@@ -19,6 +17,7 @@ import {
 } from "@/lib/mystery";
 import { bookingMessage, displayWhatsApp, openWhatsApp } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
+import { trackFunnelEvent } from "@/lib/funnel";
 
 /** Map the booking size option to an approximate cm figure for the Mystery Box engine. */
 const sizeCm = (s: string): number | null => {
@@ -233,9 +232,14 @@ const sizeOptions = ["Small (≤ 5 cm)", "Medium (5–15 cm)", "Large (15–30 c
 const budgetOptions = ["Under ₹5,000", "₹5,000 – ₹15,000", "₹15,000 – ₹30,000", "₹30,000+", "Let's discuss"];
 
 /** Bookable slots per day — surface a realistic, editable schedule. */
-const TIME_SLOTS = ["11:00 AM", "12:30 PM", "2:00 PM", "3:30 PM", "5:00 PM", "6:30 PM", "8:00 PM"];
-/** Demo availability — replace with real calendar feed when available. */
-const takenSlots = new Set(["2:00 PM", "6:30 PM"]);
+const TIME_SLOTS = ["12:00 PM", "1:30 PM", "3:00 PM", "4:30 PM", "6:00 PM", "7:30 PM", "9:00 PM"];
+
+/** Temporary browser-session availability until CRM storage is connected. */
+const bookedSlots = new Set<string>();
+
+function slotKey(date: string, time: string) {
+  return `${date}:${time}`;
+}
 
 function nextDays(n: number) {
   const days: { iso: string; label: string; day: string }[] = [];
@@ -305,24 +309,33 @@ export default function Book() {
   const [mystery, setMystery] = useState<MysteryDecision | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const issueCode = useMutation(api.mystery.issue);
-
   /* The mystery box exists the moment they land on /book — the engine is
      armed on arrival and the visible teaser appears beside the form. */
   useMysteryTracker();
   useEffect(() => {
     trackBookingStart();
+    trackFunnelEvent("book_clicked");
   }, []);
   useEffect(() => {
     trackBookingStep(step);
   }, [step]);
 
   const days = useMemo(() => nextDays(14), []);
-  const set = (k: keyof FormState, v: string) => setForm((f) => ({ ...f, [k]: v }));
+  const set = (k: keyof FormState, v: string) => {
+    setForm((f) => ({ ...f, [k]: v }));
+    const eventByField: Partial<Record<keyof FormState, "artist_selected" | "style_selected" | "size_selected" | "placement_selected">> = {
+      artist: "artist_selected",
+      style: "style_selected",
+      size: "size_selected",
+      placement: "placement_selected",
+    };
+    const event = eventByField[k];
+    if (event && v.trim()) trackFunnelEvent(event, v);
+  };
 
   const validate = (s: number): string => {
     if (s === 0 && (!form.serviceType || !form.service)) return "Pick a service to continue.";
-    if (s === 1 && !form.artist) return "Choose an artist (or no preference).";
+    if (s === 1 && form.serviceType !== "Piercing" && !form.artist) return "Choose an artist (or no preference).";
     if (s === 2 && (!form.date || !form.time)) return "Pick a date and an available time slot.";
     if (s === 3) {
       if (form.name.trim().length < 2) return "Tell us your name.";
@@ -338,7 +351,10 @@ export default function Book() {
     const err = validate(step);
     if (err) return setError(err);
     setError("");
-    setStep((s) => Math.min(s + 1, 4));
+    setStep((s) => {
+      const nextStep = s + 1;
+      return form.serviceType === "Piercing" && nextStep === 1 ? 2 : Math.min(nextStep, 4);
+    });
   };
   const back = () => {
     setError("");
@@ -381,38 +397,37 @@ export default function Book() {
       }
     }
     setSubmitting(true);
+    const decision = decideMystery(sizeCm(form.size));
     const result = await submitBooking({
       name: form.name,
       whatsapp: form.whatsapp,
       email: form.email,
       service: `${form.serviceType}: ${form.service}`,
-      artist: form.artist,
-      idea: form.idea,
-      placement: form.placement,
-      size: form.size,
-      style: form.style,
+      ...(form.serviceType === "Piercing"
+        ? {}
+        : {
+            artist: form.artist,
+            idea: form.idea,
+            placement: form.placement,
+            size: form.size,
+            style: form.style,
+          }),
       budget: form.budget,
       date: form.date,
       time: form.time,
       contactPreference: form.contactPreference,
-      notes: form.referenceName,
+      notes: `${form.referenceName}${mystery ? `\nMystery Box: ${mystery.code} — ${mystery.percent}% off` : ""}`,
+      mysteryCode: decision.code,
+      mysteryDiscount: String(decision.percent),
     });
     setSubmitting(false);
     // The box opens now: decide the discount from behavior pattern + tattoo size.
     trackBookingSubmit();
+    trackFunnelEvent("enquiry_submitted", form.artist || "No Preference");
     if (result.ok) {
-      const decision = decideMystery(sizeCm(form.size));
-      setMystery(decision);
-      // Register the code in the studio ledger so the counter can validate it.
-      void issueCode({
-        code: decision.code,
-        percent: decision.percent,
-        customer: form.name,
-        service: `${form.serviceType}: ${form.service}`,
-        size: form.size,
-        whatsapp: form.whatsapp,
-      }).catch(() => undefined);
+      bookedSlots.add(slotKey(form.date, form.time));
     }
+    setMystery(decision);
     setFormOk(result.ok);
     // No Google Form endpoint configured yet — don't silently swallow the
     // booking. The confirmation screen hands the user one explicit WhatsApp
@@ -434,7 +449,7 @@ export default function Book() {
               {formOk ? "Slot requested!" : "Finish on WhatsApp"}
             </h1>
             <p className="mt-4 font-body text-sm leading-relaxed text-bone/65">
-              {form.date} · {form.time} with {form.artist === "No Preference" ? "our next-available artist" : form.artist}.{" "}
+              {form.date} · {form.time}{form.serviceType === "Piercing" ? " for your piercing." : ` with ${form.artist === "No Preference" ? "our next-available artist" : form.artist}. `}
               {formOk
                 ? "We'll confirm shortly — it's in our intake."
                 : `Your booking isn't sent yet. Tap the button below to send the full details to ${displayWhatsApp()} on WhatsApp.`}
@@ -547,7 +562,7 @@ export default function Book() {
                   </StepShell>
                 )}
 
-                {step === 1 && (
+                {step === 1 && form.serviceType !== "Piercing" && (
                   <StepShell title="Who's holding the machine?" hint="Both residents draw custom — or leave it to fate.">
                     <div className="grid gap-4 sm:grid-cols-3">
                       {artistOptions.map((a) => {
@@ -613,7 +628,7 @@ export default function Book() {
                         ) : (
                           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                             {TIME_SLOTS.map((t) => {
-                              const taken = takenSlots.has(t);
+                              const taken = bookedSlots.has(slotKey(form.date, t));
                               return (
                                 <button
                                   key={t}
@@ -656,9 +671,11 @@ export default function Book() {
                       <Field label="Email">
                         <input className={inputCls} value={form.email} onChange={(e) => set("email", e.target.value)} type="email" placeholder="you@example.com" />
                       </Field>
-                      <Field label={form.serviceType === "Piercing" ? "Piercing placement" : "Tattoo placement"}>
-                        <input className={inputCls} value={form.placement} onChange={(e) => set("placement", e.target.value)} placeholder="Forearm, ribs, lobe…" />
-                      </Field>
+                      {form.serviceType === "Tattoo" && (
+                        <Field label="Tattoo placement">
+                          <input className={inputCls} value={form.placement} onChange={(e) => set("placement", e.target.value)} placeholder="Forearm, ribs, lobe…" />
+                        </Field>
+                      )}
                       {form.serviceType === "Tattoo" && (
                         <>
                           <Field label="Approximate size">
@@ -681,18 +698,20 @@ export default function Book() {
                           </Field>
                         </>
                       )}
-                      <div className={cn("sm:col-span-2", form.serviceType !== "Tattoo" && "sm:col-span-2")}>
-                        <Field label={form.serviceType === "Tattoo" ? "Tattoo idea *" : "Anything we should know? *"}>
-                          <textarea
-                            className={inputCls}
-                            value={form.idea}
-                            onChange={(e) => set("idea", e.target.value)}
-                            rows={4}
-                            placeholder={form.serviceType === "Tattoo" ? "Describe the idea — subject, meaning, references." : "Questions, context, goals…"}
-                            required
-                          />
-                        </Field>
-                      </div>
+                      {form.serviceType === "Tattoo" && (
+                        <div className="sm:col-span-2">
+                          <Field label="Tattoo idea *">
+                            <textarea
+                              className={inputCls}
+                              value={form.idea}
+                              onChange={(e) => set("idea", e.target.value)}
+                              rows={4}
+                              placeholder="Describe the idea — subject, meaning, references."
+                              required
+                            />
+                          </Field>
+                        </div>
+                      )}
                       {form.serviceType === "Tattoo" && (
                         <div className="sm:col-span-2">
                           <Field label="Reference image (optional)">
@@ -722,7 +741,7 @@ export default function Book() {
                     <dl className="grid gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
                       {[
                         ["Service", `${form.serviceType}: ${form.service}`],
-                        ["Artist", form.artist],
+                        ...(form.serviceType === "Piercing" ? [] : [["Artist", form.artist] as const]),
                         ["Date", form.date],
                         ["Time", form.time],
                         ["Name", form.name],

@@ -1,12 +1,11 @@
 import { cn } from "@/lib/utils";
 
-/**
- * Standalone badge mark (the "hexagram-heart" emblem from /logo.svg),
- * drawn inline so it inherits currentColor and scales with className.
- * Used on its own where the full wordmark lockup would be too heavy
- * (e.g. the Intro splash).
- */
-export function BrandMark({ className }: { className?: string }) {
+type BrandLogoProps = { className?: string };
+
+const brandMarkSrc = "/images/sct-logo-white.png";
+
+/** Standalone inline badge mark used where the full wordmark is too heavy. */
+export function BrandMark({ className }: BrandLogoProps) {
   return (
     <svg viewBox="0 0 100 100" fill="none" aria-hidden className={className}>
       <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="7" />
@@ -22,30 +21,42 @@ export function BrandMark({ className }: { className?: string }) {
   );
 }
 
-export function BrandLogo({ className }: { className?: string }) {
+/** Image-backed mark retained for contexts that need the supplied logo asset. */
+export function BrandImage({ className }: BrandLogoProps) {
+  return (
+    <img
+      src={brandMarkSrc}
+      alt="Street Culture Tattoo and Academy"
+      className={cn("h-16 w-auto object-contain opacity-75", className)}
+      draggable="false"
+    />
+  );
+}
+
+export function BrandLogo({ className }: BrandLogoProps) {
   return (
     <span
       className={cn(
-        "inline-flex select-none items-center gap-[0.75em] font-display uppercase",
+        "inline-flex select-none items-center gap-[0.65em] font-body uppercase",
         className,
       )}
     >
       <span className="sr-only">Street Culture - Tattoo and Academy</span>
 
       <img
-        src="/logo.png"
+        src={brandMarkSrc}
         alt="Street Culture Tattoo and Academy"
-        className="size-[2.75em] shrink-0 object-contain"
+        className="h-[2.75em] w-auto shrink-0 object-contain opacity-75"
         draggable="false"
       />
 
       <span aria-hidden="true" className="flex flex-col">
-        <span className="text-[1.6em] font-bold uppercase leading-[0.95] tracking-[-0.04em]">
+        <span className="font-display text-[1.6em] font-black uppercase leading-[0.85] tracking-[0.04em] text-bone [text-shadow:0_2px_3px_rgba(0,0,0,0.9),0_0_14px_rgba(235,231,224,0.28)]">
           Street Culture
         </span>
 
-        <span className="mt-[0.35em] text-[0.6em] font-semibold uppercase leading-none tracking-[0.42em] text-bone/80">
-          Tattoo <span className="text-bone">and</span> Academy
+        <span className="mt-[0.35em] text-[0.6em] font-normal uppercase leading-none tracking-[0.42em] text-bone/65">
+          Tattoo <span className="text-bone/75">and</span> Academy
         </span>
       </span>
     </span>

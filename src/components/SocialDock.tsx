@@ -2,7 +2,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { Facebook, Instagram, MessageCircle } from "lucide-react";
 import { contact } from "@/config/contact";
-import { displayWhatsApp } from "@/lib/whatsapp";
+import { displayWhatsApp, generalEnquiryMessage } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
 /**
@@ -21,7 +21,7 @@ export function SocialDock() {
   const items = [
     {
       key: "wa",
-      href: `https://wa.me/${contact.whatsappNumber}`,
+      href: `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(generalEnquiryMessage())}`,
       label: `WhatsApp ${displayWhatsApp()}`,
       Icon: MessageCircle,
       accent: "hover:bg-[#25D366] hover:text-ink",
@@ -67,10 +67,12 @@ export function SocialDock() {
         {/* collapsed handle — always visible, the primary CTA */}
         <li>
           <motion.a
-            href={`https://wa.me/${contact.whatsappNumber}`}
+            href={`https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(generalEnquiryMessage())}`}
             target="_blank"
             rel="noopener noreferrer"
             whileTap={reduce ? undefined : { scale: 0.94 }}
+            animate={reduce ? undefined : { y: [0, -3, 0] }}
+            transition={reduce ? undefined : { duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
             className={cn(
               "relative flex size-12 items-center justify-center border border-blood bg-blood text-ink",
               "transition-colors hover:bg-[#25D366] hover:border-[#25D366]",
@@ -99,11 +101,10 @@ export function SocialDock() {
               .map((i) => (
                 <motion.li
                   key={i.key}
-                  layout
-                  initial={reduce ? { opacity: 0 } : { opacity: 0, x: -14, scale: 0.85 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  exit={reduce ? { opacity: 0 } : { opacity: 0, x: -14, scale: 0.85 }}
-                  transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                  initial={reduce ? { opacity: 0 } : { opacity: 0, transform: "translate3d(-14px, 0, 0) scale(0.85)" }}
+                  animate={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }}
+                  exit={reduce ? { opacity: 0 } : { opacity: 0, transform: "translate3d(-14px, 0, 0) scale(0.85)" }}
+                  transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <a
                     href={i.href}

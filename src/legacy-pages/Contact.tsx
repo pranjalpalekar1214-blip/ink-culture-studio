@@ -2,7 +2,7 @@ import { Clock, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-re
 import { InkButton, PageHero, Reveal } from "@/components/ui-kit";
 import { breadcrumbSchema, localBusinessSchema, pageMeta } from "@/config/seo";
 import { contact } from "@/config/contact";
-import { displayWhatsApp } from "@/lib/whatsapp";
+import { displayWhatsApp, generalEnquiryMessage } from "@/lib/whatsapp";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 
 export default function Contact() {
@@ -45,7 +45,7 @@ export default function Contact() {
                   </li>
                   <li className="flex items-center gap-3">
                     <Phone className="size-4 shrink-0 text-blood" />
-                    <a href={`https://wa.me/${contact.whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-bone">
+                    <a href={`https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(generalEnquiryMessage())}`} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-bone">
                       {displayWhatsApp()} (WhatsApp preferred)
                     </a>
                   </li>
@@ -110,7 +110,7 @@ export default function Contact() {
                 <InkButton href={contact.directionsUrl} external>
                   <Navigation className="size-4" /> Get Directions
                 </InkButton>
-                <InkButton href={`https://wa.me/${contact.whatsappNumber}`} external variant="outline">
+                <InkButton href={`https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(generalEnquiryMessage())}`} external variant="outline">
                   WhatsApp Us
                 </InkButton>
                 <InkButton href="/book" variant="outline">Book Now</InkButton>
