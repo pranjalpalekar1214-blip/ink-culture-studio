@@ -101,7 +101,7 @@ function Hero() {
           transition={{ delay: 0.08, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
-          <p className="max-w-xl font-body text-base font-medium leading-[1.65] tracking-[0.01em] text-bone/75 [text-shadow:0_2px_8px_rgba(0,0,0,0.72)] md:text-lg">
+          <p className="max-w-xl font-body text-base font-medium leading-[1.65] tracking-[0.01em] text-bone/75 md:text-lg">
             <BrandLogo className="text-base md:text-lg" />
             <span className="mt-2 block">
               Custom tattoos drawn for your body, your story, your streets — in Kandivali West, Mumbai.

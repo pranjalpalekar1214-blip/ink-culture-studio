@@ -108,9 +108,8 @@ const uploadedPhotos: Record<string, string[]> = {
   ].map((file) => `/images/placeholder/Happy clients/${file}`),
   Script: [
     "/images/placeholder/Lettering.svg",
-    "/images/placeholder/line art/Website LINE ART 1.jpg",
-    "/images/placeholder/line art/Website LINE ART 2.jpg",
-    "/images/placeholder/line art/Website LINE ART 3.jpg",
+    "/images/placeholder/lettering.svg",
+    ...numbered("line art", "Website LINE ART ", 26),
   ],
   Realism: [
     ...numbered("Realism", "Website Realistic ", 13),
