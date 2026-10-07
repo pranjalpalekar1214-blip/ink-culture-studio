@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@/next/Link";
 import { galleryItems } from "@/data/gallery";
@@ -5,14 +6,23 @@ import { CursorLabel } from "./CursorLabel";
 
 /** Horizontal swipeable strip of recent work — links to the full gallery. */
 export function GalleryGridMini() {
+  const [rotation, setRotation] = useState(0);
+  const mixedItems = useMemo(
+    () => [...galleryItems].sort((a, b) => a.category.localeCompare(b.category) || a.id.localeCompare(b.id)),
+    [],
+  );
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setRotation((value) => (value + 1) % Math.max(mixedItems.length, 1)), 5000);
+    return () => window.clearInterval(timer);
+  }, [mixedItems.length]);
+
+  const visibleItems = Array.from({ length: Math.min(10, mixedItems.length) }, (_, index) => mixedItems[(rotation + index) % mixedItems.length]);
+
   return (
     <CursorLabel label="DRAG">
       <div className="-mx-5 flex snap-x gap-4 overflow-x-auto px-5 pb-4 md:mx-0 md:px-0 [scrollbar-width:thin]">
-        {[...galleryItems]
-          .sort((a, b) => a.category.localeCompare(b.category) || a.id.localeCompare(b.id))
-          .filter((item, index, items) => index === items.findIndex((candidate) => candidate.category === item.category) || index < 10)
-          .slice(0, 10)
-          .map((item, i) => (
+        {visibleItems.map((item, i) => (
           <motion.div
             key={item.id}
             initial={{ opacity: 0, x: 40 }}
