@@ -81,7 +81,7 @@ function CurriculumSection() {
   return (
     <section className="border-t border-bone/10 py-20 md:py-28" aria-labelledby="curriculum-heading">
       <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
-        <SectionHeading index="03" kicker="Course Structure" title={<>Nine modules.<br />Zero shortcuts.</>} />
+        <SectionHeading index="03" kicker="Course Structure" title={<>One master path.<br />Five months.</>} />
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {courses.map((c, i) => (
             <motion.article
@@ -98,6 +98,13 @@ function CurriculumSection() {
                   {c.level}
                 </span>
               </div>
+              {c.images?.length ? (
+                <div className="mt-4 grid grid-cols-5 gap-1" aria-label={`${c.title} curriculum visuals`}>
+                  {c.images.map((image, imageIndex) => (
+                    <img key={image} src={image} alt={`${c.title} module ${imageIndex + 1}`} className="aspect-[4/5] w-full object-cover" loading="lazy" />
+                  ))}
+                </div>
+              ) : null}
               <h3 className="mt-4 font-display text-xl uppercase leading-tight tracking-tight text-bone">{c.title}</h3>
               <p className="mt-3 flex-1 font-body text-sm leading-relaxed text-bone/60">{c.summary}</p>
               <ul className="mt-4 space-y-1.5 border-t border-bone/10 pt-4">
@@ -108,13 +115,14 @@ function CurriculumSection() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-bone/40">{c.duration}</p>
+              {c.instructor ? <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.12em] text-acid/80">{c.instructor}</p> : null}
+              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-bone/40">{c.duration}</p>
             </motion.article>
           ))}
         </div>
         <Reveal className="mt-8">
           <p className="text-center font-body text-xs leading-relaxed text-bone/45">
-            Module durations, fees and certification details are being finalised —{" "}
+            Course fees and enrolment details are shared during the application —{" "}
             <a href="#enquire" className="text-acid underline underline-offset-4">enquire for current information</a>.
           </p>
         </Reveal>

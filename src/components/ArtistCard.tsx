@@ -191,11 +191,13 @@ export function ArtistCard({ artist, index, showPhoto = false }: { artist: Artis
         <PowerAura accent={artist.accent} active={flipped} />
 
         <div
-          className="relative z-10 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          className="relative z-10 touch-manipulation transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
           style={{
             transformStyle: "preserve-3d",
+            WebkitTransformStyle: "preserve-3d",
             willChange: "transform",
             transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+            WebkitTransform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
           }}
         >
           {/* ============ FRONT ============ */}
@@ -242,9 +244,11 @@ export function ArtistCard({ artist, index, showPhoto = false }: { artist: Artis
                   <StickArtistFigure who={artist.portrait} className="absolute inset-0 m-auto h-4/5 text-bone/80" />
                 )}
                 {/* holographic foil sweep — collectible-card sheen */}
-                <span
+                <motion.span
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.08] to-transparent mix-blend-screen"
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-tr from-transparent via-white/[0.16] to-transparent mix-blend-screen"
+                  animate={reduce ? { opacity: 0.5 } : { x: ["0%", "220%"] }}
+                  transition={reduce ? { duration: 0.2 } : { duration: 3.2, repeat: Infinity, repeatDelay: 2.4, ease: "easeInOut" }}
                 />
               </div>
               <div className="absolute inset-x-0 bottom-0 flex justify-between border-t border-bone/10 bg-ink/80 px-3 py-2 text-[9px] uppercase tracking-[0.25em] text-bone/50 backdrop-blur-sm">
@@ -303,7 +307,7 @@ export function ArtistCard({ artist, index, showPhoto = false }: { artist: Artis
               <button
                 onClick={() => setFlipped(true)}
                 aria-label={`Flip ${artist.name}'s card for details`}
-                className="flex size-11 items-center justify-center border border-bone/25 text-bone/70 transition-colors hover:border-blood hover:text-blood"
+                className="flex size-11 touch-manipulation items-center justify-center border border-bone/25 text-bone/70 transition-colors active:scale-95 hover:border-blood hover:text-blood"
               >
                 <RefreshCw className="size-4" />
               </button>
@@ -353,7 +357,7 @@ export function ArtistCard({ artist, index, showPhoto = false }: { artist: Artis
             <button
               onClick={() => setFlipped(false)}
               tabIndex={flipped ? 0 : -1}
-              className="mt-4 flex items-center justify-center gap-2 border border-bone/25 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-bone/5"
+              className="mt-4 flex min-h-11 touch-manipulation items-center justify-center gap-2 border border-bone/25 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors active:scale-[0.99] hover:bg-bone/5"
             >
               <RefreshCw className="size-4" /> Flip Back
             </button>
