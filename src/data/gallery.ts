@@ -87,6 +87,15 @@ const styles: { style: string; artist: 0 | 1; cat: GalleryCategory; ink: InkColo
   { style: "Students Awards", artist: 1, cat: "Students, Convocation + Awards", ink: "Colour" },
 ];
 
+const uploadedPhotos: Record<string, string[]> = {
+  "Colour Tattoos": Array.from({ length: 26 }, (_, i) => `/images/placeholder/color tattoos/Website clr ${i === 25 ? "26" : i + 1}.jpg`),
+  Religious: Array.from({ length: 22 }, (_, i) => `/images/placeholder/religious tattoos/Website Religeous ${i + 1}.jpg`),
+  Animal: Array.from({ length: 16 }, (_, i) => `/images/placeholder/animal tattoos/Website Animal ${i + 1}.jpg`),
+  "Line Art": Array.from({ length: 26 }, (_, i) => `/images/placeholder/line art/Website LINE ART ${i + 1}.jpg`),
+  "Feminine Tattoo Inspo": Array.from({ length: 29 }, (_, i) => `/images/placeholder/feminine/Website WOMENS IDEA ${i + 1}.jpg`),
+  Portfolio: Array.from({ length: 25 }, (_, i) => `/images/placeholder/Realism/Website Realistic ${i + 1}.jpg`),
+};
+
 const titles = [
   "Saint of Streets",
   "Mumbai Monsoon",
@@ -118,12 +127,9 @@ function build(): GalleryItem[] {
         inkColor: s.ink,
         artistId: artist.id,
         artistName: artist.name,
-        src: `/images/placeholder/${slug(s.style)}.svg`,
-        alt: `${s.style} tattoo by ${artist.name} at Street Culture Tattoo Studio, Kandivali West — placeholder image awaiting studio photo`,
-        description:
-          pass === 0
-            ? "Placeholder piece — replace with a real healed-healed photo, artist notes and session details."
-            : undefined,
+        src: uploadedPhotos[s.cat]?.[idx % uploadedPhotos[s.cat].length] ?? `/images/placeholder/${slug(s.style)}.svg`,
+        alt: `${s.style} tattoo artwork at Street Culture Tattoo Studio, Kandivali West`,
+        description: undefined,
         ratio: ratios[idx % ratios.length],
       });
     });

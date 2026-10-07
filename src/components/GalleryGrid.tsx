@@ -7,7 +7,6 @@ import { contact } from "@/config/contact";
 import { cn } from "@/lib/utils";
 import { trackFunnelEvent } from "@/lib/funnel";
 import { CursorLabel } from "./CursorLabel";
-import { PlaceholderImage } from "./PlaceholderImage";
 
 /** Filter chips — categories come from data, so they stay configurable. */
 function Chip({
@@ -36,7 +35,7 @@ function Chip({
   );
 }
 
-/** A gallery tile — the artist name is itself a link into the portfolio. */
+  /** A gallery tile focused on the artwork image and category. */
 function Tile({ item, onOpen, index }: { item: GalleryItem; onOpen: () => void; index: number }) {
   return (
     <CursorLabel label="VIEW" className="w-full">
@@ -55,10 +54,12 @@ function Tile({ item, onOpen, index }: { item: GalleryItem; onOpen: () => void; 
           aria-label={`View ${item.category} tattoo`}
         >
           <div style={{ aspectRatio: `3.2 / ${item.ratio * 2}` }} className="w-full">
-            <PlaceholderImage
-              seed={item.id}
-              label={item.category}
-              className="transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+            <img
+              src={item.src}
+              alt={item.alt}
+              loading={index < 4 ? "eager" : "lazy"}
+              decoding="async"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
             />
           </div>
           {/* hover overlay — no piece name, just style + ink */}
@@ -227,7 +228,7 @@ function Lightbox({
     <motion.div
       role="dialog"
       aria-modal="true"
-      aria-label={`${item.category} tattoo by ${item.artistName}`}
+      aria-label={`${item.category} tattoo artwork`}
       className="fixed inset-0 z-[120] flex items-center justify-center bg-ink/95 p-4 backdrop-blur-sm sm:p-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -278,7 +279,7 @@ function Lightbox({
         onClick={(e) => e.stopPropagation()}
       >
         <div style={{ aspectRatio: "3.2 / 4" }} className="w-full">
-          <PlaceholderImage seed={item.id} label={item.category} />
+          <img src={item.src} alt={item.alt} className="h-full w-full object-cover" decoding="async" />
         </div>
         <figcaption className="border-t-2 border-bone/10 p-5 sm:p-6">
           <div className="flex flex-wrap items-start justify-between gap-3">
@@ -292,7 +293,7 @@ function Lightbox({
               to={`/artists/${item.artistId}/portfolio`}
               className="border-2 border-blood bg-blood px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-ink transition-transform hover:-translate-y-0.5"
             >
-              {item.artistName}'s Portfolio
+              View {item.category} Collection
             </Link>
           </div>
           {item.description && <p className="mt-3 text-sm leading-relaxed text-bone/65">{item.description}</p>}
