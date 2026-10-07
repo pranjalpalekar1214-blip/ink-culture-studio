@@ -186,13 +186,6 @@ export const academyCourses: Course[] = [
       "Management: personality, etiquette, clients, communication, studio systems, marketing and social media",
       "Live demonstrations and supervised practice across the full tattoo workflow",
     ],
-    images: [
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Drawing%2001-5I7CUaagucQ6Cc6XpVlKcuSWc8ZrqP.jpg",
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Tattooing%2002-VEFbgk7LvYVQLwYUqEEdXZL2qJKNRY.jpg",
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Colour%20Tat%2003-ROp14mxYDZbrF9KDUCJu7JA0gNDDtG.jpg",
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Designing%2004-oYlpzbXP2F1nVhXhsIYbYH60Vby4uE.jpg",
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mngmant%2005-x5EeD0RSGoM8f0sfSRKpGe3IlVCtza.jpg",
-    ],
   },
   {
     id: "primary-course",

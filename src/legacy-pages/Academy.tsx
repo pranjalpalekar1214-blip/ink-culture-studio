@@ -96,11 +96,9 @@ function CurriculumSection() {
             <Fragment key={`${c.id}-group`}>
             <motion.article
               key={c.id}
-              initial={reduce ? false : { opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={false}
               animate={reduce ? undefined : { y: [0, -5, 0], rotate: [0, i % 2 ? 0.3 : -0.3, 0] }}
               whileHover={reduce ? undefined : { scale: 1.015, rotate: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 4.8, repeat: Infinity, delay: (i % 3) * 0.25, ease: "easeInOut" }}
               className={`group relative flex cursor-pointer flex-col border border-bone/12 bg-white/[0.02] p-6 transition-colors hover:-translate-y-2 hover:border-acid/60 hover:bg-white/[0.04] hover:shadow-[0_18px_0_rgba(239,190,58,0.12)] ${selectedCourse === c.id ? "border-acid/70 bg-white/[0.05] shadow-[0_12px_0_rgba(239,190,58,0.18)]" : ""}`}
               onClick={() => setSelectedCourse(selectedCourse === c.id ? null : c.id)}
@@ -125,13 +123,6 @@ function CurriculumSection() {
                   {c.level}
                 </span>
               </div>
-              {c.images?.length ? (
-                <div className="mt-4 grid grid-cols-5 gap-1" aria-label={`${c.title} curriculum visuals`}>
-                  {c.images.map((image, imageIndex) => (
-                    <img key={image} src={image} alt={`${c.title} module ${imageIndex + 1}`} className="aspect-[4/5] w-full object-cover" loading="lazy" />
-                  ))}
-                </div>
-              ) : null}
               <h3 className="mt-4 font-display text-xl uppercase leading-tight tracking-tight text-bone">{c.title}</h3>
               <p className="mt-3 flex-1 font-body text-sm leading-relaxed text-bone/60">{c.summary}</p>
               <ul className="mt-4 space-y-1.5 border-t border-bone/10 pt-4">
