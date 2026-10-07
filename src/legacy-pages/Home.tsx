@@ -1,6 +1,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ChevronDown } from "lucide-react";
 import { useRef } from "react";
+import { Link } from "@/next/Link";
 import { ArtistCard } from "@/components/ArtistCard";
 import { BrandLogo } from "@/components/BrandLogo";
 import { ArtistPortrait, EyeMotif, HandMotif, InkStroke, LocalTrainMotif, QuestionBlock, SnakeMotif, StarMotif, TickerStrip } from "@/components/art";
@@ -250,6 +251,21 @@ function GalleryStrip() {
         </div>
         <div className="mt-12">
           <GalleryGridMini />
+        </div>
+        <div className="mt-10 flex flex-wrap gap-3" aria-label="Browse tattoo genres">
+          {[
+            ["Colour", "Colour Tattoos"],
+            ["Religious", "Religious"],
+            ["Feminine", "Feminine Tattoo Inspo"],
+            ["Line Art", "Line Art"],
+            ["Script", "Script"],
+            ["Students", "Students, Convocation + Awards"],
+            ["Studio Work", "Academy + Studio"],
+          ].map(([label, category]) => (
+            <Link key={category} to={`/gallery?category=${encodeURIComponent(category)}`} className="border border-bone/20 px-4 py-2 font-display text-xs uppercase tracking-[0.18em] text-bone/75 transition-colors hover:border-acid hover:text-acid">
+              {label} Tattoos
+            </Link>
+          ))}
         </div>
       </div>
     </section>

@@ -53,13 +53,13 @@ function Tile({ item, onOpen, index }: { item: GalleryItem; onOpen: () => void; 
           className="block w-full text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-blood"
           aria-label={`View ${item.category} tattoo`}
         >
-          <div style={{ aspectRatio: `3.2 / ${item.ratio * 2}` }} className="w-full">
+          <div className="flex aspect-[4/5] w-full items-center justify-center bg-[#111] p-2 sm:p-3">
             <img
               src={item.src}
               alt={item.alt}
-              loading={index < 4 ? "eager" : "lazy"}
+              loading={index < 8 ? "eager" : "lazy"}
               decoding="async"
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+              className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]"
             />
           </div>
           {/* hover overlay — no piece name, just style + ink */}
@@ -79,7 +79,9 @@ function Tile({ item, onOpen, index }: { item: GalleryItem; onOpen: () => void; 
 }
 
 export function GalleryGrid() {
-  const [filter, setFilter] = useState("All");
+  const requestedCategory = typeof window === "undefined" ? null : new URLSearchParams(window.location.search).get("category");
+  const initialFilter = requestedCategory && galleryCategories.includes(requestedCategory as (typeof galleryCategories)[number]) ? requestedCategory : "All";
+  const [filter, setFilter] = useState(initialFilter);
   const [artist, setArtist] = useState<string>("All");
   const [ink, setInk] = useState<string>("All");
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
@@ -169,10 +171,10 @@ export function GalleryGrid() {
           <p className="mt-2 font-body text-sm text-bone/50">Try clearing a filter. Or come make the first one.</p>
         </div>
       ) : (
-        <div className="mt-6 columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4">
+        <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AnimatePresence mode="popLayout">
             {items.map((item, i) => (
-              <div key={item.id} className="mb-4 break-inside-avoid">
+              <div key={item.id} className="min-w-0">
                 <Tile item={item} index={i} onOpen={() => { trackFunnelEvent("gallery_piece_viewed", item.id); setLightbox(item); }} />
               </div>
             ))}
@@ -278,8 +280,8 @@ function Lightbox({
         className="max-h-full w-full max-w-3xl overflow-y-auto border-2 border-bone/20 bg-[#141414] shadow-[10px_10px_0_0_rgba(245,197,24,0.25)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <div style={{ aspectRatio: "3.2 / 4" }} className="w-full">
-          <img src={item.src} alt={item.alt} className="h-full w-full object-cover" decoding="async" />
+        <div className="flex max-h-[72vh] min-h-[320px] w-full items-center justify-center bg-[#111] p-3 sm:p-5">
+          <img src={item.src} alt={item.alt} className="max-h-[68vh] w-full object-contain" decoding="async" />
         </div>
         <figcaption className="border-t-2 border-bone/10 p-5 sm:p-6">
           <div className="flex flex-wrap items-start justify-between gap-3">
