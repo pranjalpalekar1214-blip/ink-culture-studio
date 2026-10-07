@@ -13,6 +13,7 @@
 
 export type GalleryCategory =
   | "Portfolio"
+  | "Realism"
   | "Colour Tattoos"
   | "Religious"
   | "Animal"
@@ -31,6 +32,7 @@ export type InkColor = "Black" | "Black & Grey" | "Colour" | "Fine B&W";
 export const galleryCategories: ("All" | GalleryCategory)[] = [
   "All",
   "Portfolio",
+  "Realism",
   "Colour Tattoos",
   "Religious",
   "Animal",
@@ -87,6 +89,29 @@ const styles: { style: string; artist: 0 | 1; cat: GalleryCategory; ink: InkColo
   { style: "Students Awards", artist: 1, cat: "Students, Convocation + Awards", ink: "Colour" },
 ];
 
+const numbered = (folder: string, prefix: string, count: number, extension = "jpg") =>
+  Array.from({ length: count }, (_, i) => `/images/placeholder/${folder}/${prefix}${i + 1}.${extension}`);
+
+const uploadedPhotos: Record<string, string[]> = {
+  "Colour Tattoos": [
+    ...numbered("color tattoos", "Website clr ", 25),
+    "/images/placeholder/color tattoos/Website clr 27.jpg",
+    "/images/placeholder/color tattoos/Website clr26.jpg",
+  ],
+  Religious: numbered("religious tattoos", "Website Religeous ", 22),
+  Animal: numbered("animal tattoos", "Website Animal ", 16),
+  "Line Art": numbered("line art", "Website LINE ART ", 26),
+  "Feminine Tattoo Inspo": numbered("feminine", "Website WOMENS IDEA ", 29),
+  Realism: [
+    ...numbered("Realism", "Website Realistic ", 13),
+    ...Array.from({ length: 11 }, (_, i) => `/images/placeholder/Realism/Website Realistic ${i + 15}.jpg`),
+  ],
+};
+
+const uploadedCategories = Object.entries(uploadedPhotos).flatMap(([category, photos]) =>
+  photos.map((src, index) => ({ category, src, index })),
+);
+
 const titles = [
   "Saint of Streets",
   "Mumbai Monsoon",
@@ -105,30 +130,18 @@ const titles = [
 const ratios = [1, 1.45, 0.8, 1.2, 0.9, 1.6, 1.1, 0.85, 1.3, 0.95, 1.5, 1.05];
 
 function build(): GalleryItem[] {
-  const items: GalleryItem[] = [];
-  // Two passes over the pool to create 24 items with unique ids
-  for (let pass = 0; pass < 2; pass++) {
-    styles.forEach((s, i) => {
-      const idx = pass * styles.length + i;
-      const artist = s.artist === 0 ? artistsShim[0] : artistsShim[1];
-      items.push({
-        id: `g-${idx + 1}`,
-        title: titles[idx % titles.length] + (pass === 1 ? " II" : ""),
-        category: s.cat,
-        inkColor: s.ink,
-        artistId: artist.id,
-        artistName: artist.name,
-        src: `/images/placeholder/${slug(s.style)}.svg`,
-        alt: `${s.style} tattoo by ${artist.name} at Street Culture Tattoo Studio, Kandivali West — placeholder image awaiting studio photo`,
-        description:
-          pass === 0
-            ? "Placeholder piece — replace with a real healed-healed photo, artist notes and session details."
-            : undefined,
-        ratio: ratios[idx % ratios.length],
-      });
-    });
-  }
-  return items;
+  return uploadedCategories.map(({ category, src, index }, itemIndex) => ({
+    id: `g-${itemIndex + 1}`,
+    title: `${category} ${index + 1}`,
+    category: category as GalleryCategory,
+    inkColor: category === "Colour Tattoos" ? "Colour" : "Black & Grey",
+    artistId: "studio",
+    artistName: "Street Culture Studio",
+    src,
+    alt: `${category} tattoo artwork at Street Culture Tattoo Studio, Kandivali West`,
+    description: undefined,
+    ratio: ratios[itemIndex % ratios.length],
+  }));
 }
 
 // Avoid circular import with artists data; minimal shim of what we need
