@@ -21,6 +21,7 @@ export type GalleryCategory =
   | "Line Art"
   | "Script"
   | "Feminine Tattoo Inspo"
+  | "Happy Clients"
   | "Academy + Studio"
   | "BTS"
   | "Healed Tattoos"
@@ -40,6 +41,7 @@ export const galleryCategories: ("All" | GalleryCategory)[] = [
   "Line Art",
   "Script",
   "Feminine Tattoo Inspo",
+  "Happy Clients",
   "Academy + Studio",
   "BTS",
   "Healed Tattoos",
@@ -102,10 +104,16 @@ const uploadedPhotos: Record<string, string[]> = {
   Animal: numbered("animal tattoos", "Website Animal ", 16),
   "Line Art": numbered("line art", "Website LINE ART ", 26),
   "Feminine Tattoo Inspo": numbered("feminine", "Website WOMENS IDEA ", 29),
+  "Happy Clients": [
+    "Friends getting tattoo.jpg", "Oct Story 10.jpg", "SEP 26 Highlights 01.jpg", "SEP 26 Highlights 02.jpg", "SEP 26 Highlights 03.jpg", "Sep Client Diaries 01.jpg", "Sep Client Diaries 04.jpg", "Smile We Tat for 03.jpg", "Smile We Tat for.jpg", "Warning client 02.jpg", "Warning client 03.jpg",
+  ].map((file) => `/images/placeholder/Happy clients/${file}`),
+  Script: ["/images/placeholder/Lettering.svg"],
   Realism: [
     ...numbered("Realism", "Website Realistic ", 13),
     ...Array.from({ length: 11 }, (_, i) => `/images/placeholder/Realism/Website Realistic ${i + 15}.jpg`),
   ],
+  "Cover Ups": ["Coverup 01.jpg", "Coverup 02.jpg", "Coverup 03.jpg", "Coverup 04.jpg", "Coverup 05.jpg", "Coverup 06.jpg", "Coverup 07.jpg", "Coverup 8.jpg"].map((file) => `/images/placeholder/cover ups/${file}`),
+  "Healed Tattoos": ["Fresh Healed Harly joker.jpg", "Healed 02.jpg", "Healed 03.jpg", "Healed 04.jpg", "Healed 05.jpg", "Healed 5.jpg", "Healed Ardhanareshwar.jpg"].map((file) => `/images/placeholder/Healed tattoos/${file}`),
   "Students, Convocation + Awards": [
     "/images/placeholder/student's Achievement/AWARD Bagga.jpg",
     "/images/placeholder/student's Achievement/AWARD Bibin.jpg",
