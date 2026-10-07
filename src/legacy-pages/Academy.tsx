@@ -3,7 +3,7 @@ import { useState } from "react";
 import { PenToolIcon, ShieldIcon, UserCheckIcon, WorkflowIcon } from "@/components/icons";
 import { InkButton, PageHero, Reveal, SectionHeading } from "@/components/ui-kit";
 import { breadcrumbSchema, faqSchema, pageMeta } from "@/config/seo";
-import { academyFaqs, courses } from "@/data/courses";
+import { academyCourses, academyFaqs } from "@/data/courses";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { submitAcademyEnquiry } from "@/lib/forms";
 import { academyMessage, openWhatsApp } from "@/lib/whatsapp";
@@ -81,9 +81,9 @@ function CurriculumSection() {
   return (
     <section className="border-t border-bone/10 py-20 md:py-28" aria-labelledby="curriculum-heading">
       <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
-        <SectionHeading index="03" kicker="Course Structure" title={<>One master path.<br />Five months.</>} />
+        <SectionHeading index="03" kicker="Course Structure" title={<>Four ways in.<br />Choose your path.</>} />
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {courses.map((c, i) => (
+          {academyCourses.map((c, i) => (
             <motion.article
               key={c.id}
               initial={reduce ? false : { opacity: 0, y: 32 }}
@@ -117,6 +117,13 @@ function CurriculumSection() {
               </ul>
               {c.instructor ? <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.12em] text-acid/80">{c.instructor}</p> : null}
               <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-bone/40">{c.duration}</p>
+              <button
+                type="button"
+                onClick={() => openWhatsApp(`Hello Street Culture Academy! I would like to enquire about the ${c.title} (${c.duration}) and request the current price. Please share the details.`)}
+                className="mt-5 border border-acid/70 px-4 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-acid transition-colors hover:bg-acid hover:text-ink"
+              >
+                Enquire for price <span aria-hidden>↗</span>
+              </button>
             </motion.article>
           ))}
         </div>

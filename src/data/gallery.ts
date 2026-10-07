@@ -22,10 +22,10 @@ export type GalleryCategory =
   | "Script"
   | "Feminine Tattoo Inspo"
   | "Happy Clients"
-  | "Academy + Studio"
   | "BTS"
   | "Healed Tattoos"
-  | "Students, Convocation + Awards";
+  | "Students, Convocation + Awards"
+  | "Skin Pads";
 
 /** Ink palette used for the "colour" filter dimension. */
 export type InkColor = "Black" | "Black & Grey" | "Colour" | "Fine B&W";
@@ -42,10 +42,10 @@ export const galleryCategories: ("All" | GalleryCategory)[] = [
   "Script",
   "Feminine Tattoo Inspo",
   "Happy Clients",
-  "Academy + Studio",
   "BTS",
   "Healed Tattoos",
   "Students, Convocation + Awards",
+  "Skin Pads",
 ];
 
 /** Derived from items — but ordered explicitly for the UI. */
@@ -85,7 +85,6 @@ const styles: { style: string; artist: 0 | 1; cat: GalleryCategory; ink: InkColo
   { style: "Line Art", artist: 1, cat: "Line Art", ink: "Fine B&W" },
   { style: "Script", artist: 0, cat: "Script", ink: "Black" },
   { style: "Feminine", artist: 1, cat: "Feminine Tattoo Inspo", ink: "Fine B&W" },
-  { style: "Academy Studio", artist: 0, cat: "Academy + Studio", ink: "Black & Grey" },
   { style: "BTS", artist: 1, cat: "BTS", ink: "Black & Grey" },
   { style: "Healed", artist: 0, cat: "Healed Tattoos", ink: "Black & Grey" },
   { style: "Students Awards", artist: 1, cat: "Students, Convocation + Awards", ink: "Colour" },
@@ -107,7 +106,11 @@ const uploadedPhotos: Record<string, string[]> = {
   "Happy Clients": [
     "Friends getting tattoo.jpg", "Oct Story 10.jpg", "SEP 26 Highlights 01.jpg", "SEP 26 Highlights 02.jpg", "SEP 26 Highlights 03.jpg", "Sep Client Diaries 01.jpg", "Sep Client Diaries 04.jpg", "Smile We Tat for 03.jpg", "Smile We Tat for.jpg", "Warning client 02.jpg", "Warning client 03.jpg",
   ].map((file) => `/images/placeholder/Happy clients/${file}`),
-  Script: ["/images/placeholder/Lettering.svg"],
+  Script: [
+    "/images/placeholder/Lettering.svg",
+    "/images/placeholder/lettering.svg",
+    ...numbered("line art", "Website LINE ART ", 26),
+  ],
   Realism: [
     ...numbered("Realism", "Website Realistic ", 13),
     ...Array.from({ length: 11 }, (_, i) => `/images/placeholder/Realism/Website Realistic ${i + 15}.jpg`),
@@ -127,16 +130,65 @@ const uploadedPhotos: Record<string, string[]> = {
     "/images/placeholder/student's Achievement/Convoc 03.jpg",
     "/images/placeholder/student's Achievement/Convoc 04.jpg",
     "/images/placeholder/student's Achievement/Student Sachin .jpg",
+    "/images/placeholder/student's Achievement/Bagga Hanya mask post.jpg",
+    "/images/placeholder/student's Achievement/Bagga Madusa Post.jpg",
+    "/images/placeholder/student's Achievement/Desi Colour 01.jpg",
+    "/images/placeholder/student's Achievement/Dhiru Floral Skull post.jpg",
+    "/images/placeholder/student's Achievement/Dhiru Watercolour Cat Post.jpg",
+    "/images/placeholder/student's Achievement/Mnadeep Hanuman.jpg",
+    "/images/placeholder/student's Achievement/NIRAV BATLI.jpg",
+    "/images/placeholder/student's Achievement/Raj Colour Lotus.jpg",
+    "/images/placeholder/student's Achievement/Rajveer joker.jpg",
+    "/images/placeholder/student's Achievement/Rakshit Shell colour.jpg",
+    "/images/placeholder/student's Achievement/Rakshit colour wok.jpg",
+    "/images/placeholder/student's Achievement/Throwback B&G 02.jpg",
+    "/images/placeholder/student's Achievement/Throwback Student tat Yogesh.jpg",
   ],
-  "Academy + Studio": [
-    "/images/placeholder/Happy clients/SEP 26 Highlights 01.jpg",
-    "/images/placeholder/Happy clients/SEP 26 Highlights 02.jpg",
-    "/images/placeholder/Happy clients/SEP 26 Highlights 03.jpg",
-    "/images/placeholder/Happy clients/Sep Client Diaries 01.jpg",
-    "/images/placeholder/Happy clients/Sep Client Diaries 04.jpg",
-    "/images/placeholder/Happy clients/Smile We Tat for.jpg",
-    "/images/placeholder/Happy clients/Smile We Tat for 03.jpg",
-    ...numbered("Realism", "Website Realistic ", 6),
+  "Skin Pads": [
+    "/images/placeholder/skinpads/Backpiece 01.jpg",
+    "/images/placeholder/skinpads/Bagga Scary portrait.jpg",
+    "/images/placeholder/skinpads/Bagga pencil skinpad.jpg",
+    "/images/placeholder/skinpads/Deepak Kingfisher Bird.jpg",
+    "/images/placeholder/skinpads/Deepak Red Character.jpg",
+    "/images/placeholder/skinpads/Desi Green Godess.jpg",
+    "/images/placeholder/skinpads/Desi New school Nike.jpg",
+    "/images/placeholder/skinpads/Desi abstract flower.jpg",
+    "/images/placeholder/skinpads/Desmond practice skin.jpg",
+    "/images/placeholder/skinpads/Dhiraj S - Sculpture.jpg",
+    "/images/placeholder/skinpads/Dhiru Avatar.jpg",
+    "/images/placeholder/skinpads/Dhiru Kukdo post.jpg",
+    "/images/placeholder/skinpads/Hulk skin pad.jpg",
+    "/images/placeholder/skinpads/INDRAYANI RAUT.jpg",
+    "/images/placeholder/skinpads/Kapil Thenos .jpg",
+    "/images/placeholder/skinpads/Keshav Newschool post.jpg",
+    "/images/placeholder/skinpads/Keshav The Mask post.jpg",
+    "/images/placeholder/skinpads/Kingfisher Frank Ronald.jpg",
+    "/images/placeholder/skinpads/LE Desi tiger copy.jpg",
+    "/images/placeholder/skinpads/Mayank Colour portrait Post.jpg",
+    "/images/placeholder/skinpads/Mayank Flower post.jpg",
+    "/images/placeholder/skinpads/Mermaid Frank Ronald.jpg",
+    "/images/placeholder/skinpads/Morris Blue men.jpg",
+    "/images/placeholder/skinpads/Nayan Wolf skinpad.jpg",
+    "/images/placeholder/skinpads/Paakhi skinpad.jpg",
+    "/images/placeholder/skinpads/Parrot Indrayani Post.jpg",
+    "/images/placeholder/skinpads/RAJ Krishna Portrait.jpg",
+    "/images/placeholder/skinpads/Rakshit Buddha.jpg",
+    "/images/placeholder/skinpads/Rakshit Flower watercolour.jpg",
+    "/images/placeholder/skinpads/Rakshit Owl.jpg",
+    "/images/placeholder/skinpads/Rakshit Portrait.jpg",
+    "/images/placeholder/skinpads/Rakshit Shiva.jpg",
+    "/images/placeholder/skinpads/Rakshit shiva copy.jpg",
+    "/images/placeholder/skinpads/Sachin Hellboy.jpg",
+    "/images/placeholder/skinpads/Samson miduim b&g.jpg",
+    "/images/placeholder/skinpads/Siva Sculpture.jpg",
+    "/images/placeholder/skinpads/Skinpad Morgan.jpg",
+    "/images/placeholder/skinpads/Sujal Alien.jpg",
+    "/images/placeholder/skinpads/Sujal Flower.jpg",
+    "/images/placeholder/skinpads/Sujal Parot.jpg",
+    "/images/placeholder/skinpads/Supriya Cat skinpad.jpg",
+    "/images/placeholder/skinpads/Thanos Frank Ronald.jpg",
+    "/images/placeholder/skinpads/VINAYAK UNKI.jpg",
+    "/images/placeholder/skinpads/Yogesh Practice skin.jpg",
   ],
 };
 

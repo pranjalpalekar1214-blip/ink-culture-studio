@@ -169,6 +169,46 @@ export const courses: Course[] = [
   },
 ];
 
+export const academyCourses: Course[] = [
+  {
+    id: "master-course",
+    number: "01",
+    title: "Master Course",
+    level: "All Levels",
+    duration: "5 months",
+    instructor: "Taught by Lucky Solanki · Assisted by Karan Parmar",
+    summary: "Complete tattoo education across drawing, tattooing, colour, designing and studio management.",
+    outcomes: ["Drawing and anatomy", "Tattooing and hygiene", "Colour, design and management"],
+  },
+  {
+    id: "primary-course",
+    number: "02",
+    title: "Primary Course",
+    level: "Beginner",
+    duration: "3 months",
+    summary: "A focused black and grey foundation for students ready to build disciplined tattoo fundamentals.",
+    outcomes: ["Drawing and composition", "Black and grey technique", "Hygiene and studio practice"],
+  },
+  {
+    id: "colour-course",
+    number: "03",
+    title: "Colour Course",
+    level: "Intermediate",
+    duration: "1 month",
+    summary: "A concentrated colour programme covering theory, packing, blending and realistic colour tattooing.",
+    outcomes: ["Colour theory", "Packing and blending", "Colour harmony and skin safety"],
+  },
+  {
+    id: "artist-programme",
+    number: "04",
+    title: "Artist Programme Fastrack",
+    level: "All Levels",
+    duration: "1 month",
+    summary: "An intensive route for working artists who need a focused upgrade in technique, process and studio readiness.",
+    outcomes: ["Portfolio and technique review", "Workflow and client consultation", "Studio-ready refinement"],
+  },
+];
+
 export const academyFaqs = [
   {
     question: "Do I need drawing experience to join?",

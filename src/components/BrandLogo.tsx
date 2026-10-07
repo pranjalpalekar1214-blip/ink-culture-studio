@@ -51,11 +51,11 @@ export function BrandLogo({ className }: BrandLogoProps) {
       />
 
       <span aria-hidden="true" className="flex flex-col">
-        <span className="font-display text-[1.6em] font-black uppercase leading-[0.85] tracking-[0.04em] text-bone [text-shadow:0_2px_3px_rgba(0,0,0,0.9),0_0_14px_rgba(235,231,224,0.28)]">
+        <span className="font-display text-[1.6em] font-black uppercase leading-[0.85] tracking-[0.04em] text-bone">
           Street Culture
         </span>
 
-        <span className="mt-[0.35em] text-[0.6em] font-normal uppercase leading-none tracking-[0.42em] text-bone/65">
+        <span className="mt-[0.35em] text-[0.6em] font-bold uppercase leading-none tracking-[0.42em] text-bone/75">
           Tattoo <span className="text-bone/75">and</span> Academy
         </span>
       </span>
