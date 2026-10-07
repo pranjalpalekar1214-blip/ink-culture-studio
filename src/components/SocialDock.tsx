@@ -70,6 +70,7 @@ export function SocialDock() {
             href={`https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(generalEnquiryMessage())}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => setOpen((value) => !value)}
             whileTap={reduce ? undefined : { scale: 0.94 }}
             animate={reduce ? undefined : { y: [0, -3, 0] }}
             transition={reduce ? undefined : { duration: 2.8, repeat: Infinity, ease: "easeInOut" }}

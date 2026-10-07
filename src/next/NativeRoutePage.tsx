@@ -10,6 +10,8 @@ import { StickyBookBar } from "@/components/StickyBookBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SocialDock } from "@/components/SocialDock";
 import { Intro } from "@/components/Intro";
+import { ClickSound } from "@/components/ClickSound";
+import { PixelCloud } from "@/components/PixelCloud";
 import Home from "../legacy-pages/Home";
 import About from "../legacy-pages/About";
 import Artists from "../legacy-pages/Artists";
@@ -65,6 +67,8 @@ function NativeContent() {
 export default function NativeRoutePage({ routePath = "/" }: { routePath?: string }) {
   return (
     <>
+      <ClickSound />
+      <PixelCloud />
       <Intro />
       <MemoryRouter initialEntries={[routePath]}>
         <RouteSyncer />
