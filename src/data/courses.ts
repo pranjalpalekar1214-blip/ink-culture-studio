@@ -8,6 +8,9 @@ export type Course = {
   outcomes: string[];
   /** 01, 02... for the editorial numbering */
   number: string;
+  image?: string;
+  images?: string[];
+  instructor?: string;
 };
 
 /**
@@ -15,6 +18,29 @@ export type Course = {
  * claims must be replaced with real information before launch.
  */
 export const courses: Course[] = [
+  {
+    id: "master-course",
+    number: "01",
+    title: "Master Course",
+    level: "All Levels",
+    duration: "5 months",
+    instructor: "Taught by Lucky Solanki · Assisted by Karan Parmar",
+    summary: "A complete tattoo education pathway moving from drawing fundamentals to tattooing, colour, designing, and the professional mindset required to build a lasting studio practice.",
+    outcomes: [
+      "Drawing: form, value, dimension, light, anatomy, perspective",
+      "Tattooing: tools, needles, hygiene, lining, colour, realism, shading",
+      "Colour: theory, packing, blending, harmony, texture, live demonstration",
+      "Designing: Photoshop, Illustrator, iPad sketching, composition and body flow",
+      "Management: client care, communication, studio systems, marketing and social media",
+    ],
+    images: [
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Drawing%2001-pJ4Y8s3Tta71lHn2rQMI8vrZ7QjHC9.jpg",
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Tattooing%2002-YY5LGkuspresZIjV5p5D4wSZoc5pJt.jpg",
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Colour%20Tat%2003-TAidZ09pCoatYYTlb4jibhvoP7aVeF.jpg",
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Designing%2004-dtVezGolcT80At2vVKhjGd7LftjcSX.jpg",
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mngmant%2005-7qrjYTdmT3IxBwBNi6VuG9TjUkMOnL.jpg",
+    ],
+  },
   {
     id: "fundamentals",
     number: "01",
