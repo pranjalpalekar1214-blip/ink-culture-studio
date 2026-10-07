@@ -221,7 +221,7 @@ function Lightbox({
   }, []);
 
   const waHref = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(
-    `Hey ${contact.studioName}! I saw a ${item.category} piece (${item.inkColor} ink) by ${item.artistName} in your gallery. I'd love something similar.`,
+    `Hey ${contact.studioName}! I saw a ${item.category} piece (${item.inkColor} ink) in your gallery. I'd love something similar.`,
   )}`;
 
   return (
@@ -290,7 +290,7 @@ function Lightbox({
               </p>
             </div>
             <Link
-              to={`/artists/${item.artistId}/portfolio`}
+              to="/gallery"
               className="border-2 border-blood bg-blood px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-ink transition-transform hover:-translate-y-0.5"
             >
               View {item.category} Collection
