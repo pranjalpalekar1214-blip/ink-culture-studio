@@ -63,9 +63,9 @@ export function Navbar() {
           className="absolute inset-x-0 top-0 h-[2px] origin-left bg-blood"
           style={{ scaleX: progress }}
         />
-        <nav className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-5 md:h-[72px] md:px-8" aria-label="Primary">
+        <nav className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-3 px-4 sm:px-5 md:h-[72px] md:px-8" aria-label="Primary">
           <Link to="/" className="flex items-center" aria-label="Street Culture — home">
-            <BrandLogo className="text-xs md:text-sm" />
+            <BrandLogo className="max-w-[min(62vw,14rem)] text-[10px] sm:text-xs md:text-sm" />
           </Link>
 
           <div className="hidden items-center gap-7 lg:flex">
@@ -138,7 +138,7 @@ function FullScreenMenu({ open, onClose }: { open: boolean; onClose: () => void 
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
-          className="fixed inset-0 z-[90] flex flex-col bg-ink"
+          className="fixed inset-0 z-[90] flex min-h-[100dvh] flex-col bg-ink pb-[env(safe-area-inset-bottom)]"
           initial={{ clipPath: "inset(0 0 100% 0)" }}
           animate={{ clipPath: "inset(0 0 0% 0)" }}
           exit={{ clipPath: "inset(0 0 100% 0)" }}
@@ -170,7 +170,7 @@ function FullScreenMenu({ open, onClose }: { open: boolean; onClose: () => void 
                     onClick={onClose}
                     className={({ isActive }) =>
                       cn(
-                        "group flex items-baseline gap-4 py-1.5 font-display text-4xl uppercase leading-none tracking-tight transition-colors sm:text-5xl md:text-6xl",
+                        "group flex items-baseline gap-4 py-1.5 font-display text-[clamp(2.3rem,11vw,3.5rem)] uppercase leading-none tracking-tight transition-colors sm:text-5xl md:text-6xl",
                         isActive ? "text-blood" : "text-bone hover:text-blood",
                       )
                     }

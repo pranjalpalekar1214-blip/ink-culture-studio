@@ -152,6 +152,13 @@
   ::-webkit-scrollbar-thumb:hover { background: var(--blood); }
 }
 
+@media (max-width: 639px) {
+  html, body, #root { width: 100%; max-width: 100%; overflow-x: clip; }
+  body { padding-bottom: env(safe-area-inset-bottom); }
+  img, svg, video, canvas { max-width: 100%; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+}
+
 /* Respect reduced motion globally */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
