@@ -33,13 +33,6 @@ export const galleryCategories: ("All" | GalleryCategory)[] = [
   "All",
   "Portfolio",
   "Realism",
-  "Colour Tattoos",
-  "Religious",
-  "Animal",
-  "Cover Ups",
-  "Line Art",
-  "Script",
-  "Feminine Tattoo Inspo",
   "Academy + Studio",
   "BTS",
   "Healed Tattoos",
@@ -109,7 +102,6 @@ const uploadedPhotos: Record<string, string[]> = {
   "Students, Convocation + Awards": [
     "AWARD Bagga.jpg", "AWARD Bibin.jpg", "AWARD DEBRAJ.jpg", "AWARD Debraj 02.jpg", "AWARD Mahesh.jpg", "AWARD Santosh.jpg", "AWARD Supriya.jpg", "AWARD VINI.jpg", "Bagga Hanya mask post.jpg", "Bagga Madusa Post.jpg", "CONVO CEREMONY 03.JPG", "Convo Ceremony 06.JPG", "Convo ceremony 02.JPG", "Convo ceremony cover.JPG", "Convo ceremony last slide.JPG", "Convoc 02.jpg", "Convoc 03.jpg", "Convoc 04.jpg", "Convocation slide 01.JPG", "Desi Colour 01.jpg", "Dhiru Floral Skull post.jpg", "Dhiru Watercolour Cat Post.jpg", "Mnadeep Hanuman.jpg", "NIRAV BATLI.jpg", "Raj Colour Lotus.jpg", "Rajveer joker.jpg", "Rakshit Shell colour.jpg", "Rakshit colour wok.jpg", "Student Sachin .jpg", "Throwback B&G 02.jpg", "Throwback Student tat Yogesh.jpg",
   ].map((file) => `/images/placeholder/student's Achievement/${file}`),
-  Script: ["/images/placeholder/lettering.svg"],
   "Academy + Studio": [
     "Backpiece 01.jpg", "Bagga Scary portrait.jpg", "Bagga pencil skinpad.jpg", "Deepak Kingfisher Bird.jpg", "Deepak Red Character.jpg", "Desi Green Godess.jpg", "Desi New school Nike.jpg", "Desi abstract flower.jpg", "Desmond practice skin.jpg", "Dhiraj S - Sculpture.jpg", "Dhiru Avatar.jpg", "Dhiru Kukdo post.jpg", "Hulk skin pad.jpg", "INDRAYANI RAUT.jpg", "Kapil Thenos .jpg", "Keshav Newschool post.jpg", "Keshav The Mask post.jpg", "Kingfisher Frank Ronald.jpg", "LE Desi tiger copy.jpg", "Mayank Colour portrait Post.jpg", "Mayank Flower post.jpg", "Mermaid Frank Ronald.jpg", "Morris Blue men.jpg", "Nayan Wolf skinpad.jpg", "Paakhi skinpad.jpg", "Parrot Indrayani Post.jpg", "RAJ Krishna Portrait.jpg", "Rakshit Buddha.jpg", "Rakshit Flower watercolour.jpg", "Rakshit Owl.jpg", "Rakshit Portrait.jpg", "Rakshit Shiva.jpg", "Rakshit shiva copy.jpg", "Sachin Hellboy.jpg", "Samson miduim b&g.jpg", "Siva Sculpture.jpg", "Skinpad Morgan.jpg", "Sujal Alien.jpg", "Sujal Flower.jpg", "Sujal Parot.jpg", "Supriya Cat skinpad.jpg", "Thanos Frank Ronald.jpg", "VINAYAK UNKI.jpg", "Yogesh Practice skin.jpg",
   ].map((file) => `/images/placeholder/skinpads/${file}`),
