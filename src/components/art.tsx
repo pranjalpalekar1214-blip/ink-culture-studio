@@ -171,22 +171,19 @@ export function BoltDoodleMotif({ className }: ArtProps) {
 
 /** Infinite horizontal marquee strip — fun studio slogans. */
 export function TickerStrip({ items, className }: { items: string[]; className?: string }) {
-  const reduce = useReducedMotion();
   const doubled = [...items, ...items];
   return (
-    <div className={cn("relative overflow-hidden border-y-2 border-ink bg-blood py-3", className)} aria-hidden>
-      <motion.div
-        className="flex w-max items-center gap-5 pr-5 sm:gap-8 sm:pr-8"
-        animate={reduce ? {} : { x: ["0%", "-50%"] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-      >
+  <div className={cn("relative overflow-hidden border-y-2 border-ink bg-blood py-3", className)} aria-hidden>
+  <div
+  className="flex w-max animate-[ticker-scroll_22s_linear_infinite] items-center gap-5 pr-5 sm:gap-8 sm:pr-8"
+  >
         {doubled.map((t, i) => (
           <span key={i} className="flex items-center gap-5 whitespace-nowrap font-display text-sm uppercase tracking-[0.08em] text-ink sm:gap-8 sm:text-lg">
             {t}
             <StarMotif className="h-4 w-4" />
           </span>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }
