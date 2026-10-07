@@ -71,7 +71,7 @@ function Hero() {
   );
 
   return (
-    <section ref={ref} className="relative flex min-h-[100svh] flex-col overflow-hidden" aria-label="Introduction">
+    <section ref={ref} className="relative flex min-h-[100svh] flex-col overflow-hidden pb-2" aria-label="Introduction">
       {/* backdrop layers */}
       <motion.div style={{ y: yBg }} className="pointer-events-none absolute inset-0" aria-hidden>
         <div className="absolute inset-0 grain opacity-70" />
@@ -79,7 +79,7 @@ function Hero() {
         <div className="absolute -left-32 bottom-0 h-[360px] w-[360px] rounded-full bg-acid/5 blur-[100px]" />
       </motion.div>
 
-      <motion.div style={{ opacity }} className="relative mx-auto flex w-full max-w-[90rem] flex-1 flex-col justify-center px-6 pt-24 sm:px-8 md:px-10 md:pt-28 lg:px-12">
+      <motion.div style={{ opacity }} className="relative mx-auto flex w-full max-w-[90rem] flex-1 flex-col justify-center px-4 pt-24 sm:px-8 md:px-10 md:pt-28 lg:px-12">
         <motion.p
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -90,7 +90,7 @@ function Hero() {
           Tattoo Studio & Academy — Kandivali West, Mumbai
         </motion.p>
 
-        <h1 className="mt-6 font-display text-[12vw] font-black uppercase leading-[0.82] tracking-[0.035em] text-bone sm:text-[9.5vw] lg:text-[7.25rem] xl:text-[8rem]">
+        <h1 className="mt-6 font-display text-[clamp(3.6rem,16vw,6rem)] font-black uppercase leading-[0.82] tracking-[0.015em] text-bone sm:text-[9.5vw] sm:tracking-[0.035em] lg:text-[7.25rem] xl:text-[8rem]">
           <span className="block">{word("Ink", 0)}&nbsp;{word("Is", 1)}</span>
           <span className="block text-blood">{word("Culture.", 2)}</span>
         </h1>
@@ -107,10 +107,10 @@ function Hero() {
               Custom tattoos drawn for your body, your story, your streets — in Kandivali West, Mumbai.
             </span>
           </p>
-          <div className="flex flex-col items-start gap-3">
+          <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:items-start">
             <InkButton href="/book" size="lg">Book Your Tattoo</InkButton>
-            <InkButton href="/artists" variant="outline" size="lg">Explore the Artists</InkButton>
-            <InkButton href="/gallery" variant="outline" size="lg">Explore the Gallery</InkButton>
+            <InkButton href="/artists" variant="outline" size="lg" className="w-full sm:w-auto">Explore the Artists</InkButton>
+            <InkButton href="/gallery" variant="outline" size="lg" className="w-full sm:w-auto">Explore the Gallery</InkButton>
           </div>
         </motion.div>
 
@@ -133,7 +133,7 @@ function Hero() {
           initial={reduce ? false : { opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.16, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="pointer-events-auto absolute right-5 top-40 z-10 md:right-8 md:top-44"
+          className="pointer-events-auto absolute right-4 top-28 z-10 sm:right-5 sm:top-40 md:right-8 md:top-44"
         >
           <QuestionBlock className="h-11 w-11 md:h-14 md:w-14" />
         </motion.div>

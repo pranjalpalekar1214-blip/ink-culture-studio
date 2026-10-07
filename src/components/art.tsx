@@ -176,12 +176,12 @@ export function TickerStrip({ items, className }: { items: string[]; className?:
   return (
     <div className={cn("relative overflow-hidden border-y-2 border-ink bg-blood py-3", className)} aria-hidden>
       <motion.div
-        className="flex w-max items-center gap-8 pr-8"
+        className="flex w-max items-center gap-5 pr-5 sm:gap-8 sm:pr-8"
         animate={reduce ? {} : { x: ["0%", "-50%"] }}
         transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
       >
         {doubled.map((t, i) => (
-          <span key={i} className="flex items-center gap-8 whitespace-nowrap font-display text-lg uppercase tracking-[0.08em] text-ink">
+          <span key={i} className="flex items-center gap-5 whitespace-nowrap font-display text-sm uppercase tracking-[0.08em] text-ink sm:gap-8 sm:text-lg">
             {t}
             <StarMotif className="h-4 w-4" />
           </span>

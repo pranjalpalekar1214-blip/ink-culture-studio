@@ -55,7 +55,7 @@ export function SocialDock() {
 
   return (
     <div
-      className="fixed bottom-4 left-4 z-[70] flex items-end sm:bottom-6 sm:left-6"
+      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-4 z-[70] flex items-end sm:bottom-6 sm:left-6"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       onFocus={() => setOpen(true)}
