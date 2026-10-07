@@ -234,7 +234,7 @@ export function ArtistCard({ artist, index, showPhoto = false }: { artist: Artis
                 {showPhoto ? (
                   <img
                     src={artist.image}
-                    alt="Lucky, tattoo artist at Street Culture"
+                    alt={`${artist.name}, tattoo artist at Street Culture`}
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover object-center grayscale-[0.15] transition-transform duration-500 group-hover:scale-[1.03]"
                   />

@@ -10,6 +10,7 @@ import { Footer } from "@/components/Footer";
 import { StickyBookBar } from "@/components/StickyBookBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SocialDock } from "@/components/SocialDock";
+import { Intro } from "@/components/Intro";
 import Home from "../legacy-pages/Home";
 import About from "../legacy-pages/About";
 import Artists from "../legacy-pages/Artists";
@@ -65,6 +66,7 @@ function NativeContent() {
 export default function NativeRoutePage({ routePath = "/" }: { routePath?: string }) {
   return (
     <>
+      <Intro />
       <MemoryRouter initialEntries={[routePath]}>
         <RouteSyncer />
         <CursorProvider>

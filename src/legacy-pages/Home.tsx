@@ -225,7 +225,7 @@ function ArtistsSection() {
         <SectionHeading index="02" kicker="The Roster" title={<>Meet your<br />artists.</>} />
         <div className="grid gap-8 md:grid-cols-2 md:gap-10">
           {artists.map((a, i) => (
-            <ArtistCard key={a.id} artist={a} index={i} />
+            <ArtistCard key={a.id} artist={a} index={i} showPhoto />
           ))}
         </div>
         <Reveal className="mt-10 text-center">
