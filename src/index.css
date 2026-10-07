@@ -159,6 +159,11 @@
   button, a { -webkit-tap-highlight-color: transparent; }
 }
 
+@keyframes course-card-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(-0.35deg); }
+}
+
 @keyframes ticker-scroll {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
