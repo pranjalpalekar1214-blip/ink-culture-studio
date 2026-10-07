@@ -79,7 +79,7 @@ function Hero() {
         <div className="absolute -left-32 bottom-0 h-[360px] w-[360px] rounded-full bg-acid/5 blur-[100px]" />
       </motion.div>
 
-      <motion.div style={{ opacity }} className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pt-28 md:px-8 md:pt-32">
+      <motion.div style={{ opacity }} className="relative mx-auto flex w-full max-w-[90rem] flex-1 flex-col justify-center px-6 pt-24 sm:px-8 md:px-10 md:pt-28 lg:px-12">
         <motion.p
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -90,7 +90,7 @@ function Hero() {
           Tattoo Studio & Academy — Kandivali West, Mumbai
         </motion.p>
 
-        <h1 className="mt-6 font-display text-[11vw] font-black uppercase leading-[0.85] tracking-[0.04em] text-bone sm:text-[9vw] lg:text-[6.5rem]">
+        <h1 className="mt-6 font-display text-[12vw] font-black uppercase leading-[0.82] tracking-[0.035em] text-bone sm:text-[9.5vw] lg:text-[7.25rem] xl:text-[8rem]">
           <span className="block">{word("Ink", 0)}&nbsp;{word("Is", 1)}</span>
           <span className="block text-blood">{word("Culture.", 2)}</span>
         </h1>
@@ -144,7 +144,7 @@ function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.25 }}
-        className="relative z-10 mx-auto flex w-full max-w-7xl items-center gap-3 px-5 pb-8 text-[10px] uppercase tracking-[0.35em] text-bone/45 md:px-8"
+        className="relative z-10 mx-auto flex w-full max-w-[90rem] items-center gap-3 px-6 pb-8 text-[10px] uppercase tracking-[0.35em] text-bone/45 sm:px-8 md:px-10 lg:px-12"
       >
         <motion.span animate={reduce ? {} : { y: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>
           <ArrowDown className="size-3.5 text-blood" />

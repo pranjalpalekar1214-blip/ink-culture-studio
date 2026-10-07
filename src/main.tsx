@@ -9,7 +9,6 @@ import "./index.css";
 // Site chrome
 import { BlockHitLayer } from "@/components/BlockHitLayer";
 import { PixelCloud } from "@/components/PixelCloud";
-import { CursorProvider } from "@/components/Cursor";
 import { useMysteryTracker } from "@/lib/mystery";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -145,7 +144,7 @@ function ConvexUnavailable() {
 
 function SiteLayout() {
   return (
-    <CursorProvider>
+    <>
       <ScrollToTop />
       <Intro />
       <BlockHitLayer />
@@ -176,7 +175,7 @@ function SiteLayout() {
       <Footer />
       <StickyBookBar />
       <SocialDock />
-    </CursorProvider>
+    </>
   );
 }
 

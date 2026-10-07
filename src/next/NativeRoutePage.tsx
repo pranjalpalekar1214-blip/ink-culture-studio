@@ -4,7 +4,6 @@ import "../index.css";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router";
 import { Toaster } from "@/components/ui/sonner";
 import { SpeedInsights } from "@vercel/speed-insights/react";
-import { CursorProvider } from "@/components/Cursor";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { StickyBookBar } from "@/components/StickyBookBar";
@@ -69,14 +68,12 @@ export default function NativeRoutePage({ routePath = "/" }: { routePath?: strin
       <Intro />
       <MemoryRouter initialEntries={[routePath]}>
         <RouteSyncer />
-        <CursorProvider>
-          <ScrollToTop />
-          <Navbar />
-          <main id="main"><NativeContent /></main>
-          <Footer />
-          <StickyBookBar />
-          <SocialDock />
-        </CursorProvider>
+        <ScrollToTop />
+        <Navbar />
+        <main id="main"><NativeContent /></main>
+        <Footer />
+        <StickyBookBar />
+        <SocialDock />
       </MemoryRouter>
       <Toaster />
       <SpeedInsights />
