@@ -79,7 +79,9 @@ function Tile({ item, onOpen, index }: { item: GalleryItem; onOpen: () => void; 
 }
 
 export function GalleryGrid() {
-  const [filter, setFilter] = useState("All");
+  const requestedCategory = typeof window === "undefined" ? null : new URLSearchParams(window.location.search).get("category");
+  const initialFilter = requestedCategory && galleryCategories.includes(requestedCategory as (typeof galleryCategories)[number]) ? requestedCategory : "All";
+  const [filter, setFilter] = useState(initialFilter);
   const [artist, setArtist] = useState<string>("All");
   const [ink, setInk] = useState<string>("All");
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
