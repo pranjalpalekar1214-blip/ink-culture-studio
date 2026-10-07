@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { BrandMark } from "./BrandLogo";
+import { BrandLogo } from "./BrandLogo";
 import { useLockBody } from "./ui-kit";
 
 /**
@@ -23,7 +23,7 @@ export function Intro() {
     const t = setTimeout(() => {
       sessionStorage.setItem("sc-intro-seen", "1");
       setDone(true);
-    }, 2300);
+    }, 900);
     return () => clearTimeout(t);
   }, [done, reduce]);
 
@@ -37,34 +37,14 @@ export function Intro() {
           aria-hidden
         >
           <div className="flex flex-col items-center">
-            {/* hexagram-heart badge pops in, then the lockup below */}
             <motion.div
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.15, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="text-bone"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+              className="text-base sm:text-xl"
             >
-              <BrandMark className="size-16 sm:size-20" />
+              <BrandLogo />
             </motion.div>
-
-            <div className="mt-5 overflow-hidden">
-              <motion.p
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                className="font-display text-4xl font-bold uppercase leading-[0.9] tracking-[0.06em] text-bone sm:text-6xl"
-              >
-                Street<span className="text-blood">Culture</span>
-              </motion.p>
-            </div>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.4, duration: 0.4 }}
-              className="mt-3 font-display text-[11px] uppercase tracking-[0.5em] text-bone/70 sm:text-xs"
-            >
-              Tattoo <span className="text-blood">and</span> Academy
-            </motion.p>
           </div>
         </motion.div>
       )}
