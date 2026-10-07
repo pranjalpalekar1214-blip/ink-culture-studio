@@ -146,7 +146,7 @@ function Hero() {
         transition={{ delay: 0.2, duration: 0.25 }}
         className="relative z-10 mx-auto flex w-full max-w-[90rem] items-center gap-3 px-6 pb-8 text-[10px] uppercase tracking-[0.35em] text-bone/45 sm:px-8 md:px-10 lg:px-12"
       >
-        <motion.span animate={reduce ? {} : { y: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>
+        <motion.span animate={reduce ? {} : { y: [0, 4, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}>
           <ArrowDown className="size-3.5 text-blood" />
         </motion.span>
         Scroll to enter Street Culture

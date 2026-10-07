@@ -7,8 +7,6 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import "./index.css";
 
 // Site chrome
-import { BlockHitLayer } from "@/components/BlockHitLayer";
-import { PixelCloud } from "@/components/PixelCloud";
 import { useMysteryTracker } from "@/lib/mystery";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -147,8 +145,6 @@ function SiteLayout() {
     <>
       <ScrollToTop />
       <Intro />
-      <BlockHitLayer />
-      <PixelCloud />
       <Navbar />
       <div id="main">
         <Suspense fallback={<RouteLoading />}>
