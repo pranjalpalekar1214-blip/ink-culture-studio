@@ -178,7 +178,14 @@ export const academyCourses: Course[] = [
     duration: "5 months",
     instructor: "Taught by Lucky Solanki · Assisted by Karan Parmar",
     summary: "Complete tattoo education across drawing, tattooing, colour, designing and studio management.",
-    outcomes: ["Drawing and anatomy", "Tattooing and hygiene", "Colour, design and management"],
+    outcomes: [
+      "Drawing: basic forms, grey value, dimension, light, perspective, proportion and anatomy",
+      "Tattooing: history, tools, needle theory, hygiene, lining, colour packing, realism, shading and placement",
+      "Colour: colour theory, hue/value/saturation, harmony, blending, texture and realistic effects",
+      "Designing: Photoshop, Illustrator, iPad sketching, conceptual design and composition",
+      "Management: personality, etiquette, clients, communication, studio systems, marketing and social media",
+      "Live demonstrations and supervised practice across the full tattoo workflow",
+    ],
   },
   {
     id: "primary-course",
@@ -206,6 +213,34 @@ export const academyCourses: Course[] = [
     duration: "1 month",
     summary: "An intensive route for working artists who need a focused upgrade in technique, process and studio readiness.",
     outcomes: ["Portfolio and technique review", "Workflow and client consultation", "Studio-ready refinement"],
+  },
+];
+
+export const academyWorkshopImages = [
+  {
+    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Workshop%202026%20BTS05-E0AFXnjXbzKMEhzmMhGPZKYJiEuVNS.jpg",
+    alt: "Tattoo academy workshop with students learning in the studio",
+    label: "Inside the studio",
+  },
+  {
+    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Workshop%202026%20BTS%2004-P3jdOVmha13VO1ZAR7vtiOysu3VboO.jpg",
+    alt: "Tattoo students practising together during a workshop",
+    label: "Practice in progress",
+  },
+  {
+    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Workshop%202026%20BTS03-ipVb4aPhKThwDt720bksVbHG6pImaY.jpg",
+    alt: "Tattoo workshop audience listening to an artist demonstration",
+    label: "Learn from working artists",
+  },
+  {
+    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Workshop%202026%20BTS02-bg5aNV9bgvTK6AIXWS2NYc6uQbykoQ.jpg",
+    alt: "Tattoo artists gathered around a live workshop demonstration",
+    label: "Observe the craft",
+  },
+  {
+    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Benglore%20moments%20End-0I3shgtgQlH71VV0lhy3xAA1bOgj9G.jpg",
+    alt: "Tattoo workshop participants celebrating together",
+    label: "Leave thinking like an artist",
   },
 ];
 

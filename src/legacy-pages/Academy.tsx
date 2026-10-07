@@ -1,9 +1,9 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { PenToolIcon, ShieldIcon, UserCheckIcon, WorkflowIcon } from "@/components/icons";
 import { InkButton, PageHero, Reveal, SectionHeading } from "@/components/ui-kit";
 import { breadcrumbSchema, faqSchema, pageMeta } from "@/config/seo";
-import { academyCourses, academyFaqs } from "@/data/courses";
+import { academyCourses, academyFaqs, academyWorkshopImages } from "@/data/courses";
 import { useJsonLd, useSeo } from "@/hooks/use-seo";
 import { submitAcademyEnquiry } from "@/lib/forms";
 import { academyMessage, openWhatsApp } from "@/lib/whatsapp";
@@ -40,13 +40,21 @@ export default function Academy() {
         title={<>Learn the<br />craft.</>}
         lead="Structured, practical tattoo education inside a working Mumbai studio — drawing first, machines later, clients last. No shortcuts, no fake certificates."
       >
-        <Reveal delay={0.3} className="mt-8">
+        <Reveal delay={0.3} className="mt-8 flex flex-wrap items-center gap-6">
           <InkButton href="#enquire" size="lg">Enquire Now</InkButton>
+          <div className="hidden items-center gap-3 border-l border-acid/40 pl-5 sm:flex" aria-label="Academy learning path graphic">
+            <span className="size-3 rounded-full bg-acid" />
+            <span className="h-px w-12 bg-acid/60" />
+            <span className="size-2 rounded-full border border-acid" />
+            <span className="h-px w-8 bg-acid/60" />
+            <span className="size-3 rotate-45 border border-acid" />
+          </div>
         </Reveal>
       </PageHero>
 
       <WhySection />
       <CurriculumSection />
+      <WorkshopSection />
       <WhoSection />
       <ToolsSection />
       <FaqSection />
@@ -78,33 +86,43 @@ function WhySection() {
 
 function CurriculumSection() {
   const reduce = useReducedMotion();
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   return (
     <section className="border-t border-bone/10 py-20 md:py-28" aria-labelledby="curriculum-heading">
       <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
         <SectionHeading index="03" kicker="Course Structure" title={<>Four ways in.<br />Choose your path.</>} />
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {academyCourses.map((c, i) => (
+            <Fragment key={`${c.id}-group`}>
             <motion.article
               key={c.id}
-              initial={reduce ? false : { opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="group flex flex-col border border-bone/12 bg-white/[0.02] p-6 transition-colors hover:border-acid/50"
+              initial={false}
+              animate={reduce ? undefined : { y: [0, -5, 0], rotate: [0, i % 2 ? 0.3 : -0.3, 0] }}
+              whileHover={reduce ? undefined : { scale: 1.015, rotate: 0 }}
+              transition={{ duration: 4.8, repeat: Infinity, delay: (i % 3) * 0.25, ease: "easeInOut" }}
+              className={`group relative flex cursor-pointer flex-col border border-bone/12 bg-white/[0.02] p-6 transition-colors hover:-translate-y-2 hover:border-acid/60 hover:bg-white/[0.04] hover:shadow-[0_18px_0_rgba(239,190,58,0.12)] ${selectedCourse === c.id ? "border-acid/70 bg-white/[0.05] shadow-[0_12px_0_rgba(239,190,58,0.18)]" : ""}`}
+              onClick={() => setSelectedCourse(selectedCourse === c.id ? null : c.id)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setSelectedCourse(selectedCourse === c.id ? null : c.id);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-expanded={selectedCourse === c.id}
             >
-              <div className="flex items-baseline justify-between">
+              <div className="pointer-events-none absolute right-5 top-5 opacity-60 transition duration-500 group-hover:rotate-12 group-hover:scale-110" aria-hidden>
+                <span className="block size-9 rounded-full border border-acid/50" />
+                <span className="absolute left-1/2 top-[-6px] h-12 w-px -translate-x-1/2 rotate-45 bg-acid/50" />
+                <span className="absolute left-1/2 top-1/2 h-px w-12 -translate-x-1/2 bg-acid/50" />
+              </div>
+              <div className="flex items-baseline justify-between pr-14">
                 <span className="font-mono text-[11px] text-acid/70">{c.number}</span>
                 <span className="border border-bone/15 px-2 py-0.5 text-[9px] uppercase tracking-[0.18em] text-bone/50">
                   {c.level}
                 </span>
               </div>
-              {c.images?.length ? (
-                <div className="mt-4 grid grid-cols-5 gap-1" aria-label={`${c.title} curriculum visuals`}>
-                  {c.images.map((image, imageIndex) => (
-                    <img key={image} src={image} alt={`${c.title} module ${imageIndex + 1}`} className="aspect-[4/5] w-full object-cover" loading="lazy" />
-                  ))}
-                </div>
-              ) : null}
               <h3 className="mt-4 font-display text-xl uppercase leading-tight tracking-tight text-bone">{c.title}</h3>
               <p className="mt-3 flex-1 font-body text-sm leading-relaxed text-bone/60">{c.summary}</p>
               <ul className="mt-4 space-y-1.5 border-t border-bone/10 pt-4">
@@ -119,12 +137,39 @@ function CurriculumSection() {
               <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-bone/40">{c.duration}</p>
               <button
                 type="button"
-                onClick={() => openWhatsApp(`Hello Street Culture Academy! I would like to enquire about the ${c.title} (${c.duration}) and request the current price. Please share the details.`)}
-                className="mt-5 border border-acid/70 px-4 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-acid transition-colors hover:bg-acid hover:text-ink"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  openWhatsApp(`Hello Street Culture Academy! I would like to enquire about the ${c.title} (${c.duration}) and request the current price. Please share the details.`);
+                }}
+                className="group/mario relative mt-5 overflow-hidden border border-acid/70 px-4 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-acid transition-colors hover:bg-acid hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acid"
               >
-                Enquire for price <span aria-hidden>↗</span>
+                <span className="inline-flex items-center gap-2 transition-transform duration-300 group-hover/mario:-translate-y-1 group-hover/mario:translate-x-1">Enquire for price <span aria-hidden>↗</span></span>
               </button>
             </motion.article>
+            {selectedCourse === c.id ? (
+              <motion.div
+                layout
+                initial={{ opacity: 0, height: 0, y: -12 }}
+                animate={{ opacity: 1, height: "auto", y: 0 }}
+                exit={{ opacity: 0, height: 0, y: -12 }}
+                className="-mt-5 border-x border-b border-acid/40 bg-ink/80 p-6 md:col-span-2 lg:col-span-3"
+              >
+                <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-acid">Course breakdown</p>
+                    <h4 className="mt-2 font-display text-3xl uppercase tracking-tight text-bone">{c.title}</h4>
+                    <p className="mt-3 max-w-2xl font-body text-sm leading-relaxed text-bone/70">{c.summary}</p>
+                  </div>
+                  <span className="shrink-0 border border-acid/50 px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-acid">{c.duration}</span>
+                </div>
+                <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                  {c.outcomes.map((outcome) => (
+                    <div key={outcome} className="border border-bone/12 p-4 font-body text-sm text-bone/75">{outcome}</div>
+                  ))}
+                </div>
+              </motion.div>
+            ) : null}
+            </Fragment>
           ))}
         </div>
         <Reveal className="mt-8">
@@ -133,6 +178,34 @@ function CurriculumSection() {
             <a href="#enquire" className="text-acid underline underline-offset-4">enquire for current information</a>.
           </p>
         </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function WorkshopSection() {
+  return (
+    <section className="border-t border-bone/10 py-20 md:py-28" aria-labelledby="workshop-heading">
+      <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <SectionHeading index="04" kicker="Studio Field Notes" title={<>Learn it.<br />Live it.</>} />
+          <p className="max-w-sm font-body text-sm leading-relaxed text-bone/60">A master course is more than modules on a page. It is shared studio time, live demonstrations, practice, critique and the people you meet while learning.</p>
+        </div>
+        <div className="mt-10 grid auto-rows-[180px] grid-cols-2 gap-3 md:auto-rows-[220px] md:grid-cols-4">
+          {academyWorkshopImages.map((image, index) => (
+            <motion.figure
+              key={image.src}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.55, delay: index * 0.08 }}
+              className={`group relative overflow-hidden border border-bone/15 bg-charcoal ${index === 0 || index === 4 ? "row-span-2" : ""} ${index === 4 ? "col-span-2 md:col-span-1" : ""}`}
+            >
+              <img src={image.src} alt={image.alt} className="size-full object-cover transition duration-700 group-hover:scale-105 group-hover:saturate-150" loading="lazy" />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent px-4 pb-4 pt-10 font-mono text-[10px] uppercase tracking-[0.16em] text-bone/85">{image.label}</figcaption>
+            </motion.figure>
+          ))}
+        </div>
       </div>
     </section>
   );
