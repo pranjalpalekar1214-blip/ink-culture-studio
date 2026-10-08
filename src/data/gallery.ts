@@ -106,10 +106,7 @@ const uploadedPhotos: Record<string, string[]> = {
   "Happy Clients": [
     "Friends getting tattoo.jpg", "Oct Story 10.jpg", "SEP 26 Highlights 01.jpg", "SEP 26 Highlights 02.jpg", "SEP 26 Highlights 03.jpg", "Sep Client Diaries 01.jpg", "Sep Client Diaries 04.jpg", "Smile We Tat for 03.jpg", "Smile We Tat for.jpg", "Warning client 02.jpg", "Warning client 03.jpg",
   ].map((file) => `/images/placeholder/Happy clients/${file}`),
-  Script: [
-    "/images/placeholder/Lettering.svg",
-    "/images/placeholder/lettering.svg",
-  ],
+  Script: Array.from({ length: 15 }, (_, i) => `/images/placeholder/Script tattoos/Website SCRIPT ${i + 1}.jpg`),
   Realism: [
     ...numbered("Realism", "Website Realistic ", 13),
     ...Array.from({ length: 11 }, (_, i) => `/images/placeholder/Realism/Website Realistic ${i + 15}.jpg`),
