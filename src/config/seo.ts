@@ -88,16 +88,18 @@ export const pageMeta = {
     path: "/artists",
   }),
   karan: buildPageMeta({
-    title: `Karan — Custom Tattoo Artist, Kandivali West | ${siteName}`,
+    title: `Karan Parmar — Lead Tattoo & Piercing Artist in Mumbai | ${siteName}`,
     description:
-      "Karan is a resident tattoo artist at Street Culture, Kandivali West, Mumbai. Style, specialties, philosophy and selected work — book a consultation with Karan.",
+      "Meet Karan Parmar, Lead Tattoo & Piercing Artist at Street Culture Tattoo Studio in Kandivali West, Mumbai. Discover his story, fine line, lettering, miniature and custom tattoo work, then book a consultation.",
     path: "/artists/karan",
+    keywords: ["Karan Parmar tattoo artist", "lead tattoo artist Mumbai", "fine line tattoo Kandivali", "tattoo piercing artist Mumbai", "custom tattoo artist Borivali", "lettering tattoo Mumbai"],
   }),
   lucky: buildPageMeta({
-    title: `Lucky — Custom Tattoo Artist, Kandivali West | ${siteName}`,
+    title: `Lucky — Colour & Realism Tattoo Artist in Mumbai | ${siteName}`,
     description:
-      "Lucky is a resident tattoo artist at Street Culture, Kandivali West, Mumbai. Style, specialties, philosophy and selected work — book a consultation with Lucky.",
+      "Meet Lucky, a 16+ year tattoo artist at Street Culture Tattoo Studio in Kandivali West, Mumbai. Read his story and explore colour, realism, portrait, black and grey and freestyle tattoo work.",
     path: "/artists/lucky",
+    keywords: ["Lucky tattoo artist Mumbai", "colour tattoo artist Kandivali", "realism tattoo artist Mumbai", "portrait tattoo Kandivali", "black and grey tattoo Mumbai", "freestyle tattoo artist Mumbai"],
   }),
   gallery: buildPageMeta({
     title: `Tattoo Gallery | ${contact.shortName} ${"Tattoo Studio"}, Kandivali West`,

@@ -73,8 +73,9 @@ export default function ArtistDetail() {
         title={<>{artist.name}<span className="text-blood">.</span></>}
         lead={artist.epithet + " — " + artist.style + ", Street Culture, Kandivali West."}
       >
-        <div className="mt-8 flex flex-wrap gap-3">
-          <InkButton href={`/artists/${artist.id}/portfolio`} size="lg">View Portfolio</InkButton>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <InkButton href="#about-artist" size="lg">Read About {artist.name}</InkButton>
+            <InkButton href={`/artists/${artist.id}/portfolio`} size="lg">View Portfolio</InkButton>
           <InkButton href="/book" size="lg">Book with {artist.name}</InkButton>
         </div>
       </PageHero>
@@ -108,6 +109,11 @@ export default function ArtistDetail() {
                 </p>
               </div>
             </MaskReveal>
+            <div id="about-artist" className="mt-6 border border-bone/15 border-l-2 border-l-blood bg-bone/[0.03] p-6 md:p-8">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-blood">About {artist.name}</p>
+              <p className="mt-4 font-body text-base leading-relaxed text-bone/85">{artist.bio}</p>
+              <p className="mt-5 font-marker text-xl text-cream/80">{artist.philosophy}</p>
+            </div>
           </div>
 
           <div>
@@ -177,14 +183,15 @@ export default function ArtistDetail() {
       </section>
 
       {/* ABOUT / STYLE / SPECIALTIES */}
-      <section className="py-20 md:py-28" aria-label="About the artist">
+      <section id="artist-details" className="scroll-mt-20 py-20 md:py-28" aria-label={`${artist.name} artistic details`}>
         <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
-          <SectionHeading index="02" kicker="About The Artist" title={<>Who is<br />{artist.name}?</>} />
+          <SectionHeading index="02" kicker={`About ${artist.name}`} title={<>About the<br />Artist.</>} />
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
-            <Reveal>
-              <p className="font-body text-base leading-relaxed text-bone/75 md:text-lg">{artist.bio}</p>
-              <p className="mt-6 font-marker text-xl text-cream/70">{artist.philosophy}</p>
-            </Reveal>
+            <div className="border-l-2 border-blood pl-6">
+              <p className="mb-4 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-blood">Artist story</p>
+              <p className="font-body text-base leading-relaxed text-bone/85 md:text-lg">{artist.bio}</p>
+              <p className="mt-6 font-marker text-xl text-cream/80">{artist.philosophy}</p>
+            </div>
             <div className="space-y-8">
               <Reveal delay={0.1}>
                 <div className="border border-bone/12 p-6">
