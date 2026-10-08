@@ -109,7 +109,6 @@ const uploadedPhotos: Record<string, string[]> = {
   Script: [
     "/images/placeholder/Lettering.svg",
     "/images/placeholder/lettering.svg",
-    ...numbered("line art", "Website LINE ART ", 26),
   ],
   Realism: [
     ...numbered("Realism", "Website Realistic ", 13),
