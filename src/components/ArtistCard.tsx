@@ -289,7 +289,7 @@ export function ArtistCard({ artist, index, showPhoto = false }: { artist: Artis
               to="/book"
               tabIndex={flipped ? -1 : undefined}
               aria-label={`Book an appointment with ${artist.name}`}
-              className="mt-5 flex items-center justify-center gap-2 bg-blood px-4 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-blood/80"
+              className="mt-5 flex items-center justify-center gap-2 bg-black px-4 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-acid transition-colors hover:bg-acid hover:text-black"
             >
               Book an Appointment with {artist.name} <ArrowUpRight className="size-4" />
             </Link>

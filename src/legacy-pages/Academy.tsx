@@ -52,13 +52,15 @@ export default function Academy() {
         </Reveal>
       </PageHero>
 
-      <WhySection />
-      <CurriculumSection />
-      <WorkshopSection />
-      <WhoSection />
-      <ToolsSection />
-      <FaqSection />
-      <EnquireSection />
+      <div className="bg-[#101b2d]">
+        <WhySection />
+        <CurriculumSection />
+        <WorkshopSection />
+        <WhoSection />
+        <ToolsSection />
+        <FaqSection />
+        <EnquireSection />
+      </div>
     </>
   );
 }
@@ -73,7 +75,7 @@ function WhySection() {
             <Reveal key={w.title} delay={i * 0.08}>
               <div className="h-full border border-bone/12 bg-white/[0.02] p-7">
                 <w.icon className="size-7 text-acid/80" />
-                <h3 className="mt-4 font-display text-xl uppercase tracking-tight text-bone">{w.title}</h3>
+                <h3 className="mt-4 font-display text-xl font-bold uppercase tracking-tight text-bone">{w.title}</h3>
                 <p className="mt-3 font-body text-sm leading-relaxed text-bone/65">{w.body}</p>
               </div>
             </Reveal>
@@ -157,7 +159,7 @@ function CurriculumSection() {
                 <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
                   <div>
                     <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-acid">Course breakdown</p>
-                    <h4 className="mt-2 font-display text-3xl uppercase tracking-tight text-bone">{c.title}</h4>
+                    <h4 className="mt-2 font-display text-3xl font-bold uppercase tracking-tight text-bone">{c.title}</h4>
                     <p className="mt-3 max-w-2xl font-body text-sm leading-relaxed text-bone/70">{c.summary}</p>
                   </div>
                   <span className="shrink-0 border border-acid/50 px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-acid">{c.duration}</span>

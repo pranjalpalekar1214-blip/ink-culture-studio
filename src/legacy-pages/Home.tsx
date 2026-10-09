@@ -207,7 +207,7 @@ function Philosophy() {
               </div>
             </MaskReveal>
             <Reveal delay={0.3} className="absolute -bottom-8 -left-4 hidden rotate-[-4deg] border border-bone/15 bg-ink p-4 shadow-xl md:block">
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-blood">Est. Kandivali</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-blood">Est. 2015, Kandivali</p>
               <p className="mt-1 font-display text-xl uppercase text-bone">West, Mumbai</p>
             </Reveal>
           </div>
