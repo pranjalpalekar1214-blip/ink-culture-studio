@@ -21,6 +21,7 @@ import { SocialDock } from "@/components/SocialDock";
 const Landing = lazy(() => import("./legacy-pages/Home.tsx"));
 const About = lazy(() => import("./legacy-pages/About.tsx"));
 const Artists = lazy(() => import("./legacy-pages/Artists.tsx"));
+const ArtistDetail = lazy(() => import("./legacy-pages/ArtistDetail.tsx"));
 const Portfolio = lazy(() => import("./legacy-pages/Portfolio.tsx"));
 const Gallery = lazy(() => import("./legacy-pages/Gallery.tsx"));
 const Academy = lazy(() => import("./legacy-pages/Academy.tsx"));
@@ -156,7 +157,7 @@ function SiteLayout() {
             <Route path="/" element={<Landing />} />
             <Route path="/about" element={<About />} />
             <Route path="/artists" element={<Artists />} />
-            <Route path="/artists/:artistId" element={<Portfolio />} />
+            <Route path="/artists/:artistId" element={<ArtistDetail />} />
             <Route path="/artists/:artistId/portfolio" element={<Portfolio />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/academy" element={<Academy />} />

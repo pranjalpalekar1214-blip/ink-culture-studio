@@ -15,6 +15,7 @@ import { PixelCloud } from "@/components/PixelCloud";
 import Home from "../legacy-pages/Home";
 import About from "../legacy-pages/About";
 import Artists from "../legacy-pages/Artists";
+import ArtistDetail from "../legacy-pages/ArtistDetail";
 import Portfolio from "../legacy-pages/Portfolio";
 import Gallery from "../legacy-pages/Gallery";
 import Academy from "../legacy-pages/Academy";
@@ -48,7 +49,7 @@ function NativeContent() {
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/artists" element={<Artists />} />
-      <Route path="/artists/:artistId" element={<Portfolio />} />
+      <Route path="/artists/:artistId" element={<ArtistDetail />} />
       <Route path="/artists/:artistId/portfolio" element={<Portfolio />} />
       <Route path="/gallery" element={<Gallery />} />
       <Route path="/academy" element={<Academy />} />
