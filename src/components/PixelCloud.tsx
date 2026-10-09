@@ -81,7 +81,7 @@ export function PixelCloud({ className }: { className?: string }) {
           {/* cloud body */}
           <path
             d="M10 50 V36 H18 V28 H30 V20 H44 V14 H62 V20 H74 V28 H84 V36 H90 V50 Z"
-            fill="var(--bone)"
+            fill="transparent"
             stroke="var(--ink)"
             strokeWidth="3"
           />

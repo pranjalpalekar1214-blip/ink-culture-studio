@@ -203,18 +203,16 @@ function MysteryBoxReveal({ decision }: { decision: MysteryDecision }) {
 
 const steps = ["Service", "Artist", "Date & Time", "Details", "Confirm"] as const;
 
-type ServiceType = "Tattoo" | "Piercing" | "Academy";
+  type ServiceType = "Tattoo" | "Piercing";
 
 const serviceTypes: { id: ServiceType; blurb: string }[] = [
   { id: "Tattoo", blurb: "Custom pieces, cover-ups, small & large — drawn for you." },
   { id: "Piercing", blurb: "Ear, nose, septum & more — sterile, safe, quick." },
-  { id: "Academy", blurb: "Courses, workshops & studio tours for future artists." },
 ];
 
 const subOptions: Record<ServiceType, string[]> = {
   Tattoo: ["New Tattoo", "Cover Up", "Custom Design", "Consultation", "Touch-up"],
-  Piercing: ["Ear Lobe", "Helix", "Nose", "Septum", "Eyebrow", "Other"],
-  Academy: ["Beginner Course", "Single Workshop", "Studio Tour", "Counselling"],
+    Piercing: ["Ear Lobe", "Helix", "Nose", "Septum", "Eyebrow", "Other"],
 };
 
 const artistOptions = ["Karan", "Lucky", "No Preference"];
@@ -475,7 +473,7 @@ export default function Book() {
         index="04"
         kicker="Booking"
         title={<>Grab a<br />chair.</>}
-        lead="Tattoo, piercing or academy — pick your artist, grab a time slot and tell us the idea. No payment now, ever."
+        lead="Tattoo or piercing — pick your artist, grab a time slot and tell us the idea. No payment now, ever."
       />
 
       {/* The Mystery Box appears the moment they land on /book — finish the
@@ -528,7 +526,7 @@ export default function Book() {
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
                 {step === 0 && (
-                  <StepShell title="What are we doing today?" hint="Tattoo, piercing or academy — pick your path.">
+                  <StepShell title="What are we doing today?" hint="Tattoo or piercing — pick your path.">
                     <div className="space-y-4">
                       {serviceTypes.map((t) => (
                         <div key={t.id} className={cn("border-2 p-4 transition-colors", form.serviceType === t.id ? "border-blood bg-blood/5" : "border-bone/15")}>
@@ -583,9 +581,6 @@ export default function Book() {
                         );
                       })}
                     </div>
-                    {form.serviceType === "Academy" && (
-                      <p className="mt-4 font-marker text-base text-cream/70">Note: academy sessions are taught by the studio team.</p>
-                    )}
                   </StepShell>
                 )}
 
