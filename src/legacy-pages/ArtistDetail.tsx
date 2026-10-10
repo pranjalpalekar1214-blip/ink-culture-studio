@@ -185,13 +185,8 @@ export default function ArtistDetail() {
       {/* ABOUT / STYLE / SPECIALTIES */}
       <section id="artist-details" className="scroll-mt-20 py-20 md:py-28" aria-label={`${artist.name} artistic details`}>
         <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
-          <SectionHeading index="02" kicker={`About ${artist.name}`} title={<>About the<br />Artist.</>} />
+          <SectionHeading index="02" kicker="Style & Specialties" title={<>The artist&apos;s<br />language.</>} />
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
-            <div className="border-l-2 border-blood pl-6">
-              <p className="mb-4 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-blood">Artist story</p>
-              <p className="font-body text-base leading-relaxed text-bone/85 md:text-lg">{artist.bio}</p>
-              <p className="mt-6 font-marker text-xl text-cream/80">{artist.philosophy}</p>
-            </div>
             <div className="space-y-8">
               <Reveal delay={0.1}>
                 <div className="border border-bone/12 p-6">
