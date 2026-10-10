@@ -31,6 +31,25 @@ export function PixelCloud({ className }: { className?: string }) {
       x.set(tx);
       y.set(ty);
       setHop((h) => h + 1);
+
+      const AudioContextClass = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      if (AudioContextClass) {
+        const audio = new AudioContextClass();
+        const now = audio.currentTime;
+        [523.25, 659.25].forEach((frequency, index) => {
+          const oscillator = audio.createOscillator();
+          const gain = audio.createGain();
+          oscillator.type = "square";
+          oscillator.frequency.value = frequency;
+          gain.gain.setValueAtTime(0.0001, now + index * 0.09);
+          gain.gain.exponentialRampToValueAtTime(0.045, now + index * 0.09 + 0.015);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + index * 0.09 + 0.075);
+          oscillator.connect(gain).connect(audio.destination);
+          oscillator.start(now + index * 0.09);
+          oscillator.stop(now + index * 0.09 + 0.08);
+        });
+        window.setTimeout(() => void audio.close(), 320);
+      }
     };
     document.addEventListener("pointerdown", onDown, { capture: true });
     return () => document.removeEventListener("pointerdown", onDown, { capture: true });
@@ -81,8 +100,10 @@ export function PixelCloud({ className }: { className?: string }) {
           {/* cloud body */}
           <path
             d="M10 50 V36 H18 V28 H30 V20 H44 V14 H62 V20 H74 V28 H84 V36 H90 V50 Z"
-            fill="transparent"
-            stroke="var(--ink)"
+            fill="#ffffff"
+            fillOpacity="0.72"
+            stroke="#ffffff"
+            strokeOpacity="0.9"
             strokeWidth="3"
           />
           {/* shine */}

@@ -43,6 +43,26 @@ export const defaultKeywords = [
   "tattoo artist in Kandivali West",
   "tattoo studio Mumbai",
   "custom tattoo Kandivali",
+  "colour tattoo artist Mumbai",
+  "color tattoo studio Mumbai",
+  "realism tattoo Mumbai",
+  "black and grey tattoo",
+  "fine line tattoo",
+  "minimalist tattoo",
+  "linework tattoo",
+  "lettering tattoo",
+  "script tattoo",
+  "portrait tattoo",
+  "traditional tattoo",
+  "neo traditional tattoo",
+  "new school tattoo",
+  "Japanese tattoo",
+  "cover up tattoo",
+  "tattoo aftercare",
+  "body piercing Kandivali",
+  "ear piercing Mumbai",
+  "nose piercing Kandivali",
+  "sterile professional piercing",
 ];
 
 export function buildPageMeta(input: SeoInput) {
@@ -70,7 +90,7 @@ export function buildPageMeta(input: SeoInput) {
 
 export const pageMeta = {
   home: buildPageMeta({
-    title: `${contact.googleListingName}`,
+    title: `Tattoo Studio, Piercing & Academy in Kandivali West, Mumbai | ${siteName}`,
     description:
       `Custom tattoo & piercing studio in Kandivali West, Mumbai — 4.8★ on Google. Colour, black & grey, fine line and realism by Karan & Lucky. WhatsApp ${contact.displayPhone}.`,
     path: "/",
@@ -102,15 +122,15 @@ export const pageMeta = {
     keywords: ["Lucky tattoo artist Mumbai", "colour tattoo artist Kandivali", "realism tattoo artist Mumbai", "portrait tattoo Kandivali", "black and grey tattoo Mumbai", "freestyle tattoo artist Mumbai"],
   }),
   gallery: buildPageMeta({
-    title: `Tattoo Gallery | ${contact.shortName} ${"Tattoo Studio"}, Kandivali West`,
+    title: `Tattoo & Piercing Gallery | ${contact.shortName} Tattoo Studio, Kandivali West`,
     description:
-      "Browse the Street Culture tattoo gallery — black & grey, realism, fine line, traditional, lettering, cover ups and custom work from our Kandivali West, Mumbai studio.",
+      "Browse the Street Culture tattoo and piercing gallery — colour tattoos, color tattoos, black and grey, realism, fine line, lettering, cover ups, custom work and professional piercings from our Kandivali West, Mumbai studio.",
     path: "/gallery",
   }),
   book: buildPageMeta({
     title: `Book a Tattoo | ${contact.shortName} Tattoo Studio, Kandivali West`,
     description:
-      "Book a tattoo at Street Culture, Kandivali West, Mumbai. Choose your artist, share your idea and get a consultation on WhatsApp — the fastest way to start your custom tattoo.",
+      "Book a custom tattoo or professional piercing at Street Culture, Kandivali West, Mumbai. Choose your artist, share your idea and get a consultation on WhatsApp.",
     path: "/book",
   }),
   academy: buildPageMeta({

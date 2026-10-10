@@ -25,7 +25,8 @@ export type GalleryCategory =
   | "BTS"
   | "Healed Tattoos"
   | "Students, Convocation + Awards"
-  | "Skin Pads";
+  | "Skin Pads"
+  | "Piercing";
 
 /** Ink palette used for the "colour" filter dimension. */
 export type InkColor = "Black" | "Black & Grey" | "Colour" | "Fine B&W";
@@ -46,6 +47,7 @@ export const galleryCategories: ("All" | GalleryCategory)[] = [
   "Healed Tattoos",
   "Students, Convocation + Awards",
   "Skin Pads",
+  "Piercing",
 ];
 
 /** Derived from items — but ordered explicitly for the UI. */
@@ -88,6 +90,7 @@ const styles: { style: string; artist: 0 | 1; cat: GalleryCategory; ink: InkColo
   { style: "BTS", artist: 1, cat: "BTS", ink: "Black & Grey" },
   { style: "Healed", artist: 0, cat: "Healed Tattoos", ink: "Black & Grey" },
   { style: "Students Awards", artist: 1, cat: "Students, Convocation + Awards", ink: "Colour" },
+  { style: "Piercing", artist: 0, cat: "Piercing", ink: "Black" },
 ];
 
 const numbered = (folder: string, prefix: string, count: number, extension = "jpg") =>
@@ -140,6 +143,7 @@ const uploadedPhotos: Record<string, string[]> = {
     "/images/placeholder/student's Achievement/Throwback B&G 02.jpg",
     "/images/placeholder/student's Achievement/Throwback Student tat Yogesh.jpg",
   ],
+  Piercing: ["/images/placeholder/Piercing.svg", "/images/placeholder/piercing.svg"],
   "Skin Pads": [
     "/images/placeholder/skinpads/Backpiece 01.jpg",
     "/images/placeholder/skinpads/Bagga Scary portrait.jpg",

@@ -87,7 +87,7 @@ function Hero() {
           className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.4em] text-bone/50 md:text-[11px]"
         >
           <span className="h-px w-10 bg-blood/70" aria-hidden />
-          Tattoo Studio & Academy — Kandivali West, Mumbai
+          Tattoo Studio, Piercing & Academy — Kandivali West, Mumbai
         </motion.p>
 
         <h1 className="mt-6 font-display text-[clamp(3.6rem,16vw,6rem)] font-black uppercase leading-[0.82] tracking-[0.015em] text-bone sm:text-[9.5vw] sm:tracking-[0.035em] lg:text-[7.25rem] xl:text-[8rem]">
@@ -104,7 +104,7 @@ function Hero() {
           <p className="max-w-xl font-body text-base font-medium leading-[1.65] tracking-[0.01em] text-bone/75 md:text-lg">
             <BrandLogo className="text-base md:text-lg" />
             <span className="mt-2 block">
-              Custom tattoos drawn for your body, your story, your streets — in Kandivali West, Mumbai.
+              Custom colour and black & grey tattoos, professional piercings and practical tattoo training — in Kandivali West, Mumbai.
             </span>
           </p>
           <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:items-start">
@@ -262,9 +262,10 @@ function GalleryStrip() {
             ["Happy Clients", "Happy Clients"],
             ["Healed", "Healed Tattoos"],
             ["Cover Ups", "Cover Ups"],
+            ["Piercing", "Piercing"],
           ].map(([label, category]) => (
             <Link key={category} to={`/gallery?category=${encodeURIComponent(category)}`} className="border border-bone/20 px-4 py-2 font-display text-xs uppercase tracking-[0.18em] text-bone/75 transition-colors hover:border-acid hover:text-acid">
-              {label} Tattoos
+              {label === "Piercing" ? label : `${label} Tattoos`}
             </Link>
           ))}
         </div>
